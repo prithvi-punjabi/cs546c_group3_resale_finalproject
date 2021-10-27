@@ -1,0 +1,20 @@
+{
+  "name": "cs546c_group3_resale",
+  "version": "1.0.0",
+  "description": "<!-- re$ale -->\r <!-- ABOUT THE PROJECT -->\r ## About re$ale",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prithvi-punjabi/cs546c_group3_resale_finalproject.git"
+  },
+  "author": "Prithvi Punjabi, Rishikesh Yadav, Anirudh Sundararaman, Nevil Ghelani",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/prithvi-punjabi/cs546c_group3_resale_finalproject/issues"
+  },
+  "homepage": "https://github.com/prithvi-punjabi/cs546c_group3_resale_finalproject#readme"
+}
