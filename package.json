@@ -4,7 +4,7 @@
   "description": "<!-- re$ale -->\r <!-- ABOUT THE PROJECT -->\r ## About re$ale",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "devStart": "nodemon app.js",
     "start": "node app.js"
   },
   "repository": {
@@ -16,5 +16,16 @@
   "bugs": {
     "url": "https://github.com/prithvi-punjabi/cs546c_group3_resale_finalproject/issues"
   },
-  "homepage": "https://github.com/prithvi-punjabi/cs546c_group3_resale_finalproject#readme"
+  "homepage": "https://github.com/prithvi-punjabi/cs546c_group3_resale_finalproject#readme",
+  "dependencies": {
+    "bootstrap": "^5.1.3",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.4",
+    "fs": "0.0.1-security",
+    "hbs": "^4.1.2",
+    "jquery": "^3.6.0",
+    "multer": "^1.4.3",
+    "nodemon": "^2.0.13",
+    "path": "^0.12.7"
+  }
 }
