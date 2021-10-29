@@ -66,7 +66,7 @@ async function create(
 
   const insertInfo = await userCol.insertOne(newUser);
   if (insertInfo.insertedCount === 0) throw "Could not add user";
-  return "success";
+  return;
 }
 
 module.exports = {

@@ -49,6 +49,7 @@ module.exports = {
       (day > currday && month == currmonth && year == curryear) ||
       (day > currday && month > currmonth && year > curryear) ||
       (month > currmonth && year > curryear) ||
+      (month > currmonth && year == curryear) ||
       year > curryear
     )
       throw "Your birthday cannot be in the future";
