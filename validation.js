@@ -71,5 +71,7 @@ module.exports = {
       typeof address.zip !== "string"
     )
       throw "Address values need to be strings";
+    if (address.state.length > 2) throw "State can only be 2 character string";
+    if (address.zip.length > 5) throw "Invalid zip code";
   },
 };
