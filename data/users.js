@@ -1,6 +1,7 @@
 const mongoCollections = require("../config/mongoCollections");
 const users = mongoCollections.users;
 let { ObjectId } = require("mongodb");
+const validate = require("../validation");
 
 async function create(
   firstName,
@@ -15,7 +16,35 @@ async function create(
   password,
   biography
 ) {
+  // Input Validation
+  validate.checkNull(firstName);
+  validate.checkNull(lastName);
+  validate.checkNull(email);
+  validate.checkNull(phoneNumber);
+  validate.checkNull(userName);
+  validate.checkNull(dob);
+  validate.checkNull(gender);
+  validate.checkNull(profilePicture);
+  validate.checkNull(address);
+  validate.checkNull(password);
+  validate.checkNull(biography);
+  validate.checkString(firstName);
+  validate.checkString(lastName);
+  validate.checkString(email);
+  validate.checkString(phoneNumber);
+  validate.checkString(userName);
+  validate.checkString(dob);
+  validate.checkString(gender);
+  validate.checkString(profilePicture);
+  validate.checkString(password);
+  validate.checkString(biography);
+  validate.checkEmail(email);
+  validate.checkPhone(phoneNumber);
+  validate.checkDob(dob);
+  validate.checkAddress(address);
+
   const userCol = await users();
+
   let newUser = {
     firstName: firstName,
     lastName: lastName,
@@ -25,13 +54,14 @@ async function create(
     dob: dob,
     gender: gender,
     profilePicture: profilePicture,
-    addres: address,
+    address: address,
     password: password,
     biography: biography,
     rating: 0,
     listedProducts: [],
     favouriteProducts: [],
   };
+
   const insertInfo = await userCol.insertOne(newUser);
   if (insertInfo.insertedCount === 0) throw "Could not add restaurant";
   return "success";

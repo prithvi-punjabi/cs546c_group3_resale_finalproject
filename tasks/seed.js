@@ -4,26 +4,29 @@ const users = require("../data/users");
 async function main() {
   const db = await connection();
   await db.dropDatabase();
-
-  const user1 = await users.create(
-    "Prithvi",
-    "Punjabi",
-    "prithvi@gmail.com",
-    "646-904-0663",
-    "prithvi46",
-    "06/05/1999",
-    "male",
-    "/pathtoimage",
-    {
-      streetAddress: "1220 Hudson Street",
-      city: "Hoboken",
-      state: "NJ",
-      zip: 07030,
-    },
-    "thisisapassword",
-    "My name is Prithvi! Hey!"
-  );
-  console.log(user1);
+  try {
+    const user1 = await users.create(
+      "Michael",
+      "Jordan",
+      "mj@gmail.com",
+      "646-904-1998",
+      "michael23",
+      "10/29/1990",
+      "male",
+      "/pathtoimage",
+      {
+        streetAddress: "170 NY street",
+        city: "New York",
+        state: "NY",
+        zip: "11220",
+      },
+      "thisisapassword",
+      "My name is Michael! Hey!"
+    );
+    console.log(user1);
+  } catch (e) {
+    console.log(e);
+  }
   console.log("Done seeding database");
   await db.s.client.close();
 }
