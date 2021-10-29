@@ -2,6 +2,7 @@ const mongoCollections = require("../config/mongoCollections");
 const users = mongoCollections.users;
 let { ObjectId } = require("mongodb");
 const validate = require("../validation");
+const sha256 = require("js-sha256");
 
 async function create(
   firstName,
@@ -55,7 +56,8 @@ async function create(
     gender: gender,
     profilePicture: profilePicture,
     address: address,
-    password: password,
+    //Using js-SHA256 to hash the password before insertion into db
+    hashedPassword: sha256(password),
     biography: biography,
     rating: 0,
     listedProducts: [],
@@ -63,7 +65,7 @@ async function create(
   };
 
   const insertInfo = await userCol.insertOne(newUser);
-  if (insertInfo.insertedCount === 0) throw "Could not add restaurant";
+  if (insertInfo.insertedCount === 0) throw "Could not add user";
   return "success";
 }
 
