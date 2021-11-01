@@ -4,8 +4,11 @@ const data = require("../data");
 const validate = require("../validation");
 const users = data.users;
 
+//Important: Do not pass a hashed password to the create function, the password hashing takes place before insertion
+
 router.post("/add/", async (req, res) => {
   const userData = req.body;
+  //User input validation on user route by calling validation.js
   try {
     validate.checkNull(userData.firstName);
     validate.checkNull(userData.lastName);

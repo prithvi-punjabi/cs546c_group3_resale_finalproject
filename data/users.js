@@ -4,6 +4,8 @@ let { ObjectId } = require("mongodb");
 const validate = require("../validation");
 const sha256 = require("js-sha256");
 
+//Important: Do not pass a hashed password to the create function, the password hashing takes place before insertion
+
 async function create(
   firstName,
   lastName,
@@ -17,7 +19,7 @@ async function create(
   password,
   biography
 ) {
-  // Input Validation
+  // Input Validation by calling functions from validation.js
   validate.checkNull(firstName);
   validate.checkNull(lastName);
   validate.checkNull(email);

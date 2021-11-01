@@ -1,6 +1,8 @@
 const connection = require("../config/mongoConnection");
 const users = require("../data/users");
 
+//Important: Do not pass a hashed password to the create function, the password hashing takes place before insertion
+
 async function main() {
   const db = await connection();
   await db.dropDatabase();
