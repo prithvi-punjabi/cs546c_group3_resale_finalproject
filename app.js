@@ -5,6 +5,7 @@ const hbs = require("hbs");
 const exphbs = require("express-handlebars");
 const configRoutes = require("./routes");
 
+// For reading request body
 app.use(express.json());
 
 app.use(
