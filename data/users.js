@@ -68,9 +68,25 @@ async function create(
 
   const insertInfo = await userCol.insertOne(newUser);
   if (insertInfo.insertedCount === 0) throw "Could not add user";
-  return;
+  const newId = insertInfo.insertedId;
+  const curruser = await this.get(newId.toString());
+  return curruser;
+}
+
+async function get(id) {
+  validate.checkNull(id);
+  validate.checkString(id);
+  if (ObjectId.isValid(id) !== true) throw "ID is not a valid Object ID";
+
+  const usercol = await users();
+  const user = await usercol.findOne({ _id: ObjectId(id) });
+  if (user) {
+    user._id = user._id.toString();
+    return user;
+  } else throw "Could not find user in database";
 }
 
 module.exports = {
   create,
+  get,
 };
