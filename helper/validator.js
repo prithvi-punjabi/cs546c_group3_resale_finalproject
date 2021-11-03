@@ -77,6 +77,13 @@ module.exports = {
 		return true;
 	},
 
+	isValidObjectID(id) {
+		if (!ObjectId.isValid(id)) {
+			throw `Invalid id: ${id}`;
+		}
+		return ObjectId(id);
+	},
+
 	verifyToken(req, res, next) {
 		const authHeader = req.headers.authorization;
 		const token = authHeader && authHeader.split(" ")[1];
