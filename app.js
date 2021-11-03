@@ -5,6 +5,7 @@ const hbs = require("hbs");
 const exphbs = require("express-handlebars");
 const configRoutes = require("./routes");
 
+app.use(express.json());
 app.use(
 	"/css",
 	express.static(path.join(__dirname, "./node_modules/bootstrap/dist/css"))
