@@ -83,14 +83,15 @@ async function getAllComments(product_id) {
   validator.checkString(product_id);
   validator.isValidObjectID(product_id);
   const commentsCollection = await comments();
-  const productComments = commentsCollection.findOne({
+  const productComments = await commentsCollection.findOne({
     product_id: ObjectId(product_id),
   });
   if (productComments === null) {
-    throw "The given product does not exist or has no comments";
+    const empty = [];
+    return empty;
   }
-  const comments = productComments.comments;
-  return comments;
+  const commentResult = productComments.comments;
+  return commentResult;
 }
 
 async function getCommentById(id) {
