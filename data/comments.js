@@ -9,39 +9,45 @@ const { comments } = require("../config/mongoCollections");
 
 async function create(product_id, user_id, comment) {
   validator.checkNonNull(product_id),
-    validator.checkNonNull(user_id),
-    validator.checkNonNull(comment);
+  validator.checkNonNull(user_id),
+  validator.checkNonNull(comment);
   validator.checkString(product_id, "Product ID"),
-    validator.checkString(user_id, "User ID"),
-    validator.checkString(comment, "Comment");
+  validator.checkString(user_id, "User ID"),
+  validator.checkString(comment, "Comment");
+  validator.isValidObjectID(ObjectId(product_id)),
+  validator.isValidObjectID(ObjectId(user_id));
   const thisproduct = await products.getById(product_id);
-  // const thisproduct = await comments.getById(product_id);
+  const currentproduct = await comments.getById(product_id);
   const comments = await comments();
   if (thisproduct) {
-    let newComment = {
-      _id: new ObjectId(),
-      user_id: ObjectId(user_id),
-      dateAdded: new Date(),
-      comment: comment,
-    };
-    const insertinfo = await comments.updateOne(
-      { product_id: ObjectId(product_id) },
-      { $push: { comments: newComment } }
-    );
-  } else {
-    let newProdComment = {
-      product_id: ObjectId(product_id),
-      comments: [
-        {
-          _id: new ObjectId(),
-          user_id: ObjectId(user_id),
-          dateAdded: new Date(),
-          comment: comment,
-        },
-      ],
-    };
-    const insertinfo = await comments.insertOne(newProdComment);
-  }
+    if (currentproduct) {
+      let newComment = {
+        _id: new ObjectId(),
+        user_id: ObjectId(user_id),
+        dateAdded: new Date(),
+        comment: comment,
+      };
+      const insertInfo = await comments.updateOne(
+        { product_id: ObjectId(product_id) },
+        { $push: { comments: newComment } }
+      );
+      if (insertInfo.insertedCount === 0) throw "Could not add comment";
+    } else {
+      let newProdComment = {
+        product_id: ObjectId(product_id),
+        comments: [
+          {
+            _id: new ObjectId(),
+            user_id: ObjectId(user_id),
+            dateAdded: new Date(),
+            comment: comment,
+          },
+        ],
+      };
+      const insertInfo = await comments.insertOne(newProdComment);
+      if (insertInfo.insertedCount === 0) throw "Could not add comment";
+    }
+  } else throw `Product with ID ${product_id} does not exist`;
 }
 
 async function getAllComments(reviewId){}
@@ -49,4 +55,5 @@ async function getAllComments(reviewId){}
 module.exports = {
   create,
   getAllComments
+
 };
