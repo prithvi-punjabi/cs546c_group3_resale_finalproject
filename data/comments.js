@@ -44,4 +44,9 @@ async function create(product_id, user_id, comment) {
   }
 }
 
-module.exports = {};
+async function getAllComments(reviewId){}
+
+module.exports = {
+  create,
+  getAllComments
+};
