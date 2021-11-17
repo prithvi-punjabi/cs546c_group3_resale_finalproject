@@ -5,7 +5,6 @@ const utils = require("../helper/utils");
 const errorCode = require("../helper/common").errorCode;
 const products = require("./products");
 const { ObjectId } = require("mongodb");
-const { reviews } = require("../../../Lab6/config/mongoCollections");
 
 async function create(product_id, user_id, comment) {
   validator.checkNonNull(product_id),
