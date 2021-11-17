@@ -1,0 +1,19 @@
+<div id="logo">
+  <img src="/public/images/resale.png" alt="Resale Logo" />
+</div>
+
+{{#each products}}
+  <div class="card">
+    <div class="card-header">{{name}}</div>
+    <div class="divimage">
+      <img src={{images}} class="card-img-top" alt="..." />
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">${{price}}</h5>
+      <p class="card-text">
+        {{description}}
+      </p>
+      <a href="#" class="btn btn-primary">View item</a>
+    </div>
+  </div>
+{{/each}}
