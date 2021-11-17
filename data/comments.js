@@ -16,17 +16,17 @@ async function create(product_id, user_id, comment) {
   validator.isValidObjectID(ObjectId(product_id)),
     validator.isValidObjectID(ObjectId(user_id));
   const thisproduct = await products.getById(product_id);
+  const commentcol = await comments();
   const currentproduct = await getAllComments(product_id);
-  const comments = await comments();
   if (thisproduct) {
-    if (currentproduct) {
+    if (currentproduct.length > 0) {
       let newComment = {
         _id: new ObjectId(),
         user_id: ObjectId(user_id),
-        dateAdded: new Date(),
+        dateAdded: new Date().toLocaleString(),
         comment: comment,
       };
-      const insertInfo = await comments.updateOne(
+      const insertInfo = await commentcol.updateOne(
         { product_id: ObjectId(product_id) },
         { $push: { comments: newComment } }
       );
@@ -39,12 +39,12 @@ async function create(product_id, user_id, comment) {
           {
             _id: new ObjectId(),
             user_id: ObjectId(user_id),
-            dateAdded: new Date(),
+            dateAdded: new Date().toLocaleString(),
             comment: comment,
           },
         ],
       };
-      const insertInfo = await comments.insertOne(newProdComment);
+      const insertInfo = await commentcol.insertOne(newProdComment);
       if (insertInfo.insertedCount === 0) throw "Could not add comment";
       else return insertInfo.insertedId;
     }
@@ -57,8 +57,8 @@ async function deleteCommentById(id) {
     validator.isValidObjectID(id);
   let thiscomment = getCommentById(id);
   if (thiscomment) {
-    const comments = await comments();
-    const deletedInfo = await comments.deleteOne({
+    const commentcol = await comments();
+    const deletedInfo = await commentcol.deleteOne({
       _id: ObjectId(id),
     });
     if (deletedInfo.deletedCount === 0) throw "Could not delete comment";
@@ -69,8 +69,8 @@ async function deleteAllComments(product_id) {
   validator.checkNonNull(product_id),
     validator.checkString(product_id),
     validator.isValidObjectID(product_id);
-  const comments = await comments();
-  const deletedInfo = await comments.deleteOne({
+  const commentcol = await comments();
+  const deletedInfo = await commentcol.deleteOne({
     product_id: ObjectId(product_id),
   });
   if (deletedInfo.deletedCount === 0) throw "Could not delete all comments";
@@ -82,15 +82,16 @@ async function getAllComments(product_id) {
   validator.checkNonNull(product_id);
   validator.checkString(product_id);
   validator.isValidObjectID(product_id);
-  const commentsCollection = await comments();
-  const productComments = commentsCollection.findOne({
+  const commentcol = await comments();
+  const productComments = await commentcol.findOne({
     product_id: ObjectId(product_id),
   });
   if (productComments === null) {
-    throw "The given product does not exist or has no comments";
+    const comments1 = [];
+    return comments1;
   }
-  const comments = productComments.comments;
-  return comments;
+  const comments1 = productComments.comments;
+  return comments1;
 }
 
 async function getCommentById(id) {
