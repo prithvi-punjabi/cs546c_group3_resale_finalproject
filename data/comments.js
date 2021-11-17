@@ -10,14 +10,17 @@ async function create(product_id, user_id, comment) {
   validator.checkNonNull(product_id),
     validator.checkNonNull(user_id),
     validator.checkNonNull(comment);
+
   validator.checkString(product_id, "Product ID"),
     validator.checkString(user_id, "User ID"),
     validator.checkString(comment, "Comment");
+
   validator.isValidObjectID(ObjectId(product_id)),
     validator.isValidObjectID(ObjectId(user_id));
+
   const thisproduct = await products.getById(product_id);
-  const commentcol = await comments();
   const currentproduct = await getAllComments(product_id);
+  const commentsCollection = await comments();
   if (thisproduct) {
     if (currentproduct.length > 0) {
       let newComment = {
@@ -26,12 +29,12 @@ async function create(product_id, user_id, comment) {
         dateAdded: new Date().toLocaleString(),
         comment: comment,
       };
-      const insertInfo = await commentcol.updateOne(
+      const insertInfo = await commentsCollection.updateOne(
         { product_id: ObjectId(product_id) },
         { $push: { comments: newComment } }
       );
       if (insertInfo.modifiedCount === 0) throw "Could not add comment";
-      else return insertInfo.upsertedId;
+      else return newComment._id;
     } else {
       let newProdComment = {
         product_id: ObjectId(product_id),
@@ -44,7 +47,7 @@ async function create(product_id, user_id, comment) {
           },
         ],
       };
-      const insertInfo = await commentcol.insertOne(newProdComment);
+      const insertInfo = await commentsCollection.insertOne(newProdComment);
       if (insertInfo.insertedCount === 0) throw "Could not add comment";
       else return insertInfo.insertedId;
     }
@@ -55,10 +58,11 @@ async function deleteCommentById(id) {
   validator.checkNonNull(id),
     validator.checkString(id),
     validator.isValidObjectID(id);
+
   let thiscomment = getCommentById(id);
   if (thiscomment) {
-    const commentcol = await comments();
-    const deletedInfo = await commentcol.deleteOne({
+    const commentsCollection = await comments();
+    const deletedInfo = await commentsCollection.deleteOne({
       _id: ObjectId(id),
     });
     if (deletedInfo.deletedCount === 0) throw "Could not delete comment";
@@ -69,8 +73,9 @@ async function deleteAllComments(product_id) {
   validator.checkNonNull(product_id),
     validator.checkString(product_id),
     validator.isValidObjectID(product_id);
-  const commentcol = await comments();
-  const deletedInfo = await commentcol.deleteOne({
+
+  const commentsCollection = await comments();
+  const deletedInfo = await commentsCollection.deleteOne({
     product_id: ObjectId(product_id),
   });
   if (deletedInfo.deletedCount === 0) throw "Could not delete all comments";
@@ -78,27 +83,27 @@ async function deleteAllComments(product_id) {
 }
 
 async function getAllComments(product_id) {
-  if (!product_id) throw "You must provide a product id to search for";
   validator.checkNonNull(product_id);
   validator.checkString(product_id);
   validator.isValidObjectID(product_id);
-  const commentcol = await comments();
-  const productComments = await commentcol.findOne({
+
+  const commentsCollection = await comments();
+  const productComments = await commentsCollection.findOne({
     product_id: ObjectId(product_id),
   });
   if (productComments === null) {
-    const comments1 = [];
-    return comments1;
+    const empty = [];
+    return empty;
   }
-  const comments1 = productComments.comments;
-  return comments1;
+  const commentResult = productComments.comments;
+  return commentResult;
 }
 
 async function getCommentById(id) {
-  if (!id) throw "You must provide a comment id to search with";
   validator.checkNonNull(id);
   validator.checkString(id);
   validator.isValidObjectID(id);
+
   const commentsCollection = await comments();
   let product = await commentsCollection
     .find({ comments: { $elemMatch: { _id: ObjectId(id) } } })
@@ -112,10 +117,10 @@ async function getCommentById(id) {
 }
 
 async function getCommentByUser(user_id) {
-  if (!user_id) throw "You must provide an user id to search with";
   validator.checkNonNull(user_id);
   validator.checkString(user_id);
   validator.isValidObjectID(user_id);
+
   const commentsCollection = await comments();
   let product = await commentsCollection
     .find({ comments: { $elemMatch: { user_id: ObjectId(user_id) } } })
