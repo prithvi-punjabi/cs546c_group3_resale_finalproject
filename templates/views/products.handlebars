@@ -1,19 +1,46 @@
-<div id="logo">
+{{! <div id="logo">
   <img src="/public/images/resale.png" alt="Resale Logo" />
+</div> }}
+<div class="topnav">
+  <div id="logo">
+    <img src="/public/images/resale.png" />
+  </div>
+  <a class="active" href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="#contact">Statistics</a>
+  <div class="search-container">
+    <input
+      type="text"
+      id="myInput"
+      onkeyup="searchBar()"
+      placeholder="Find products.."
+    />
+  </div>
 </div>
-
 {{#each products}}
   <div class="card">
-    <div class="card-header">{{name}}</div>
+    <div class="card-header">{{name}}
+      {{! <button type="button" class="btn btn-outline-danger">
+        <i class="bi bi-heart"></i>
+      </button>  }}
+    </div>
     <div class="divimage">
-      <img src={{images}} class="card-img-top" alt="..." />
+      <img src={{images}} class="card-img-top" alt="{{name}}" />
     </div>
     <div class="card-body">
       <h5 class="card-title">${{price}}</h5>
       <p class="card-text">
-        {{description}}
+        Condition:
+        {{condition}}<br />
+        {{!-- {{description}} --}}
+        Location:
+        {{location.city}},
+        {{location.state}}<br />
+        Date Listed:
+        {{dateListed}}
       </p>
       <a href="#" class="btn btn-primary">View item</a>
     </div>
   </div>
 {{/each}}
+<script src="/public/js/clientside.js"></script>
