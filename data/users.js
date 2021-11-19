@@ -85,8 +85,97 @@ async function get(id) {
     return user;
   } else throw "Could not find user in database";
 }
+// update data
+async function update(
+  id,
+  firstName,
+  lastName,
+  email,
+  phoneNumber,
+  userName,
+  dob,
+  gender,
+  profilePicture,
+  address,
+  password,
+  biography,
+  rating,
+  listedProducts,
+  favouriteProducts
+) {
+  validate.checkNull(id);
+  validate.checkString(id); //update validation
+  validate.checkNull(firstName);
+  validate.checkNull(lastName);
+  validate.checkNull(email);
+  validate.checkNull(phoneNumber);
+  validate.checkNull(userName);
+  validate.checkNull(dob);
+  validate.checkNull(gender);
+  validate.checkNull(profilePicture);
+  validate.checkNull(address);
+  validate.checkNull(password);
+  validate.checkNull(biography);
+  validate.checkString(firstName);
+  validate.checkString(lastName);
+  validate.checkString(email);
+  validate.checkString(phoneNumber);
+  validate.checkString(userName);
+  validate.checkString(dob);
+  validate.checkString(gender);
+  validate.checkString(profilePicture);
+  validate.checkString(password);
+  validate.checkString(biography);
+  validate.checkEmail(email);
+  validate.checkPhone(phoneNumber);
+  validate.checkDob(dob);
+  validate.checkAddress(address);
+  const userCol = await users();
+  const updated_users = {
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    phoneNumber: phoneNumber,
+    userName: userName,
+    dob: dob,
+    gender: gender,
+    profilePicture: profilePicture,
+    address: address,
+    hashedPassword: password,
+    biography: biography,
+    rating: rating,
+    listedProducts: listedProducts,
+    favouriteProducts: favouriteProducts,
+  };
+  const updatedone = await userCol.updateOne(
+    { _id: ObjectId(id) },
+    { $set: updated_users }
+  );
+
+  if (updatedone.modifiedCount == 0) {
+    throw "Could not update";
+  }
+  let a = await this.get(id);
+
+  return a;
+}
+// delete data
+async function remove(id) {
+  validate.checkNull(id);
+  validate.checkString(id);
+  const user = await users();
+  const Del = await user.findOne({ _id: ObjectId(id) });
+
+  const usersdel = await user.deleteOne({ _id: ObjectId(id) });
+
+  if (usersdel.deletedCount !== 1)
+    throw new Error(`No user exists with id${id}`);
+  return { deleted: true };
+}
 
 module.exports = {
   create,
   get,
+  update,
+  remove,
 };
