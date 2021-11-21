@@ -1,0 +1,183 @@
+{{! <div id="logo">
+  <img src="/public/images/resale.png" alt="Resale Logo" />
+</div> }}
+<div class="topnav">
+  <div id="logo">
+    <img src="/public/images/resale.png" alt="resale logo" />
+  </div>
+  <a class="active" href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="#contact">Statistics</a>
+  <div class="search-container">
+    <input
+      type="text"
+      id="myInput"
+      onkeyup="searchBar()"
+      placeholder="Find products.."
+    />
+    <button
+      class="btn btn-outline-secondary"
+      onClick="clearInput()"
+      id="clearButton"
+    ><span id="respClearText">Clear</span></button>
+  </div>
+</div>
+<div id="filterDivButton">
+  <button class="w3-button w3-medium" onclick="w3_open()">☰</button>
+</div>
+<div
+  class="w3-sidebar w3-bar-block w3-border-right"
+  style="display:none"
+  id="mySidebar"
+>
+  <div>
+    Filter products
+    <button
+      onclick="w3_close()"
+      id="sidebarCloseBut"
+      class="btn btn-close"
+    ></button>
+  </div>
+  <div id="filterDiv">
+    <div id="priceDiv">
+      By Price:
+      <br />
+      <label for="price">Price below: $<span id="priceVal"></span></label><br />
+      <span class="sliderTextValue">0</span><input
+        name="price"
+        type="range"
+        min="10"
+        max="1000"
+        value="1000"
+        class=""
+        id="price"
+        onchange="filterByPrice()"
+      /><span class="sliderTextValue">1000</span><br />
+    </div>
+    <div id="locDiv">
+      By Location:<br />
+      <input type="checkbox" name="location" value="NY" id="NewYork" checked />
+      <label for="NewYork">NY</label><br />
+      <input
+        type="checkbox"
+        id="NewJersey"
+        name="location"
+        value="NJ"
+        checked
+      />
+      <label for="NewJersey">NJ</label><br />
+      <button onclick="filterLocation()" class="sidebarButton">Set Location
+        Filter</button>
+    </div>
+    <div id="categoryDiv">
+      By Category:<br />
+      <input type="checkbox" name="category" value="Books" id="Books" checked />
+      <label for="Clothing">Books</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Clothing"
+        id="Clothing"
+        checked
+      />
+      <label for="Clothing">Clothing</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Electronics"
+        id="Electronics"
+        checked
+      />
+      <label for="Electronics">Electronics</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Footwear"
+        id="Footwear"
+        checked
+      />
+      <label for="Footwear">Footwear</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Furniture"
+        id="Furniture"
+        checked
+      />
+      <label for="Furniture">Furniture</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Household"
+        id="Household"
+        checked
+      />
+      <label for="Household">Household</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Kitchenware"
+        id="Kitchenware"
+        checked
+      />
+      <label for="Kitchenware">Kitchenware</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Office"
+        id="Office"
+        checked
+      />
+      <label for="Office">Office and Supplies</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Storage"
+        id="Storage"
+        checked
+      />
+      <label for="Storage">Storage</label><br />
+      <input type="checkbox" name="category" value="Other" id="Other" checked />
+      <label for="Other">Other</label><br />
+      <button onclick="filterCategory()" class="sidebarButton">Set Category
+        Filter</button>
+    </div>
+  </div>
+  <div id="clearAllDiv">
+    <button
+      id="clearAll"
+      onclick="clearAllFilters()"
+      class="sidebarButton"
+    >Clear All Filters</button>
+  </div>
+</div>
+
+{{#each products}}
+  <div class="card">
+    <div class="card-header">{{name}}
+      {{! <button type="button" class="btn btn-outline-danger">
+        <i class="bi bi-heart"></i>
+      </button>  }}
+    </div>
+    <div class="divimage">
+      <img src={{images}} class="card-img-top" alt="{{name}}" />
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">${{price}}</h5>
+      <p class="card-text">
+        Condition:
+        {{condition}}<br />
+        Location:
+        {{location.city}},
+        <span class="locationState">{{location.state}}</span><br />
+        Date Listed:
+        {{dateListed}}
+      </p>
+      <p class="card-category" hidden>{{category}}</p>
+      <a href="#" class="btn btn-primary">View item</a>
+    </div>
+  </div>
+{{/each}}
+<script src="/public/js/clientside.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="sweetalert2.all.min.js"></script>
