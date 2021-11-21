@@ -1,4 +1,4 @@
-function noProduct() {
+function noProduct(parameter) {
   let cards = document.getElementsByClassName("card");
   let count = 0;
   for (i = 0; i < cards.length; i++) {
@@ -7,7 +7,13 @@ function noProduct() {
     }
   }
   if (count === 0) {
-    alert("No results found. Please modify search parameters");
+    Swal.fire({
+      title: "Error!",
+      text: `No results found for the given ${parameter}. Please modify your search parameter.`,
+      icon: "error",
+      confirmButtonText: "Got it!",
+    });
+    clearAllFilters();
   }
 }
 
@@ -27,7 +33,7 @@ function searchBar() {
       cards[i].className = "card hiddenBySearch";
     }
   }
-  noProduct();
+  noProduct("name");
 }
 
 let slider = document.getElementById("price");
@@ -58,7 +64,7 @@ function filterByPrice() {
       }
     }
   }
-  noProduct();
+  noProduct("price");
 }
 function clearInput() {
   let input = document.getElementById("myInput");
@@ -97,7 +103,7 @@ function filterLocation() {
       }
     }
   }
-  noProduct();
+  noProduct("location");
 }
 
 function filterCategory() {
@@ -111,7 +117,7 @@ function filterCategory() {
   obj["Kitchenware"] = document.getElementById("Kitchenware").checked;
   obj["Office"] = document.getElementById("Office").checked;
   obj["Storage"] = document.getElementById("Storage").checked;
-  obj["Other"] = document.getElementById("Object").checked;
+  obj["Other"] = document.getElementById("Other").checked;
   let selectedCat = [];
   for (let cat in obj) {
     if (obj[cat] === true) {
@@ -138,7 +144,7 @@ function filterCategory() {
       availableCats = [];
     }
   }
-  noProduct();
+  noProduct("category");
 }
 
 function clearAllFilters() {
