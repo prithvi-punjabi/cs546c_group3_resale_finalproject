@@ -196,10 +196,13 @@ img {
 }
 
 #priceDiv,
-#locDiv {
+#locDiv,
+#categoryDiv,
+#clearAllDiv {
   float: left;
   /* height: 10px; */
   margin-top: 10px;
+  margin-left: 10px;
 }
 
 @media screen and (max-width: 650px) {
@@ -272,7 +275,7 @@ img {
 }
 
 #mySidebar {
-  width: 250px;
+  width: 270px;
 }
 
 #sidebarCloseBut {
@@ -280,7 +283,11 @@ img {
   right: 0;
 }
 
-#clearAll {
-  float: left;
-  bottom: 5%;
+.sliderTextValue {
+  padding-top: -10px;
+  font-size: 12px;
+}
+
+.sidebarButton {
+  margin-top: 6px;
 }

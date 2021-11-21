@@ -42,8 +42,8 @@
     <div id="priceDiv">
       By Price:
       <br />
-      <label for="price">Price below: <span id="priceVal"></span></label><br />
-      <input
+      <label for="price">Price below: $<span id="priceVal"></span></label><br />
+      <span class="sliderTextValue">0</span><input
         name="price"
         type="range"
         min="10"
@@ -52,7 +52,7 @@
         class=""
         id="price"
         onchange="filterByPrice()"
-      /><br />
+      /><span class="sliderTextValue">1000</span><br />
     </div>
     <div id="locDiv">
       By Location:<br />
@@ -66,10 +66,90 @@
         checked
       />
       <label for="NewJersey">NJ</label><br />
-      <button onclick="filterLocation()">Set Location Filter</button>
+      <button onclick="filterLocation()" class="sidebarButton">Set Location
+        Filter</button>
+    </div>
+    <div id="categoryDiv">
+      By Category:<br />
+      <input type="checkbox" name="category" value="Books" id="Books" checked />
+      <label for="Clothing">Books</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Clothing"
+        id="Clothing"
+        checked
+      />
+      <label for="Clothing">Clothing</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Electronics"
+        id="Electronics"
+        checked
+      />
+      <label for="Electronics">Electronics</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Footwear"
+        id="Footwear"
+        checked
+      />
+      <label for="Footwear">Footwear</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Furniture"
+        id="Furniture"
+        checked
+      />
+      <label for="Furniture">Furniture</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Household"
+        id="Household"
+        checked
+      />
+      <label for="Household">Household</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Kitchenware"
+        id="Kitchenware"
+        checked
+      />
+      <label for="Kitchenware">Kitchenware</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Office"
+        id="Office"
+        checked
+      />
+      <label for="Office">Office and Supplies</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Storage"
+        id="Storage"
+        checked
+      />
+      <label for="Storage">Storage</label><br />
+      <input type="checkbox" name="category" value="Other" id="Other" checked />
+      <label for="Other">Other</label><br />
+      <button onclick="filterCategory()" class="sidebarButton">Set Category
+        Filter</button>
     </div>
   </div>
-  <button id="clearAll" onclick="clearAllFilters()">Clear All Filters</button>
+  <div id="clearAllDiv">
+    <button
+      id="clearAll"
+      onclick="clearAllFilters()"
+      class="sidebarButton"
+    >Clear All Filters</button>
+  </div>
 </div>
 
 {{#each products}}
@@ -93,6 +173,7 @@
         Date Listed:
         {{dateListed}}
       </p>
+      <p class="card-category" hidden>{{category}}</p>
       <a href="#" class="btn btn-primary">View item</a>
     </div>
   </div>
