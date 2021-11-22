@@ -6,18 +6,15 @@ const validator = require("../helper/validator");
 const errorCode = require("../helper/common").errorCode;
 const ErrorMessage = require("../helper/message").ErrorMessage;
 
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   try {
+    let products;
     if (utils.isEmptyObject(req.query)) {
-      const products = await productsData.getAll();
-      products.forEach((prod) => {
-        prod.images = prod.images[0];
-      });
-      res.render("products", { products: products });
-      return;
+      products = await productsData.getAll();
+    } else {
+      products = await productsData.getByQuery(req.query);
     }
-    const products = await productsData.getByQuery(req.query);
-    return res.json(products);
+    return res.render("products", { products: products });
   } catch (e) {
     if (typeof e == "string") {
       e = new Error(e);
