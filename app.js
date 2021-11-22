@@ -4,18 +4,20 @@ const path = require("path");
 const hbs = require("hbs");
 const exphbs = require("express-handlebars");
 const configRoutes = require("./routes");
+const uest = require("uest");
 
+app.use(express.json());
 app.use(
-	"/css",
-	express.static(path.join(__dirname, "./node_modules/bootstrap/dist/css"))
+  "/css",
+  express.static(path.join(__dirname, "./node_modules/bootstrap/dist/css"))
 );
 app.use(
-	"/js",
-	express.static(path.join(__dirname, "./node_modules/bootstrap/dist/js"))
+  "/js",
+  express.static(path.join(__dirname, "./node_modules/bootstrap/dist/js"))
 );
 app.use(
-	"/jq",
-	express.static(path.join(__dirname, "./node_modules/jquery/dist"))
+  "/jq",
+  express.static(path.join(__dirname, "./node_modules/jquery/dist"))
 );
 
 const templatePath = path.join(__dirname, "./templates/views");
@@ -28,7 +30,8 @@ app.set("view engine", "handlebars");
 app.use("/public", express.static(__dirname + "/public"));
 hbs.registerPartials(partialsPath);
 
+app.use(uest());
 configRoutes(app);
 app.listen(3000, () => {
-	console.log("Server started");
+  console.log("Server started");
 });
