@@ -14,7 +14,10 @@ router.get("/", async (req, res, next) => {
     } else {
       products = await productsData.getByQuery(req.query);
     }
-    return res.render("products", { products: products });
+    products.forEach((x) => {
+      x.images = x.images[0];
+    });
+    return res.render("products", { products: products, title: "re$ale" });
   } catch (e) {
     if (typeof e == "string") {
       e = new Error(e);
@@ -30,7 +33,7 @@ router.get("/:id", async (req, res) => {
     const productId = req.params.id;
     utils.parseObjectId(productId, "ProductId");
     const product = await productsData.getById(productId);
-    return res.json(product);
+    return res.render("thisproduct", { product: product });
   } catch (e) {
     if (typeof e == "string") {
       e = new Error(e);
