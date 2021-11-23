@@ -1,7 +1,7 @@
 const mongoCollections = require("../config/mongoCollections");
 const users = mongoCollections.users;
 let { ObjectId } = require("mongodb");
-const validate = require("../validation");
+const validate = require("../helper/validator");
 const sha256 = require("js-sha256");
 
 //Important: Do not pass a hashed password to the create function, the password hashing takes place before insertion
@@ -20,17 +20,17 @@ async function create(
   biography
 ) {
   // Input Validation by calling functions from validation.js
-  validate.checkNull(firstName);
-  validate.checkNull(lastName);
-  validate.checkNull(email);
-  validate.checkNull(phoneNumber);
-  validate.checkNull(userName);
-  validate.checkNull(dob);
-  validate.checkNull(gender);
-  validate.checkNull(profilePicture);
-  validate.checkNull(address);
-  validate.checkNull(password);
-  validate.checkNull(biography);
+  validate.checkNonNull(firstName);
+  validate.checkNonNull(lastName);
+  validate.checkNonNull(email);
+  validate.checkNonNull(phoneNumber);
+  validate.checkNonNull(userName);
+  validate.checkNonNull(dob);
+  validate.checkNonNull(gender);
+  validate.checkNonNull(profilePicture);
+  validate.checkNonNull(address);
+  validate.checkNonNull(password);
+  validate.checkNonNull(biography);
   validate.checkString(firstName);
   validate.checkString(lastName);
   validate.checkString(email);
@@ -42,9 +42,9 @@ async function create(
   validate.checkString(password);
   validate.checkString(biography);
   validate.checkEmail(email);
-  validate.checkPhone(phoneNumber);
+  validate.checkPhoneNumber(phoneNumber);
   validate.checkDob(dob);
-  validate.checkAddress(address);
+  validate.checkLocation(address);
 
   const userCol = await users();
 
@@ -74,7 +74,7 @@ async function create(
 }
 
 async function get(id) {
-  validate.checkNull(id);
+  validate.checkNonNull(id);
   validate.checkString(id);
   if (ObjectId.isValid(id) !== true) throw "ID is not a valid Object ID";
 
@@ -103,19 +103,19 @@ async function update(
   listedProducts,
   favouriteProducts
 ) {
-  validate.checkNull(id);
+  validate.checkNonNull(id);
   validate.checkString(id); //update validation
-  validate.checkNull(firstName);
-  validate.checkNull(lastName);
-  validate.checkNull(email);
-  validate.checkNull(phoneNumber);
-  validate.checkNull(userName);
-  validate.checkNull(dob);
-  validate.checkNull(gender);
-  validate.checkNull(profilePicture);
-  validate.checkNull(address);
-  validate.checkNull(password);
-  validate.checkNull(biography);
+  validate.checkNonNull(firstName);
+  validate.checkNonNull(lastName);
+  validate.checkNonNull(email);
+  validate.checkNonNull(phoneNumber);
+  validate.checkNonNull(userName);
+  validate.checkNonNull(dob);
+  validate.checkNonNull(gender);
+  validate.checkNonNull(profilePicture);
+  validate.checkNonNull(address);
+  validate.checkNonNull(password);
+  validate.checkNonNull(biography);
   validate.checkString(firstName);
   validate.checkString(lastName);
   validate.checkString(email);
@@ -127,9 +127,9 @@ async function update(
   validate.checkString(password);
   validate.checkString(biography);
   validate.checkEmail(email);
-  validate.checkPhone(phoneNumber);
+  validate.checkPhoneNumber(phoneNumber);
   validate.checkDob(dob);
-  validate.checkAddress(address);
+  validate.checkLocation(address);
   const userCol = await users();
   const updated_users = {
     firstName: firstName,
@@ -161,7 +161,7 @@ async function update(
 }
 // delete data
 async function remove(id) {
-  validate.checkNull(id);
+  validate.checkNonNull(id);
   validate.checkString(id);
   const user = await users();
   const Del = await user.findOne({ _id: ObjectId(id) });
