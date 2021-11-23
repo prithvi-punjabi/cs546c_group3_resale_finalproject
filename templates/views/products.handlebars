@@ -3,7 +3,7 @@
 </div> }}
 <div class="topnav">
   <div id="logo">
-    <img src="/public/images/resale.png" alt="resale logo" />
+    <img src="/public/images/resale.png" alt="resale logo" class="logoimg" />
   </div>
   <a class="active" href="#home">Home</a>
   <a href="#about">About</a>
@@ -174,7 +174,7 @@
         {{dateListed}}
       </p>
       <p class="card-category" hidden>{{category}}</p>
-      <a href="#" class="btn btn-primary">View item</a>
+      <a href="/products/{{_id}}" class="btn btn-primary">View item</a>
     </div>
   </div>
 {{/each}}
