@@ -82,20 +82,6 @@ module.exports = {
     if (address.zip.length > 5) throw "Invalid zip code";
   },
 
-  isEmptyObject(obj) {
-    if (this.isValidObject(obj)) {
-      return Object.keys(obj).length == 0;
-    }
-    return true;
-  },
-
-  isValidObjectID(id) {
-    if (!ObjectId.isValid(id)) {
-      throw `Invalid id: ${id}`;
-    }
-    return ObjectId(id);
-  },
-
   checkDob: (input) => {
     let today = new Date().toLocaleDateString();
     let currmonth = parseInt(today.split("/")[0]);
@@ -132,5 +118,19 @@ module.exports = {
       year > curryear
     )
       throw "Your birthday cannot be in the future";
+  },
+
+  isEmptyObject(obj) {
+    if (this.isValidObject(obj)) {
+      return Object.keys(obj).length == 0;
+    }
+    return true;
+  },
+
+  isValidObjectID(id) {
+    if (!ObjectId.isValid(id)) {
+      throw `Invalid id: ${id}`;
+    }
+    return ObjectId(id);
   },
 };

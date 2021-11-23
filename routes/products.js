@@ -39,7 +39,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/get/:id", async (req, res) => {
   try {
     const productId = req.params.id;
     utils.parseObjectId(productId, "ProductId");
@@ -63,6 +63,19 @@ router.get("/:id", async (req, res) => {
       seller: seller,
       comments: comments,
     });
+  } catch (e) {
+    if (typeof e == "string") {
+      e = new Error(e);
+      e.code = 400;
+    }
+    if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
+    else return res.status(500).json(ErrorMessage(e.message));
+  }
+});
+
+router.get("/new", async (req, res) => {
+  try {
+    return res.render("addProduct");
   } catch (e) {
     console.log(e);
     if (typeof e == "string") {
