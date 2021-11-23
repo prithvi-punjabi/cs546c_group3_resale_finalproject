@@ -6,7 +6,7 @@
   "scripts": {
     "devStart": "nodemon app.js",
     "start": "node app.js",
-    "seed": "node ./tasks/seed.js"
+    "seed": "node ./tasks/seeds.js"
   },
   "repository": {
     "type": "git",

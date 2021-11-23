@@ -150,20 +150,20 @@ async function main() {
     );
 
     await products.create(
-      `Dell 19" Monitor`,
-      ["Electronics", "Accessories", "Desktop", "Monitor"],
-      ["Extended Monitor", "Desktop"],
-      50,
+      `Electric Bicycle`,
+      ["Electronics", "Vehicle", "Bike", "Trasportation"],
+      ["Cycle", "E-bike"],
+      300,
       iron_man._id,
       [
-        "/public/uploads/keyboard.jpg",
-        "/public/uploads/keyboard.jpg",
-        "/public/uploads/keyboard.jpg",
+        "/public/uploads/bicycle.jpg",
+        "/public/uploads/bicycle.jpg",
+        "/public/uploads/bicycle.jpg",
       ],
-      "Dell 19 inch monitor. Model No - 39487595439",
+      "Electric bike with upto 40 MPH speed. Used around 1 year and it's in very good condition",
       iron_man.address,
       "Available",
-      "Fairly Used",
+      "Barely Used",
       "11/21/2021"
     );
   } catch (e) {
