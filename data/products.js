@@ -59,7 +59,7 @@ const getByQuery = async (query) => {
 
   //#region seller
   if (typeof seller == "string") {
-    const seller_id = utils.parseObjectId(seller);
+    const seller_id = utils.parseObjectId(seller, "SellerId");
     main_query.push({ seller_id: seller_id });
   } else if (Array.isArray(seller)) {
     for (let i = 0; i < seller.length; i++) {

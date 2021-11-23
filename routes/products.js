@@ -155,7 +155,7 @@ router.put("/:id", async (req, res) => {
     try {
       await productsData.getById(req.params.id);
     } catch (e) {
-      res.status(404).json({ message: "Product not found" });
+      return res.status(404).json({ message: "Product not found" });
     }
 
     const product = await productsData.update(
