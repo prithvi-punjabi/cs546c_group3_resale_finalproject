@@ -32,7 +32,11 @@ form.addEventListener("submit", function (event) {
   }
 
   var formData = new FormData();
-  formData.append("image", document.getElementById("imageUpload").files[0]); // since inputs allow multi files submission, therefore files are in array
+  const files = document.getElementById("imageUpload").files;
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    formData.append("image", file); // since inputs allow multi files submission, therefore files are in array
+  }
 
   $.ajax({
     type: "POST",
@@ -43,7 +47,7 @@ form.addEventListener("submit", function (event) {
     success: function (path) {
       const newPost = {
         name: event.target.name.value,
-        images: [path],
+        images: path,
         category: category,
         keywords: keywords,
         price: event.target.price.value,
@@ -75,8 +79,8 @@ form.addEventListener("submit", function (event) {
       });
     },
     error: function (error) {
-      console.log(error);
-      window.location.replace("/products/new");
+      console.log(JSON.parse(error.responseText).message);
+      alert(JSON.parse(error.responseText).message);
     },
   });
 });
