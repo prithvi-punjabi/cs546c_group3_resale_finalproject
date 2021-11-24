@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const data = require("../data");
 const validate = require("../helper/validator");
+const utils = require("../helper/utils");
 const users = data.users;
 
 //Important: Do not pass a hashed password to the create function, the password hashing takes place before insertion
@@ -80,12 +81,27 @@ router.delete("/delete/:id", async (req, res) => {
     validate.checkNonNull(id);
     validate.checkString(id);
 
-    const users = await data.users.remove(id);
+    const deluser = await data.users.remove(id);
     res.json("The ${id} is deleted");
   } catch (e) {
     res.status(500).json("No id");
   }
 });
+
+// get user
+router.get("/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    validate.checkNonNull(id);
+    validate.checkString(id);
+    utils.parseObjectId(id, "User ID");
+    const thisuser = await users.get(id);
+    return res.status(200).json(thisuser);
+  } catch (e) {
+    console.log(e);
+  }
+});
+
 //update
 router.put("/update/:id", async (req, res) => {
   console.log("update");
