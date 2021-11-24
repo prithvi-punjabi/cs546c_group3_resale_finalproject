@@ -1,238 +1,142 @@
-<!--Section: Block Content-->
-<section class="mb-5">
-
-  <div class="row">
-    <div class="col-md-6 mb-4 mb-md-0">
-
-      <div id="mdb-lightbox-ui"></div>
-
-      <div class="mdb-lightbox">
-
-        <div class="row product-gallery mx-1">
-
-          <div class="col-12 mb-0">
-            <figure class="view overlay rounded z-depth-1 main-img">
-              <a
-                href="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/15a.jpg"
-                data-size="710x823"
-              >
-                <img
-                  src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/15a.jpg"
-                  class="img-fluid z-depth-1"
-                />
-              </a>
-            </figure>
-            <figure
-              class="view overlay rounded z-depth-1"
-              style="visibility: hidden;"
-            >
-              <a
-                href="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg"
-                data-size="710x823"
-              >
-                <img
-                  src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg"
-                  class="img-fluid z-depth-1"
-                />
-              </a>
-            </figure>
-            <figure
-              class="view overlay rounded z-depth-1"
-              style="visibility: hidden;"
-            >
-              <a
-                href="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/13a.jpg"
-                data-size="710x823"
-              >
-                <img
-                  src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/13a.jpg"
-                  class="img-fluid z-depth-1"
-                />
-              </a>
-            </figure>
-            <figure
-              class="view overlay rounded z-depth-1"
-              style="visibility: hidden;"
-            >
-              <a
-                href="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/14a.jpg"
-                data-size="710x823"
-              >
-                <img
-                  src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/14a.jpg"
-                  class="img-fluid z-depth-1"
-                />
-              </a>
-            </figure>
-          </div>
-          <div class="col-12">
-            <div class="row">
-              <div class="col-3">
-                <div class="view overlay rounded z-depth-1 gallery-item">
-                  <img
-                    src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg"
-                    class="img-fluid"
-                  />
-                  <div class="mask rgba-white-slight"></div>
-                </div>
-              </div>
-              <div class="col-3">
-                <div class="view overlay rounded z-depth-1 gallery-item">
-                  <img
-                    src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/13a.jpg"
-                    class="img-fluid"
-                  />
-                  <div class="mask rgba-white-slight"></div>
-                </div>
-              </div>
-              <div class="col-3">
-                <div class="view overlay rounded z-depth-1 gallery-item">
-                  <img
-                    src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/14a.jpg"
-                    class="img-fluid"
-                  />
-                  <div class="mask rgba-white-slight"></div>
-                </div>
-              </div>
-              <div class="col-3">
-                <div class="view overlay rounded z-depth-1 gallery-item">
-                  <img
-                    src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/15a.jpg"
-                    class="img-fluid"
-                  />
-                  <div class="mask rgba-white-slight"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Send email to
+          {{seller.firstName}}
+          {{seller.lastName}}</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
-
-    </div>
-    <div class="col-md-6">
-
-      <h5>Fantasy T-shirt</h5>
-      <p class="mb-2 text-muted text-uppercase small">Shirts</p>
-      <ul class="rating">
-        <li>
-          <i class="fas fa-star fa-sm text-primary"></i>
-        </li>
-        <li>
-          <i class="fas fa-star fa-sm text-primary"></i>
-        </li>
-        <li>
-          <i class="fas fa-star fa-sm text-primary"></i>
-        </li>
-        <li>
-          <i class="fas fa-star fa-sm text-primary"></i>
-        </li>
-        <li>
-          <i class="far fa-star fa-sm text-primary"></i>
-        </li>
-      </ul>
-      <p><span class="mr-1"><strong>$12.99</strong></span></p>
-      <p class="pt-1">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Numquam, sapiente illo. Sit error voluptas repellat rerum quidem, soluta
-        enim perferendis voluptates laboriosam. Distinctio, officia quis dolore
-        quos sapiente tempore alias.</p>
-      <div class="table-responsive">
-        <table class="table table-sm table-borderless mb-0">
-          <tbody>
-            <tr>
-              <th class="pl-0 w-25" scope="row"><strong>Model</strong></th>
-              <td>Shirt 5407X</td>
-            </tr>
-            <tr>
-              <th class="pl-0 w-25" scope="row"><strong>Color</strong></th>
-              <td>Black</td>
-            </tr>
-            <tr>
-              <th class="pl-0 w-25" scope="row"><strong>Delivery</strong></th>
-              <td>USA, Europe</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="modal-body">
+        <form
+          method="POST"
+          action="/products/{{product._id}}"
+          name="emailForm"
+          id="emailForm"
+        >
+          <label for="buyeremail" class="emailLabel">From:</label>
+          <input type="text" id="buyeremail" name="buyeremail" /><br />
+          <label for="message" class="emailLabel">Message:</label><br />
+          <textarea name="message" rows="5" cols="50"></textarea>
+          <input
+            type="text"
+            id="nameOfSeller"
+            name="nameOfSeller"
+            value="{{seller.firstName}} {{seller.lastName}}"
+            hidden
+          />
+          <input
+            type="text"
+            id="emailOfSeller"
+            name="emailOfSeller"
+            value="{{seller.email}}"
+            hidden
+          />
+        </form>
       </div>
-      <hr />
-      <div class="table-responsive mb-2">
-        <table class="table table-sm table-borderless">
-          <tbody>
-            <tr>
-              <td class="pl-0 pb-0 w-25">Quantity</td>
-              <td class="pb-0">Select size</td>
-            </tr>
-            <tr>
-              <td class="pl-0">
-                <div class="def-number-input number-input safari_only mb-0">
-                  <button
-                    onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
-                    class="minus"
-                  ></button>
-                  <input
-                    class="quantity"
-                    min="0"
-                    name="quantity"
-                    value="1"
-                    type="number"
-                  />
-                  <button
-                    onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
-                    class="plus"
-                  ></button>
-                </div>
-              </td>
-              <td>
-                <div class="mt-1">
-                  <div class="form-check form-check-inline pl-0">
-                    <input
-                      type="radio"
-                      class="form-check-input"
-                      id="small"
-                      name="materialExampleRadios"
-                      checked
-                    />
-                    <label
-                      class="form-check-label small text-uppercase card-link-secondary"
-                      for="small"
-                    >Small</label>
-                  </div>
-                  <div class="form-check form-check-inline pl-0">
-                    <input
-                      type="radio"
-                      class="form-check-input"
-                      id="medium"
-                      name="materialExampleRadios"
-                    />
-                    <label
-                      class="form-check-label small text-uppercase card-link-secondary"
-                      for="medium"
-                    >Medium</label>
-                  </div>
-                  <div class="form-check form-check-inline pl-0">
-                    <input
-                      type="radio"
-                      class="form-check-input"
-                      id="large"
-                      name="materialExampleRadios"
-                    />
-                    <label
-                      class="form-check-label small text-uppercase card-link-secondary"
-                      for="large"
-                    >Large</label>
-                  </div>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >Discard</button>
+        <button type="submit" class="btn btn-primary" form="emailForm">Send
+          Email</button>
       </div>
-      <button type="button" class="btn btn-primary btn-md mr-1 mb-2">Buy now</button>
-      <button type="button" class="btn btn-light btn-md mr-1 mb-2"><i
-          class="fas fa-shopping-cart pr-2"
-        ></i>Add to cart</button>
     </div>
   </div>
+</div>
+<main class="container">
+  <div class="left-column">
+    {{! prettier-ignore }}
+    <img class="active" src="{{product.images.[0]}}" alt="{{product.name}}" />
+  </div>
 
-</section>
-<!--Section: Block Content-->
+  <div class="right-column">
+
+    <div class="product-description">
+      <h1>{{title}}</h1>
+      <label for="favourite" class="custom-checkbox" id="favLabel">
+        <input type="checkbox" id="favourite" onclick="favouriteProduct()" />
+        <i class="bi bi-star" id="favProdIcon"></i>
+      </label>
+      <h4>Price: <span>${{product.price}}</span></h4>
+      <p>{{product.description}}</p>
+    </div>
+
+    <div class="product-configuration">
+      <div class="product-details">
+        <span>Listed by:</span>
+        <span hidden id="sellerEmail">{{seller.email}}</span>
+        <p id="sellerName">{{seller.firstName}} {{seller.lastName}}</p>
+        <button
+          type="button"
+          class="btn btn-primary btn-sm"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        ><i class="bi bi-envelope"></i></button><br />
+        <span>Location:</span>
+        <p>{{product.location.streetAddress}},
+          {{product.location.city}},
+          {{product.location.state}},
+          {{product.location.zip}}</p><br />
+        <span>Condition:</span>
+        <p>{{product.condition}}</p><br />
+        <span>Date Listed:</span>
+        <p>{{product.dateListed}}</p>
+      </div>
+    </div>
+    <div class="product-comments">
+      {{! <form>
+        <div class="commentBox">
+          <label for="commentBox">
+            <textarea
+              id="commentBox"
+              name="commentBox"
+              placeholder="Enter your comment"
+            ></textarea>
+          </label>
+        </div><br />
+        <button type="button" class="btn btn-success">Post Comment</button>
+      </form> }}
+      <div class="list-group">
+        {{#comments}}
+          <div
+            class="list-group-item list-group-item-action"
+            aria-current="true"
+          >
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1 commentUserName">{{userName}}</h5>
+              <img
+                src={{profilePicture}}
+                alt={{userName}}
+                class="commentImgs"
+              />
+            </div>
+            <p class="mb-1">{{comment}}</p>
+            <small class="dateAdded">{{dateAdded}}</small>
+            {{! <small>And some small print.</small> }}
+          </div>
+        {{/comments}}
+      </div>
+    </div>
+  </div>
+</main>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+  crossorigin="anonymous"
+></script>
+<script src="/public/js/clientside2.js"></script>

@@ -119,7 +119,7 @@ router.put("/update/:id", async (req, res) => {
     validate.checkEmail(userData.email);
     validate.checkPhoneNumber(userData.phoneNumber);
     validate.checkDob(userData.dob);
-    validate.checkAddress(userData.address);
+    validate.checkLocation(userData.address);
   } catch (e) {
     res.status(400).json({ error: e });
     return;

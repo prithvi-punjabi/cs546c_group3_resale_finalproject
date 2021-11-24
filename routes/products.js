@@ -1,11 +1,22 @@
 const express = require("express");
 const router = express.Router();
 const productsData = require("../data").products;
+const userData = require("../data/users");
+const commentData = require("../data/comments");
 const utils = require("../helper/utils");
 const validator = require("../helper/validator");
 const errorCode = require("../helper/common").errorCode;
 const ErrorMessage = require("../helper/message").ErrorMessage;
 const moment = require("moment");
+let nodemailer = require("nodemailer");
+
+let transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "resalegroup3@gmail.com",
+    pass: "rwckkyxaaveoxakw",
+  },
+});
 
 router.get("/", async (req, res, next) => {
   try {
@@ -34,7 +45,25 @@ router.get("/get/:id", async (req, res) => {
     const productId = req.params.id;
     utils.parseObjectId(productId, "ProductId");
     const product = await productsData.getById(productId);
-    return res.render("thisproduct", { product: product });
+    const sellerId = product.seller_id.toString();
+    const seller = await userData.get(sellerId);
+    const comments = await commentData.getAllComments(productId);
+    const allusers = await userData.getAll();
+    comments.forEach((x, index) => {
+      comments[index].dateAdded = utils.formatDaysAgo(x.dateAdded);
+      allusers.forEach((curr) => {
+        if (curr.id === x.user_id.toString()) {
+          x.userName = curr.name;
+          x.profilePicture = curr.img;
+        }
+      });
+    });
+    return res.render("thisproduct", {
+      product: product,
+      title: product.name,
+      seller: seller,
+      comments: comments,
+    });
   } catch (e) {
     if (typeof e == "string") {
       e = new Error(e);
@@ -49,6 +78,7 @@ router.get("/new", async (req, res) => {
   try {
     return res.render("addProduct");
   } catch (e) {
+    console.log(e);
     if (typeof e == "string") {
       e = new Error(e);
       e.code = 400;
@@ -56,6 +86,26 @@ router.get("/new", async (req, res) => {
     if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
     else return res.status(500).json(ErrorMessage(e.message));
   }
+});
+
+router.post("/:id", async (req, res) => {
+  let id = req.params.id;
+  let from = req.body.buyeremail;
+  let to = req.body.emailOfSeller;
+  let msg = req.body.message;
+  let mailOptions = {
+    from: from,
+    to: to,
+    subject: `Email from: ${from}`,
+    text: msg,
+  };
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      res.redirect(id);
+    }
+  });
 });
 
 router.post("/", async (req, res) => {

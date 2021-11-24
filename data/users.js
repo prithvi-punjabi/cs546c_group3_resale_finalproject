@@ -173,9 +173,32 @@ async function remove(id) {
   return { deleted: true };
 }
 
+async function getAll() {
+  const usercol = await users();
+  const allusers = await usercol.find({}).toArray();
+  let finalUsers = [];
+  let thisUser = {};
+  allusers.forEach((x) => {
+    thisUser["id"] = x._id.toString();
+    fname = x.firstName;
+    lname = x.lastName;
+    thisUser["name"] = fname + " " + lname;
+    thisUser["img"] = x.profilePicture;
+    finalUsers.push(thisUser);
+    thisUser = {};
+  });
+  if (!Array.isArray(finalUsers) || finalUsers.length == 0) {
+    const error = new Error(`No users found`);
+    error.code = errorCode.NOT_FOUND;
+    throw error;
+  }
+  return finalUsers;
+}
+
 module.exports = {
   create,
   get,
   update,
   remove,
+  getAll,
 };
