@@ -5,6 +5,7 @@ const utils = require("../helper/utils");
 const validator = require("../helper/validator");
 const errorCode = require("../helper/common").errorCode;
 const ErrorMessage = require("../helper/message").ErrorMessage;
+const moment = require("moment");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -66,38 +67,43 @@ router.post("/", async (req, res) => {
       category,
       keywords,
       price,
-      seller_id,
       images,
       description,
       location,
       status,
       condition,
-      dateListed,
     } = req.body;
     validator.checkNonNull(
       name,
       category,
       keywords,
       price,
-      seller_id,
       images,
       description,
       location,
       status,
-      condition,
-      dateListed
+      condition
     );
     validator.checkString(name, "name");
     if (!Array.isArray(category)) throw "Category must be an array";
     if (!Array.isArray(keywords)) throw "keywords must be an array";
     validator.checkNumber(price, "price");
-    validator.checkString(seller_id, "seller_id");
+
     if (!Array.isArray(images)) throw "Images must be an array";
     validator.checkString(description, "description");
     validator.checkLocation(location);
     validator.checkString(status, "status");
     validator.checkString(condition, "Barely used");
-    validator.checkDate(dateListed, "Date Listed");
+
+    // if (req.session.user == null || req.session.user.userId == null) {
+    //   return res
+    //     .status(403)
+    //     .json(ErrorMessage("Login to start listing products"));
+    // }
+
+    const seller_id = "619c600cb33745e00813ad81";
+    // const seller_id = req.session.user.userId;
+    const dateListed = moment().format("MM/DD/YYYY");
 
     const product = await productsData.create(
       name,

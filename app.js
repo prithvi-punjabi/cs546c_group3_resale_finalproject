@@ -4,7 +4,6 @@ const path = require("path");
 const hbs = require("hbs");
 const exphbs = require("express-handlebars");
 const configRoutes = require("./routes");
-const uest = require("uest");
 
 app.use(express.json());
 app.use(
@@ -30,7 +29,6 @@ app.set("view engine", "handlebars");
 app.use("/public", express.static(__dirname + "/public"));
 hbs.registerPartials(partialsPath);
 
-app.use(uest());
 configRoutes(app);
 app.listen(3000, () => {
   console.log("Server started");
