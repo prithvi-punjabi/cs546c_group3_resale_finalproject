@@ -1,12 +1,6 @@
+<h2>Add new product</h2>
 <div class="container">
-  <h2>Add new product</h2>
-  <form
-    id="form-product"
-    class="form-horizontal needs-validation"
-    novalidate
-    action="/products"
-    method="post"
-  >
+  <form id="form-product" class="form-horizontal needs-validation" novalidate>
     <div class="input-group mb-3">
       <span class="input-group-text" id="span-name">Name</span>
       <input
@@ -24,18 +18,28 @@
       </div>
     </div>
     <div class="input-group mb-3">
-      <span class="input-group-text" id="span-name">Image</span>
-      <input
-        type="file"
-        accept="image/*"
-        class="form-control"
-        id="imageUpload"
-        name="imageUpload"
-        required
-        multiple
-      />
-      <div class="invalid-feedback">
-        Please select image to upload
+      <span class="input-group-text" id="span-image">Images</span>
+      <div class="custom-file">
+        <input
+          type="file"
+          accept="image/*"
+          class="custom-file-input"
+          id="imageUpload"
+          name="imageUpload"
+          aria-label="imageUpload"
+          aria-describedby="span-image"
+          onchange="imageUploadChange()"
+          required
+          multiple
+        />
+        <label
+          id="image-upload-label"
+          class="custom-file-label"
+          for="imageUpload"
+        >Choose file</label>
+        <div class="invalid-feedback">
+          Please select image to upload
+        </div>
       </div>
     </div>
     <div class="input-group mb-3">

@@ -26,10 +26,7 @@ router.get("/", async (req, res, next) => {
     } else {
       products = await productsData.getByQuery(req.query);
     }
-    products.forEach((x) => {
-      x.images = x.images[0];
-    });
-    return res.render("products", { products: products, title: "re$ale" });
+    return res.json(products);
   } catch (e) {
     if (typeof e == "string") {
       e = new Error(e);

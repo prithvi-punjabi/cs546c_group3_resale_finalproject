@@ -3,6 +3,9 @@ const products = require("./products");
 const comments = require("./comments");
 const multer = require("multer");
 const { ErrorMessage } = require("../helper/message");
+const productsData = require("../data").products;
+const utils = require("../helper/utils");
+
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./public/uploads");
@@ -48,6 +51,41 @@ module.exports = async (app) => {
       }
       return res.json(images);
     });
+  });
+
+  app.get("/login", (req, res) => {
+    return res.render("login");
+  });
+
+  app.post("/login", async (req, res) => {
+    try {
+      const { username, password } = req.body;
+    } catch (e) {
+      console.log(e);
+    }
+  });
+
+  app.get("/", async (req, res) => {
+    try {
+      let products;
+      if (utils.isEmptyObject(req.query)) {
+        products = await productsData.getAll();
+      } else {
+        products = await productsData.getByQuery(req.query);
+      }
+      products.forEach((x) => {
+        x.images = x.images[0];
+      });
+      return res.render("products", { products: products, title: "re$ale" });
+    } catch (e) {
+      if (typeof e == "string") {
+        e = new Error(e);
+        e.code = 400;
+      }
+      if (e.code != null)
+        return res.status(e.code).json(ErrorMessage(e.message));
+      else return res.status(500).json(ErrorMessage(e.message));
+    }
   });
 
   app.use("/*", (req, res) => {
