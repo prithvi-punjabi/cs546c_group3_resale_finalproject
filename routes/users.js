@@ -3,11 +3,42 @@ const router = express.Router();
 const data = require("../data");
 const validate = require("../helper/validator");
 const utils = require("../helper/utils");
-const users = data.users;
+const usersData = data.users;
+const validator = require("../helper/validator");
+const { errorCode } = require("../helper/common");
+const { ErrorMessage } = require("../helper/message");
 
 //Important: Do not pass a hashed password to the create function, the password hashing takes place before insertion
 
-router.post("/add/", async (req, res) => {
+router.get("/login", (req, res) => {
+  return res.render("login");
+});
+
+router.get("/logout", (req, res) => {
+  req.session.destroy();
+  return res.redirect("/");
+});
+
+router.post("/login", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    validator.checkNonNull(username, password);
+    validator.checkString(username, "username");
+    validator.checkString(password, "password");
+
+    const user = await usersData.loginUser(username, password);
+    req.session.user = user;
+    return res.json(user);
+  } catch (e) {
+    if (typeof e == "string") {
+      e = new Error(e);
+      e.code = errorCode.BAD_REQUEST;
+    }
+    return res.status(e.code).json(ErrorMessage(e.message));
+  }
+});
+
+router.post("/users/add", async (req, res) => {
   const userData = req.body;
   //User input validation on user route by calling validation.js
   try {
@@ -54,7 +85,7 @@ router.post("/add/", async (req, res) => {
       password,
       biography,
     } = req.body;
-    const newUser = await users.create(
+    const newUser = await usersData.create(
       firstName,
       lastName,
       email,
@@ -75,7 +106,7 @@ router.post("/add/", async (req, res) => {
   }
 });
 //delete data
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/users/delete/:id", async (req, res) => {
   const id = req.params.id;
   try {
     validate.checkNonNull(id);
@@ -89,13 +120,13 @@ router.delete("/delete/:id", async (req, res) => {
 });
 
 // get user
-router.get("/:id", async (req, res) => {
+router.get("users/:id", async (req, res) => {
   const id = req.params.id;
   try {
     validate.checkNonNull(id);
     validate.checkString(id);
     utils.parseObjectId(id, "User ID");
-    const thisuser = await users.get(id);
+    const thisuser = await usersData.get(id);
     return res.status(200).json(thisuser);
   } catch (e) {
     console.log(e);
@@ -103,7 +134,7 @@ router.get("/:id", async (req, res) => {
 });
 
 //update
-router.put("/update/:id", async (req, res) => {
+router.put("users/update/:id", async (req, res) => {
   console.log("update");
   const userData = req.body;
   const id = req.params.id;
@@ -157,7 +188,7 @@ router.put("/update/:id", async (req, res) => {
       listedProducts,
       favouriteProducts,
     } = req.body;
-    const newUser = await users.update(
+    const newUser = await usersData.update(
       id,
       firstName,
       lastName,

@@ -27,4 +27,7 @@ module.exports = {
     const formatter = new Intl.RelativeTimeFormat(locale);
     return formatter.format(Math.round(deltaDays), "days");
   },
+  isUserLoggedIn(req) {
+    return req.session.user != null;
+  },
 };

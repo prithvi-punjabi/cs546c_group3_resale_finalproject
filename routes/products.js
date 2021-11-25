@@ -142,14 +142,13 @@ router.post("/", async (req, res) => {
     validator.checkString(status, "status");
     validator.checkString(condition, "Barely used");
 
-    // if (req.session.user == null || req.session.user.userId == null) {
-    //   return res
-    //     .status(403)
-    //     .json(ErrorMessage("Login to start listing products"));
-    // }
+    if (!utils.isUserLoggedIn(req)) {
+      return res
+        .status(403)
+        .json(ErrorMessage("Login to start listing products"));
+    }
 
-    const seller_id = "619c600cb33745e00813ad81";
-    // const seller_id = req.session.user.userId;
+    const seller_id = req.session.user._id.toString();
     const dateListed = moment().format("MM/DD/YYYY");
 
     const product = await productsData.create(

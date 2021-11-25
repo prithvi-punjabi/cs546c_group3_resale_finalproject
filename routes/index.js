@@ -5,9 +5,6 @@ const multer = require("multer");
 const { ErrorMessage } = require("../helper/message");
 const productsData = require("../data").products;
 const utils = require("../helper/utils");
-const validator = require("../helper/validator");
-const usersData = require("../data/users");
-const { errorCode } = require("../helper/common");
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -25,11 +22,7 @@ var uploadSingle = multer({ storage: storage }).single("image");
 var uploadArray = multer({ storage: storage }).array("image", 5);
 
 module.exports = async (app) => {
-  // app.use("/", (req, res) => {
-  // 	return res.render("layouts/index");
-  // });
-
-  app.use("/users", users);
+  app.use("/", users);
   app.use("/products", products);
   app.use("/comments", comments);
 
@@ -54,34 +47,6 @@ module.exports = async (app) => {
       }
       return res.json(images);
     });
-  });
-
-  app.get("/login", (req, res) => {
-    return res.render("login");
-  });
-
-  app.get("/logout", (req, res) => {
-    req.session.destroy();
-    return res.render("/");
-  });
-
-  app.post("/login", async (req, res) => {
-    try {
-      const { username, password } = req.body;
-      validator.checkNonNull(username, password);
-      validator.checkString(username, "username");
-      validator.checkString(password, "password");
-
-      const user = await usersData.loginUser(username, password);
-      req.session.user = user;
-      return res.json(user);
-    } catch (e) {
-      if (typeof e == "string") {
-        e = new Error(e);
-        e.code = errorCode.BAD_REQUEST;
-      }
-      return res.status(e.code).json(ErrorMessage(e.message));
-    }
   });
 
   app.get("/", async (req, res) => {

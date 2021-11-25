@@ -12,10 +12,12 @@
   </div>
   <div class="search-container">
     {{#if user}}
-      <a id="a-profile" href="/user">Hello, {{user.firstName}}</a>
+      <a href="/user">Hello, {{user.firstName}}</a>
+      <a href="/products/new">+ Sell Products</a>
     {{else}}
       <a id="a-login" href="/login">Login</a>
     {{/if}}
+
     <input
       type="text"
       id="myInput"
