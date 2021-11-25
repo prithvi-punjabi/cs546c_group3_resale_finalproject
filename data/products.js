@@ -1,5 +1,6 @@
 const mongoCollections = require("../config/mongoCollections");
 const productCollections = mongoCollections.products;
+const userCollections = mongoCollections.users;
 const validator = require("../helper/validator");
 const utils = require("../helper/utils");
 const errorCode = require("../helper/common").errorCode;
@@ -196,10 +197,21 @@ const create = async (
   };
 
   const products = await productCollections();
+  const users = await userCollections();
   const insertInfo = await products.insertOne(newProduct);
 
   if (insertInfo.length === 0) throw new Error("Could not add a product");
   let id = insertInfo.insertedId;
+  const userListedPrd = {
+    _id: id,
+    name: name,
+    price: price,
+    images: images,
+  };
+  await users.updateOne(
+    { _id: seller_id },
+    { $push: { listedProducts: userListedPrd } }
+  );
 
   const product = await getById(id.toString());
   return product;
