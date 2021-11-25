@@ -2,9 +2,41 @@ const mongoCollections = require("../config/mongoCollections");
 const users = mongoCollections.users;
 let { ObjectId } = require("mongodb");
 const validate = require("../helper/validator");
-const sha256 = require("js-sha256");
+const bcrypt = require("bcryptjs");
+const saltRounds = 8;
 
 //Important: Do not pass a hashed password to the create function, the password hashing takes place before insertion
+
+async function loginUser(username, password) {
+  validate.checkNonNull(username);
+  validate.checkNonNull(password);
+
+  validate.checkString(username);
+  validate.checkString(password);
+
+  const usercol = await users();
+  const user = await usercol.findOne({ userName: username.toLowerCase() });
+  if (user == null) {
+    const error = new Error("Either username or password is invalid");
+    error.code = 403;
+    throw error;
+  }
+
+  let isAuthenticated = false;
+  try {
+    isAuthenticated = await bcrypt.compare(password, user.password);
+  } catch (e) {
+    throw new Error(e.message);
+  }
+
+  if (!isAuthenticated) {
+    const error = new Error("Either username or password is invalid");
+    error.code = 403;
+    throw error;
+  } else {
+    return user;
+  }
+}
 
 async function create(
   firstName,
@@ -48,18 +80,19 @@ async function create(
 
   const userCol = await users();
 
+  password = await bcrypt.hash(password, saltRounds);
+
   let newUser = {
     firstName: firstName,
     lastName: lastName,
     email: email,
     phoneNumber: phoneNumber,
-    userName: userName,
+    userName: userName.toLowerCase(),
     dob: dob,
     gender: gender,
     profilePicture: profilePicture,
     address: address,
-    //Using js-SHA256 to hash the password before insertion into db
-    hashedPassword: sha256(password),
+    password: password,
     biography: biography,
     rating: 0,
     listedProducts: [],
@@ -131,17 +164,20 @@ async function update(
   validate.checkDob(dob);
   validate.checkLocation(address);
   const userCol = await users();
+
+  password = await bcrypt.hash(password, saltRounds);
+
   const updated_users = {
     firstName: firstName,
     lastName: lastName,
     email: email,
     phoneNumber: phoneNumber,
-    userName: userName,
+    userName: userName.toLowerCase(),
     dob: dob,
     gender: gender,
     profilePicture: profilePicture,
     address: address,
-    hashedPassword: password,
+    password: password,
     biography: biography,
     rating: rating,
     listedProducts: listedProducts,
@@ -201,4 +237,5 @@ module.exports = {
   update,
   remove,
   getAll,
+  loginUser,
 };

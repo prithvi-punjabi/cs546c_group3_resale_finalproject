@@ -23,7 +23,7 @@ async function main() {
         state: "NY",
         zip: "11220",
       },
-      "thisisapassword",
+      "michael.jordan",
       "My name is Michael! Hey!"
     );
     await products.create(
@@ -63,7 +63,7 @@ async function main() {
         state: "NY",
         zip: "11225",
       },
-      "mahpasswordmahrules",
+      "john.doe",
       "I am John Doe. People use me for testing."
     );
 
@@ -104,7 +104,7 @@ async function main() {
         state: "NY",
         zip: "16220",
       },
-      "female",
+      "ariana.grande",
       "No bio needed. Everyone knows me."
     );
 
