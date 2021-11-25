@@ -2,13 +2,20 @@
   <img src="/public/images/resale.png" alt="Resale Logo" />
 </div> }}
 <div class="topnav">
-  <div id="logo">
-    <img src="/public/images/resale.png" alt="resale logo" class="logoimg" />
+  <div>
+    <div id="logo">
+      <img src="/public/images/resale.png" alt="resale logo" class="logoimg" />
+    </div>
+    <a class="active" href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#contact">Statistics</a>
   </div>
-  <a class="active" href="#home">Home</a>
-  <a href="#about">About</a>
-  <a href="#contact">Statistics</a>
   <div class="search-container">
+    {{#if user}}
+      <a id="a-profile" href="/user">Hello, {{user.firstName}}</a>
+    {{else}}
+      <a id="a-login" href="/login">Login</a>
+    {{/if}}
     <input
       type="text"
       id="myInput"

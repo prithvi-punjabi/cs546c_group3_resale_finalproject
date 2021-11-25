@@ -95,7 +95,11 @@ module.exports = async (app) => {
       products.forEach((x) => {
         x.images = x.images[0];
       });
-      return res.render("products", { products: products, title: "re$ale" });
+      return res.render("products", {
+        user: req.session.user,
+        products: products,
+        title: "re$ale",
+      });
     } catch (e) {
       if (typeof e == "string") {
         e = new Error(e);
