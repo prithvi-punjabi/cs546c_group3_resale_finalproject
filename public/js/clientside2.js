@@ -21,6 +21,37 @@
       });
     });
   });
+
+  $(document).ready(function () {
+    $("#submitComment").click(function (event) {
+      const commentForm = $("#commentForm");
+      const commentDiv = $("#displayedComments");
+      event.preventDefault();
+      $.ajax({
+        type: "POST",
+        url: commentForm.attr("action"),
+        data: commentForm.serialize(),
+        complete: function (response) {
+          console.log(response);
+          commentDiv.append(
+            "<div class='list-group-item list-group-item-action' aria-current='true'>" +
+              "<div class='d-flex w-100 justify-content-between'>" +
+              " <h5 class='mb-1 commentUserName'>" +
+              response.responseJSON.usersname +
+              "</h5>" +
+              "<img src='" +
+              response.responseJSON.userimg +
+              "'class='commentImgs'/>" +
+              "</div> <p class='mb-1'>" +
+              response.responseJSON.comment +
+              "</p> <small class='dateAdded'>" +
+              response.responseJSON.time +
+              "</small>"
+          );
+        },
+      });
+    });
+  });
 })(window.jQuery);
 
 function favouriteProduct() {

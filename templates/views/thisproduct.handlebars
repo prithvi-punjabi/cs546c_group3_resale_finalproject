@@ -26,8 +26,6 @@
           name="emailForm"
           id="emailForm"
         >
-          <label for="buyeremail" class="emailLabel">From:</label>
-          <input type="text" id="buyeremail" name="buyeremail" /><br />
           <label for="message" class="emailLabel">Message:</label><br />
           <textarea name="message" rows="5" cols="50"></textarea>
           <input
@@ -103,7 +101,11 @@
       </div>
     </div>
     <div class="product-comments">
-      <form>
+      <form
+        id="commentForm"
+        method="POST"
+        action="/comments/add/{{product._id}}"
+      >
         <div class="commentBox">
           <label for="commentBox">
             <textarea
@@ -113,9 +115,10 @@
             ></textarea>
           </label>
         </div><br />
-        <button type="button" class="btn btn-success">Post Comment</button>
+        <button type="button" class="btn btn-success" id="submitComment">Post
+          Comment</button>
       </form>
-      <div class="list-group">
+      <div class="list-group" id="displayedComments">
         {{#comments}}
           <div
             class="list-group-item list-group-item-action"

@@ -87,7 +87,7 @@ router.get("/new", async (req, res) => {
 
 router.post("/post/:id", async (req, res) => {
   let id = req.params.id;
-  let from = req.body.buyeremail;
+  let from = req.session.user.email;
   let to = req.body.emailOfSeller;
   let msg = req.body.message;
   let mailOptions = {
