@@ -4,3 +4,4 @@ function favouriteProduct() {
   else if (favIcon.className === "bi bi-star-fill")
     favIcon.className = "bi bi-star";
 }
+
