@@ -85,7 +85,7 @@ router.get("/new", async (req, res) => {
   }
 });
 
-router.post("/:id", async (req, res) => {
+router.post("/post/:id", async (req, res) => {
   let id = req.params.id;
   let from = req.body.buyeremail;
   let to = req.body.emailOfSeller;
@@ -100,7 +100,7 @@ router.post("/:id", async (req, res) => {
     if (error) {
       console.log(error);
     } else {
-      res.redirect(id);
+      res.json({ data: "Email Sent" });
     }
   });
 });

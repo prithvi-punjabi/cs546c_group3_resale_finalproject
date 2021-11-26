@@ -16,12 +16,13 @@
           class="btn-close"
           data-bs-dismiss="modal"
           aria-label="Close"
+          id="emailButClose"
         ></button>
       </div>
       <div class="modal-body">
         <form
           method="POST"
-          action="/products/{{product._id}}"
+          action="/products/post/{{product._id}}"
           name="emailForm"
           id="emailForm"
         >
@@ -51,8 +52,12 @@
           class="btn btn-secondary"
           data-bs-dismiss="modal"
         >Discard</button>
-        <button type="submit" class="btn btn-primary" form="emailForm">Send
-          Email</button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          form="emailForm"
+          id="emailFormSubmit"
+        >Send Email</button>
       </div>
     </div>
   </div>
@@ -139,4 +144,11 @@
   integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
   crossorigin="anonymous"
 ></script>
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"
+></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="sweetalert2.all.min.js"></script>
 <script src="/public/js/clientside2.js"></script>
