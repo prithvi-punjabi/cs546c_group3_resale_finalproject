@@ -488,9 +488,10 @@ body {
   }
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 768px) {
   .login-form {
-    margin-top: 10%;
+    margin-top: 20%;
+    margin-left: 10%;
   }
 
   .register-form {
@@ -512,7 +513,8 @@ body {
   }
 
   .login-form {
-    margin-top: 80%;
+    margin-top: 60%;
+    margin-left: 10%;
   }
 
   .register-form {
