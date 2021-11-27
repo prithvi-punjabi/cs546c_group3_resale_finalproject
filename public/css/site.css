@@ -536,3 +536,7 @@ body {
   background-color: #000 !important;
   color: #fff;
 }
+
+.add-product-form {
+  margin: 10%;
+}
