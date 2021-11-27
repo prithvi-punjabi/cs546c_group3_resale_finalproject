@@ -20,19 +20,18 @@
         },
       });
     });
-  });
 
-  $(document).ready(function () {
     $("#submitComment").click(function (event) {
       const commentForm = $("#commentForm");
       const commentDiv = $("#displayedComments");
+      const commentBox = $("#commentBox");
       event.preventDefault();
       $.ajax({
         type: "POST",
         url: commentForm.attr("action"),
         data: commentForm.serialize(),
         complete: function (response) {
-          console.log(response);
+          commentBox.val("");
           commentDiv.append(
             "<div class='list-group-item list-group-item-action' aria-current='true'>" +
               "<div class='d-flex w-100 justify-content-between'>" +
@@ -51,12 +50,15 @@
         },
       });
     });
+    $("#favProdIcon").click(function (event) {
+      const starIcon = $("#favProdIcon");
+      const prodId = $("#prodID").text();
+      event.preventDefault();
+      if (starIcon.hasClass("bi bi-star")) {
+        starIcon.removeClass("bi bi-star").addClass("bi bi-star-fill");
+      } else if (starIcon.hasClass("bi bi-star-fill")) {
+        starIcon.removeClass("bi bi-star-fill").addClass("bi bi-star");
+      }
+    });
   });
 })(window.jQuery);
-
-function favouriteProduct() {
-  let favIcon = document.getElementById("favProdIcon");
-  if (favIcon.className === "bi bi-star") favIcon.className = "bi bi-star-fill";
-  else if (favIcon.className === "bi bi-star-fill")
-    favIcon.className = "bi bi-star";
-}

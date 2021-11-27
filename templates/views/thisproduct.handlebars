@@ -8,7 +8,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Send email to
+        <h5 class="modal-title" id="exampleModalLabel">Send an email to
           {{seller.firstName}}
           {{seller.lastName}}</h5>
         <button
@@ -27,7 +27,7 @@
           id="emailForm"
         >
           <label for="message" class="emailLabel">Message:</label><br />
-          <textarea name="message" rows="5" cols="50"></textarea>
+          <textarea name="message" rows="5" cols="56"></textarea>
           <input
             type="text"
             id="nameOfSeller"
@@ -71,11 +71,12 @@
     <div class="product-description">
       <h1>{{title}}</h1>
       <label for="favourite" class="custom-checkbox" id="favLabel">
-        <input type="checkbox" id="favourite" onclick="favouriteProduct()" />
+        <input type="checkbox" id="favourite" class="custom-checkbox" />
         <i class="bi bi-star" id="favProdIcon"></i>
       </label>
       <h4>Price: <span>${{product.price}}</span></h4>
       <p>{{product.description}}</p>
+      <span hidden id="prodID">{{product._id}}</span>
     </div>
 
     <div class="product-configuration">
