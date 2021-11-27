@@ -1,20 +1,14 @@
 function removeErrorClass(element) {
   element.classList.remove("is-invalid");
-  document.getElementById("error-div").classList.add("d-none");
+  document.getElementById("error-div").classList.add("visually-hidden");
+  document.getElementById("usernameHelp").classList.remove("visually-hidden");
 }
 (function ($) {
   const username = document.getElementById("username");
   const password = document.getElementById("password");
   const error = document.getElementById("error-div");
-  error.classList.add("d-none");
-
-  username.addEventListener("change", (event) => {
-    username.classList.remove("is-invalid");
-  });
-
-  password.addEventListener("change", (event) => {
-    password.classList.remove("is-invalid");
-  });
+  error.classList.add("visually-hidden");
+  document.getElementById("usernameHelp").classList.remove("visually-hidden");
 
   const form = document.getElementById("login-form");
   form.addEventListener("submit", function addProduct(event) {
@@ -24,13 +18,19 @@ function removeErrorClass(element) {
     if (username.value.length == 0) {
       username.classList.add("is-invalid");
       username.focus();
+      document.getElementById("usernameHelp").classList.add("visually-hidden");
       isValid = false;
     } else if (username.value.length < 5) {
       username.classList.add("is-invalid");
       username.focus();
       document.getElementById("invalid-username-label").innerHTML =
         "Username must be at least 5 characters long";
+      document.getElementById("usernameHelp").classList.add("visually-hidden");
       isValid = false;
+    } else {
+      document
+        .getElementById("usernameHelp")
+        .classList.remove("visually-hidden");
     }
 
     if (password.value.length == 0) {
@@ -63,7 +63,7 @@ function removeErrorClass(element) {
       },
       error: function (responseError) {
         error.innerHTML = JSON.parse(responseError.responseText).message;
-        error.classList.remove("d-none");
+        error.classList.remove("visually-hidden");
       },
     });
   });
