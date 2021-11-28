@@ -184,23 +184,19 @@ input:checked + .slider:before {
   padding-left: 40px;
 }
 
-#filterDiv {
-  height: 10px;
-  max-height: 10px;
-  margin-bottom: 30px;
-  position: relative;
-  /* margin-left: 30%; */
+#price {
+  width: 250px;
 }
 
-#price {
-  width: 200px;
+#filterSidebar {
+  width: 350px;
 }
 
 #priceDiv,
 #locDiv,
 #categoryDiv,
 #clearAllDiv {
-  float: left;
+  float: bottom;
   /* height: 10px; */
   margin-top: 10px;
   margin-left: 10px;
