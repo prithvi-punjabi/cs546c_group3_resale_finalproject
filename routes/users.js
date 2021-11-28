@@ -133,6 +133,46 @@ router.get("users/:id", async (req, res) => {
   }
 });
 
+router.post("/users/favourite/:id", async (req, res) => {
+  try {
+    let prodId = req.params.id;
+    let userId = req.session.user._id.toString();
+    const favourited = await usersData.addFavourite(userId, prodId);
+    if (favourited === true) {
+      res.json(true);
+    } else if (typeof favourited == "string") {
+      res.json(false);
+    }
+  } catch (e) {
+    if (typeof e == "string") {
+      e = new Error(e);
+      e.code = 400;
+    }
+    if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
+    else return res.status(500).json(ErrorMessage(e.message));
+  }
+});
+
+router.post("/users/removefavourite/:id", async (req, res) => {
+  try {
+    let prodId = req.params.id;
+    let userId = req.session.user._id.toString();
+    const removed = await usersData.removeFavourite(userId, prodId);
+    if (removed === true) {
+      res.json(true);
+    } else if (typeof removed == "string") {
+      res.json(false);
+    }
+  } catch (e) {
+    if (typeof e == "string") {
+      e = new Error(e);
+      e.code = 400;
+    }
+    if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
+    else return res.status(500).json(ErrorMessage(e.message));
+  }
+});
+
 //update
 router.put("users/update/:id", async (req, res) => {
   console.log("update");

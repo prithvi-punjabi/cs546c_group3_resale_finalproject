@@ -107,15 +107,16 @@
         method="POST"
         action="/comments/add/{{product._id}}"
       >
-        <div class="commentBox">
-          <label for="commentBox">
-            <textarea
-              id="commentBox"
-              name="commentBox"
-              placeholder="Enter your comment"
-            ></textarea>
-          </label>
-        </div><br />
+        <label for="commentBox">
+          <textarea
+            id="commentBox"
+            name="commentBox"
+            placeholder="Enter your comment"
+            cols="70"
+            rows="3"
+          ></textarea>
+        </label>
+        <br />
         <button type="button" class="btn btn-success" id="submitComment">Post
           Comment</button>
       </form>

@@ -56,8 +56,53 @@
       event.preventDefault();
       if (starIcon.hasClass("bi bi-star")) {
         starIcon.removeClass("bi bi-star").addClass("bi bi-star-fill");
+        $.ajax({
+          type: "POST",
+          url: `/users/favourite/${prodId}`,
+          complete: function (response) {
+            if (response.responseJSON === false) {
+              Swal.fire({
+                title: "Hmm..",
+                text: "This product already exists in your favourites list!",
+                icon: "info",
+                confirmButtonText: "Oops! Got it!",
+              });
+            }
+            if (response.responseJSON === true) {
+              Swal.fire({
+                title: "Yay!",
+                text: "Product added to your favourite list!",
+                icon: "success",
+                confirmButtonText: "Thank you!",
+              });
+            }
+          },
+        });
       } else if (starIcon.hasClass("bi bi-star-fill")) {
         starIcon.removeClass("bi bi-star-fill").addClass("bi bi-star");
+        $.ajax({
+          type: "POST",
+          url: `/users/removefavourite/${prodId}`,
+          complete: function (response) {
+            console.log(response);
+            if (response.responseJSON === false) {
+              Swal.fire({
+                title: "Hmm..",
+                text: "This product does not exist in your favourites list!",
+                icon: "info",
+                confirmButtonText: "Oops! Got it!",
+              });
+            }
+            if (response.responseJSON === true) {
+              Swal.fire({
+                title: "Done!",
+                text: "Product removed from your favourite list!",
+                icon: "info",
+                confirmButtonText: "Thank you!",
+              });
+            }
+          },
+        });
       }
     });
   });

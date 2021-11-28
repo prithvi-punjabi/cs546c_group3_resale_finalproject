@@ -231,6 +231,49 @@ async function getAll() {
   return finalUsers;
 }
 
+async function addFavourite(userId, prodId) {
+  validate.checkNonNull(userId), validate.checkNonNull(prodId);
+  validate.isValidObjectID(userId), validate.isValidObjectID(prodId);
+  const usercol = await users();
+  const thisUser = await usercol.findOne({ _id: ObjectId(userId) });
+  let alreadyFav = 0;
+  thisUser.favouriteProducts.forEach((x) => {
+    if (x.toString() === prodId) alreadyFav += 1;
+  });
+  if (alreadyFav === 0) {
+    const addedFav = await usercol.updateOne(
+      { _id: ObjectId(userId) },
+      { $push: { favouriteProducts: ObjectId(prodId) } }
+    );
+    if (addedFav.modifiedCount === 0) {
+      throw "Could not add product into favourites";
+    }
+    return true;
+  } else return "Product already exists in favourites";
+}
+
+async function removeFavourite(userId, prodId) {
+  validate.checkNonNull(userId), validate.checkNonNull(prodId);
+  validate.isValidObjectID(userId), validate.isValidObjectID(prodId);
+  const usercol = await users();
+  const thisUser = await usercol.findOne({ _id: ObjectId(userId) });
+  let alreadyFav = 0;
+  thisUser.favouriteProducts.forEach((x) => {
+    if (x.toString() === prodId) alreadyFav += 1;
+  });
+  if (alreadyFav !== 0) {
+    const removedFav = await usercol.updateOne(
+      { _id: ObjectId(userId) },
+      { $pull: { favouriteProducts: ObjectId(prodId) } }
+    );
+    console.log("after remove");
+    if (removedFav.modifiedCount === 0) {
+      throw "Could not remove product from favourites";
+    }
+    return true;
+  } else return "Product does not exist in favourites";
+}
+
 module.exports = {
   create,
   get,
@@ -238,4 +281,6 @@ module.exports = {
   remove,
   getAll,
   loginUser,
+  addFavourite,
+  removeFavourite,
 };
