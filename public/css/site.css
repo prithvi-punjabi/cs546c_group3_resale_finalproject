@@ -7,6 +7,15 @@
   margin-left: 10px;
   text-align: center;
 }
+.profilePic {
+  width: 5rem;
+}
+.small-card {
+  float: left;
+  width: 8rem;
+  height: 12rem;
+  padding: 10px;
+}
 
 h1 {
   color: #32a852;

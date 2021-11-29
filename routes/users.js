@@ -120,14 +120,30 @@ router.delete("/users/delete/:id", async (req, res) => {
 });
 
 // get user
-router.get("users/:id", async (req, res) => {
+router.get("/users/:id", async (req, res) => {
   const id = req.params.id;
   try {
+    console.log("here id");
     validate.checkNonNull(id);
     validate.checkString(id);
     utils.parseObjectId(id, "User ID");
     const thisuser = await usersData.get(id);
-    return res.status(200).json(thisuser);
+    // return res.status(200).json(thisuser);
+    return res.render("userprofile", {
+      firstName: thisuser.firstName,
+      lastName: thisuser.lastName,
+      email: thisuser.email,
+      phoneNumber: thisuser.phoneNumber,
+      userName: thisuser.userName,
+      dob: thisuser.dob,
+      gender: thisuser.gender,
+      profilePicture: thisuser.profilePicture,
+      address: thisuser.address,
+      biography: thisuser.biography,
+      rating: thisuser.rating,
+      listedProducts: thisuser.listedProducts,
+      favouriteProducts: thisuser.favouriteProducts,
+    });
   } catch (e) {
     console.log(e);
   }

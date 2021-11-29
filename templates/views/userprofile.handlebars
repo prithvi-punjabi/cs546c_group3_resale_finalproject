@@ -1,0 +1,94 @@
+<main>
+     <div class="">
+  <img src="../../public/images/{{profilePicture}}" class="profilePic"/>
+
+  </div>
+  <div class="">
+    First name:
+    {{firstName}}
+
+  </div>
+  <div class="">
+    Last Name:
+    {{lastName}}
+
+  </div>
+  
+  <div class="">
+    Email:
+    {{email}}
+
+  </div>
+   <div class="">
+    Phone Number:
+    {{phoneNumber}}
+
+  </div>
+     <div class="">
+    User Name :
+    {{userName}}
+
+  </div>
+  
+     <div class="">
+    Date of Birth:
+    {{dob}}
+
+  </div>
+    <div class="">
+    Gender:
+    {{gender}}
+
+  </div>
+    <div class="row">
+    <div class="col-md-2">Address Street:</div>
+    <div class="col-md-10">
+    {{address.streetAddress}}
+    <div>
+      {{address.city}}
+    </div>
+    <div>
+      {{address.state}}
+    </div>
+    <div>
+      {{address.zip}}
+    </div>
+    </div>
+    
+
+  </div>
+  </div>
+    <div class="">
+    Biography:
+    {{biography}}
+
+  </div>
+   </div>
+    <div class="">
+    Rating:
+    {{rating}}
+
+  </div>
+   <div class="row">
+    <div class="col-md-2">    Listed Products:</div>
+    <div class="col-md-10">{{#each listedProducts}}
+    <span >
+         <img class="small-card" src="../../public/images/{{this}}"/>
+    </span>
+             {{/each}}</div>
+    
+
+
+  </div>
+   <div class="row">
+    <div class="col-md-2"> Favourite Products:</div>
+    <div class="col-md-10">  {{#each favouriteProducts}}
+      <span >
+        <img class="small-card" src="../../public/images/{{this}}"/>
+    </span>
+    {{/each}}
+</div>
+   
+  </div>
+</main>
+
