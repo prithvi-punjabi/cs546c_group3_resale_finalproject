@@ -10,6 +10,9 @@
 .profilePic {
   width: 5rem;
 }
+.userp {
+  padding: 10px;
+}
 .small-card {
   float: left;
   width: 8rem;

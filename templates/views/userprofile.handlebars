@@ -1,9 +1,9 @@
 <main>
-     <div class="">
+     <div>
   <img src="../../public/images/{{profilePicture}}" class="profilePic"/>
 
   </div>
-  <div class="">
+  <div class="userp">
     First name:
     {{firstName}}
 
@@ -73,7 +73,7 @@
     <div class="col-md-2">    Listed Products:</div>
     <div class="col-md-10">{{#each listedProducts}}
     <span >
-         <img class="small-card" src="../../public/images/{{this}}"/>
+         <img class="small-card" src="../../public/uploads/{{this}}"/>
     </span>
              {{/each}}</div>
     
@@ -84,7 +84,7 @@
     <div class="col-md-2"> Favourite Products:</div>
     <div class="col-md-10">  {{#each favouriteProducts}}
       <span >
-        <img class="small-card" src="../../public/images/{{this}}"/>
+        <img class="small-card" src="../../public/uploads/{{this}}"/>
     </span>
     {{/each}}
 </div>
