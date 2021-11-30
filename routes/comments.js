@@ -53,7 +53,6 @@ router.get("/getall/:id", async (req, res) => {
     return res.status(e.code).json(ErrorMessage(e.message));
   }
 });
-module.exports = router;
 
 router.post("/delete/:id", async (req, res) => {
   try {
@@ -68,3 +67,5 @@ router.post("/delete/:id", async (req, res) => {
     return res.status(e.code).json(ErrorMessage(e.message));
   }
 });
+
+module.exports = router;

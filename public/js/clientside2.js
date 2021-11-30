@@ -1,48 +1,49 @@
 (function ($) {
   // const emailForm = $("#emailForm");
-
-  $(document).ready(function () {
-    $(".btn-danger").hide();
-    const prodId = $("#prodID").text();
-    var comms = new Array();
-    $(".commId").each(function () {
-      var comment = $(this).text();
-      comms.push(comment);
-    });
+  $(".btn-danger").hide();
+  $(".btn-danger").click(function (event) {
+    const commId = this.id;
+    const delButt = $(`#${commId}`);
     $.ajax({
-      type: "GET",
-      url: `/comments/getall/${prodId}`,
+      type: "POST",
+      url: `/comments/delete/${commId}`,
       complete: function (response) {
-        console.log(response.responseJSON);
-        response.responseJSON.forEach((x) => {
-          comms.forEach((y) => {
-            if (x === y) {
-              $(`#${y}`).show();
-            }
+        if (response.responseJSON === true) {
+          event.target.closest(".list-group-item").remove();
+          Swal.fire({
+            title: "Success!",
+            text: `Your comment has been deleted!`,
+            icon: "success",
+            confirmButtonText: "Got it, thank you!",
           });
-        });
+        }
       },
     });
-
-    $(".btn-danger").click(function (event) {
-      const commId = this.id;
-      const delButt = $(`#${commId}`);
+  });
+  $(document).ready(function () {
+    function delBut() {
+      const prodId = $("#prodID").text();
+      var comms = new Array();
+      $(".commId").each(function () {
+        var comment = $(this).text();
+        comms.push(comment);
+      });
       $.ajax({
-        type: "POST",
-        url: `/comments/delete/${commId}`,
+        type: "GET",
+        url: `/comments/getall/${prodId}`,
         complete: function (response) {
-          if (response.responseJSON === true) {
-            event.target.closest(".list-group-item").remove();
-            Swal.fire({
-              title: "Success!",
-              text: `Your comment has been deleted!`,
-              icon: "success",
-              confirmButtonText: "Got it, thank you!",
+          console.log(response.responseJSON);
+          response.responseJSON.forEach((x) => {
+            comms.forEach((y) => {
+              if (x === y) {
+                $(`#${y}`).show();
+              }
             });
-          }
+          });
         },
       });
-    });
+    }
+    delBut();
 
     $("#emailFormSubmit").click(function (event) {
       const emailForm = $("#emailForm");
@@ -88,8 +89,12 @@
               response.responseJSON.comment +
               "</p> <small class='dateAdded'>" +
               response.responseJSON.time +
-              "</small>"
+              "</small>" +
+              "<button class='btn btn-danger btn-sm' id='" +
+              response.responseJSON.commentId +
+              "'>Delete</button>"
           );
+          delBut();
         },
       });
     });

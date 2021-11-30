@@ -561,3 +561,9 @@ body {
   position: relative;
   float: right;
 }
+
+#map {
+  position: relative;
+  float: right;
+  bottom: 15px;
+}
