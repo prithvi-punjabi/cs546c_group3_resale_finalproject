@@ -1,14 +1,14 @@
 <div
   class="modal fade"
-  id="exampleModal"
+  id="emailModal"
   tabindex="-1"
-  aria-labelledby="exampleModalLabel"
+  aria-labelledby="emailModalLabel"
   aria-hidden="true"
 >
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Send an email to
+        <h5 class="modal-title" id="emailModalLabel">Send an email to
           {{seller.firstName}}
           {{seller.lastName}}</h5>
         <button
@@ -88,8 +88,16 @@
           type="button"
           class="btn btn-primary btn-sm"
           data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-        ><i class="bi bi-envelope"></i></button><br />
+          data-bs-target="#emailModal"
+        ><i class="bi bi-envelope"></i></button>
+        <button
+          type="button"
+          class="btn btn-primary btn-sm"
+          {{! data-bs-toggle="modal"
+          data-bs-target="#exampleModal" }}
+        ><i class="bi bi-hand-thumbs-up"></i><i
+            class="bi bi-hand-thumbs-down"
+          ></i></button><br />
         <span>Location:</span>
         <p>{{product.location.streetAddress}},
           {{product.location.city}},
@@ -126,6 +134,7 @@
             class="list-group-item list-group-item-action"
             aria-current="true"
           >
+            <span class="commId" hidden>{{_id}}</span>
             <div class="d-flex w-100 justify-content-between">
               <h5 class="mb-1 commentUserName">{{userName}}</h5>
               <img
@@ -136,6 +145,7 @@
             </div>
             <p class="mb-1">{{comment}}</p>
             <small class="dateAdded">{{dateAdded}}</small>
+            <button class="btn btn-danger btn-sm" id={{_id}}>Delete</button>
             {{! <small>And some small print.</small> }}
           </div>
         {{/comments}}

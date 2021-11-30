@@ -48,6 +48,7 @@ router.get("/get/:id", async (req, res) => {
     const allusers = await userData.getAll();
     comments.forEach((x, index) => {
       comments[index].dateAdded = utils.formatDaysAgo(x.dateAdded);
+      comments[index]._id = x._id.toString();
       allusers.forEach((curr) => {
         if (curr.id === x.user_id.toString()) {
           x.userName = curr.name;

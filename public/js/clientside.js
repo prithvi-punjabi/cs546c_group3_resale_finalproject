@@ -72,14 +72,6 @@ function clearInput() {
   searchBar();
 }
 
-function w3_open() {
-  document.getElementById("mySidebar").style.display = "block";
-}
-
-function w3_close() {
-  document.getElementById("mySidebar").style.display = "none";
-}
-
 function filterLocation() {
   let nyCheck = document.getElementById("NewYork");
   let njCheck = document.getElementById("NewJersey");

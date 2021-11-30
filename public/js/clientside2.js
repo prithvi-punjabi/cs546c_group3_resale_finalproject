@@ -1,6 +1,49 @@
 (function ($) {
   // const emailForm = $("#emailForm");
+
   $(document).ready(function () {
+    $(".btn-danger").hide();
+    const prodId = $("#prodID").text();
+    var comms = new Array();
+    $(".commId").each(function () {
+      var comment = $(this).text();
+      comms.push(comment);
+    });
+    $.ajax({
+      type: "GET",
+      url: `/comments/getall/${prodId}`,
+      complete: function (response) {
+        console.log(response.responseJSON);
+        response.responseJSON.forEach((x) => {
+          comms.forEach((y) => {
+            if (x === y) {
+              $(`#${y}`).show();
+            }
+          });
+        });
+      },
+    });
+
+    $(".btn-danger").click(function (event) {
+      const commId = this.id;
+      const delButt = $(`#${commId}`);
+      $.ajax({
+        type: "POST",
+        url: `/comments/delete/${commId}`,
+        complete: function (response) {
+          if (response.responseJSON === true) {
+            event.target.closest(".list-group-item").remove();
+            Swal.fire({
+              title: "Success!",
+              text: `Your comment has been deleted!`,
+              icon: "success",
+              confirmButtonText: "Got it, thank you!",
+            });
+          }
+        },
+      });
+    });
+
     $("#emailFormSubmit").click(function (event) {
       const emailForm = $("#emailForm");
       const seller = $("#nameOfSeller").val();

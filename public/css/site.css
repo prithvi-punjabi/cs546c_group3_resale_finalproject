@@ -556,3 +556,8 @@ body {
 .add-product-form {
   margin: 10%;
 }
+
+.btn-danger {
+  position: relative;
+  float: right;
+}
