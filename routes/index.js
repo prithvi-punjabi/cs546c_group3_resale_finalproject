@@ -1,6 +1,7 @@
 const users = require("./users");
 const products = require("./products");
 const comments = require("./comments");
+const chats = require("./chat");
 const multer = require("multer");
 const { ErrorMessage } = require("../helper/message");
 const productsData = require("../data").products;
@@ -25,6 +26,7 @@ module.exports = async (app) => {
   app.use("/", users);
   app.use("/products", products);
   app.use("/comments", comments);
+  app.use("/chat", chats);
 
   app.post("/uploadSingle", (req, res) => {
     uploadSingle(req, res, function (err) {
