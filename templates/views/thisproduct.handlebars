@@ -5,6 +5,7 @@
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
 >
+<input type="hidden" id="product_id" value="{{seller._id}}">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -88,7 +89,12 @@
           class="btn btn-primary btn-sm"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
-        ><i class="bi bi-envelope"></i></button><br />
+        ><i class="bi bi-envelope"></i></button>
+        <button
+          id="btn-chat"
+          type="button"
+          class="btn btn-primary btn-sm"
+        ><i class="bi bi-chat-dots"></i></button><br />
         <span>Location:</span>
         <p>{{product.location.streetAddress}},
           {{product.location.city}},

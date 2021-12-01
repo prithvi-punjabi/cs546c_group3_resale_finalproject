@@ -20,6 +20,10 @@
         },
       });
     });
+
+    $("#btn-chat").click(function () {
+      window.location.href = "/chat/" + $("#product_id").val();
+    });
   });
 
   $(document).ready(function () {

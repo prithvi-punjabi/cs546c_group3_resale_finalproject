@@ -20,6 +20,11 @@ const getAllChats = async (my_user_id) => {
 };
 
 const getChatByUserId = async (my_user_id, user_id) => {
+  if (my_user_id == user_id) {
+    const error = new Error("Cannot chat with yourself");
+    error.code = errorCode.BAD_REQUEST;
+    throw error;
+  }
   validator.checkNonNull(my_user_id, user_id);
   validator.checkString(my_user_id, "my_user_id");
   validator.checkString(user_id, "user_id");
@@ -41,6 +46,12 @@ const getChatByUserId = async (my_user_id, user_id) => {
 };
 
 const addEmptyChat = async (my_user_id, user_id) => {
+  if (my_user_id == user_id) {
+    const error = new Error("Cannot chat with yourself");
+    error.code = errorCode.BAD_REQUEST;
+    throw error;
+  }
+
   const user = await usersData.get(user_id);
   const myUser = await usersData.get(my_user_id);
   my_user_id = utils.parseObjectId(my_user_id, "MyUserId");
@@ -82,6 +93,11 @@ const addEmptyChat = async (my_user_id, user_id) => {
 };
 
 const addToChat = async (my_user_id, user_id, msg, isSent) => {
+  if (my_user_id == user_id) {
+    const error = new Error("Cannot chat with yourself");
+    error.code = errorCode.BAD_REQUEST;
+    throw error;
+  }
   validator.checkNonNull(my_user_id, user_id, msg, isSent);
   validator.checkString(msg, "msg");
   validator.checkString(my_user_id, "my_user_id");
