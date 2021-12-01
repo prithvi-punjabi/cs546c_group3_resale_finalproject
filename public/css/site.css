@@ -35,6 +35,17 @@
   padding: 10px;
 }
 
+.caption {
+  display: block;
+}
+
+.itemProduct {
+  vertical-align: top;
+  display: inline-block;
+  text-align: center;
+  margin: 0px 30px;
+}
+
 h1 {
   color: #32a852;
   margin-top: 30px;
@@ -142,6 +153,16 @@ input:checked + .slider:before {
   float: left;
 }
 
+.caption {
+  display: block;
+}
+
+.itemProduct {
+  vertical-align: top;
+  display: inline-block;
+  text-align: center;
+  margin: 0px 30px;
+}
 .card-title {
   color: rgb(20, 170, 6);
 }
