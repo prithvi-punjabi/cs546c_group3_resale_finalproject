@@ -18,7 +18,7 @@
         let thistest = response.responseJSON;
         $("#testButClose").trigger("click");
         testDiv.append(
-          "<div class='card prodCard'><div class='card-header'>" +
+          "<div class='card'><div class='card-header'>" +
             thistest.usersName +
             "</div><div class='divimage2'><img src='" +
             thistest.userImg +

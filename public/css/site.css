@@ -13,7 +13,7 @@
       format("svg");
 }
 
-.prodCard {
+.card {
   float: left;
   width: 18rem;
   height: 32rem;
@@ -724,10 +724,11 @@ body {
   }
 }
 
-.abtcard {
+.row > .column > .abtcard {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   /* height: 180px; */
   padding: 16px;
+  height: inherit;
   text-align: justify;
   background-color: #f1f1f1;
 }
