@@ -1,4 +1,19 @@
-.card {
+@font-face {
+  font-family: "Gagalin";
+  src: url("//db.onlinewebfonts.com/t/240a7cb10b49b02c94ceddc459d385a9.eot");
+  src: url("//db.onlinewebfonts.com/t/240a7cb10b49b02c94ceddc459d385a9.eot?#iefix")
+      format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/240a7cb10b49b02c94ceddc459d385a9.woff2")
+      format("woff2"),
+    url("//db.onlinewebfonts.com/t/240a7cb10b49b02c94ceddc459d385a9.woff")
+      format("woff"),
+    url("//db.onlinewebfonts.com/t/240a7cb10b49b02c94ceddc459d385a9.ttf")
+      format("truetype"),
+    url("//db.onlinewebfonts.com/t/240a7cb10b49b02c94ceddc459d385a9.svg#Gagalin")
+      format("svg");
+}
+
+.prodCard {
   float: left;
   width: 18rem;
   height: 32rem;
@@ -301,7 +316,7 @@ input:checked + .slider:before {
   margin-top: 6px;
 }
 
-.container {
+.productCont {
   max-width: 1200px;
   margin: 0 auto;
   padding: 15px;
@@ -392,7 +407,7 @@ input:checked + .slider:before {
 
 /* Responsive */
 @media (max-width: 940px) {
-  .container {
+  .productCont {
     flex-direction: column;
     margin-top: 60px;
   }
@@ -620,4 +635,87 @@ body {
 }
 .star-rating i ~ i ~ i ~ i ~ i {
   width: 100%;
+}
+
+.resaleimg {
+  display: block;
+  height: 268px;
+  width: 45%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#abtImg {
+  width: 100%;
+  height: auto;
+}
+
+#abouthead {
+  color: black;
+  font-family: "Gagalin";
+  font-size: 60px;
+}
+
+.column {
+  float: left;
+  width: 25%;
+  padding: 0 10px;
+}
+
+#colu1,
+#colu2,
+#colu3,
+#colu4 {
+  float: left;
+  width: 25%;
+  padding: 0 10px;
+}
+
+/* Remove extra left and right margins, due to padding */
+.row {
+  margin: 0 -5px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive columns */
+@media screen and (max-width: 990px) {
+  #colu1,
+  #colu2,
+  #colu3,
+  #colu4 {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+  #abtUsCont {
+    margin-top: 10px;
+  }
+}
+
+.abtcard {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  /* height: 180px; */
+  padding: 16px;
+  text-align: justify;
+  background-color: #f1f1f1;
+}
+
+.abtcard p {
+  padding-left: 1px;
+  padding-right: 1px;
+}
+
+#abtUsCont {
+  margin-top: 110px;
+}
+
+.column h3 {
+  text-align: center;
+  font-weight: bold;
 }

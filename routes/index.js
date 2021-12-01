@@ -76,6 +76,10 @@ module.exports = async (app) => {
     }
   });
 
+  app.get("/about", async (req, res) => {
+    res.render("about");
+  });
+
   app.use("/*", (req, res) => {
     res.status(404).json({
       status: "Error",
