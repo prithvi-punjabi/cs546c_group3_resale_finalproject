@@ -1,7 +1,7 @@
 const connection = require("../config/mongoConnection");
 const users = require("../data/users");
 const products = require("../data/products");
-const comments = require("../data/comments")
+const comments = require("../data/comments");
 
 //Important: Do not pass a hashed password to the create function, the password hashing takes place before insertion
 
@@ -48,7 +48,7 @@ async function main() {
       blender._id.toString(),
       michael._id,
       "Good blender lol, obviously, I posted it."
-    )
+    );
   } catch (e) {
     console.log(e);
   }

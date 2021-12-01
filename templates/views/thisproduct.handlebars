@@ -1,5 +1,58 @@
 <div
   class="modal fade"
+  id="ratingModal"
+  tabindex="-1"
+  aria-labelledby="ratingModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ratingModalLabel">Rate
+          {{seller.firstName}}
+          {{seller.lastName}}</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          id="ratingButClose"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form
+          method="POST"
+          action="/users/rate/{{product.seller_id}}"
+          id="ratingForm"
+        >
+          <span class="star-rating">
+            <input type="radio" name="rating" value="1" /><i></i>
+            <input type="radio" name="rating" value="2" /><i></i>
+            <input type="radio" name="rating" value="3" /><i></i>
+            <input type="radio" name="rating" value="4" /><i></i>
+            <input type="radio" name="rating" value="5" /><i></i>
+          </span>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >Discard</button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          form="ratingForm"
+          id="ratingFormSubmit"
+        >Rate</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
   id="emailModal"
   tabindex="-1"
   aria-labelledby="emailModalLabel"
@@ -93,8 +146,8 @@
         <button
           type="button"
           class="btn btn-primary btn-sm"
-          {{! data-bs-toggle="modal"
-          data-bs-target="#exampleModal" }}
+          data-bs-toggle="modal"
+          data-bs-target="#ratingModal"
         ><i class="bi bi-hand-thumbs-up"></i><i
             class="bi bi-hand-thumbs-down"
           ></i></button><br />

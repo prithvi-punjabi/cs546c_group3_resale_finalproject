@@ -94,7 +94,7 @@ async function create(
     address: address,
     password: password,
     biography: biography,
-    rating: 0,
+    rating: [],
     listedProducts: [],
     favouriteProducts: [],
   };
@@ -274,6 +274,22 @@ async function removeFavourite(userId, prodId) {
   } else return "Product does not exist in favourites";
 }
 
+async function rateUser(userId, currrating) {
+  currrating = parseInt(currrating);
+  validate.checkNonNull(userId), validate.checkNonNull(currrating);
+  validate.isValidObjectID(userId);
+  validate.checkNumber(currrating);
+  const usercol = await users();
+  const userRating = await usercol.updateOne(
+    { _id: ObjectId(userId) },
+    { $push: { rating: currrating } }
+  );
+  if (userRating.modifiedCount === 0) {
+    throw "Could not add rating";
+  }
+  return currrating;
+}
+
 module.exports = {
   create,
   get,
@@ -283,4 +299,5 @@ module.exports = {
   loginUser,
   addFavourite,
   removeFavourite,
+  rateUser,
 };

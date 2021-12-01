@@ -32,7 +32,6 @@
         type: "GET",
         url: `/comments/getall/${prodId}`,
         complete: function (response) {
-          console.log(response.responseJSON);
           response.responseJSON.forEach((x) => {
             comms.forEach((y) => {
               if (x === y) {
@@ -61,6 +60,36 @@
             icon: "success",
             confirmButtonText: "Got it!",
           });
+        },
+      });
+    });
+
+    $("#ratingFormSubmit").click(function (event) {
+      event.preventDefault();
+      const ratingForm = $("#ratingForm");
+      const seller = $("#nameOfSeller").val();
+      $.ajax({
+        type: "POST",
+        url: ratingForm.attr("action"),
+        data: ratingForm.serialize(),
+        complete: function (response) {
+          $("#ratingButClose").trigger("click");
+          const thisRate = parseInt(response.responseJSON);
+          if (thisRate >= 3) {
+            Swal.fire({
+              title: "Yay!",
+              text: `${seller} appreciates your ${thisRate} star rating!`,
+              icon: "success",
+              confirmButtonText: "That's great!",
+            });
+          } else {
+            Swal.fire({
+              title: "Awww..",
+              text: `${seller} will take your ${thisRate} star rating into account, and improve!`,
+              icon: "success",
+              confirmButtonText: "Good to know!",
+            });
+          }
         },
       });
     });

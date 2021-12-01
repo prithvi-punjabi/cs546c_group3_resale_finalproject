@@ -189,6 +189,24 @@ router.post("/users/removefavourite/:id", async (req, res) => {
   }
 });
 
+router.post("/users/rate/:id", async (req, res) => {
+  try {
+    let userId = req.params.id;
+    let rating = req.body.rating;
+    const rated = await usersData.rateUser(userId, rating);
+    if (rated) {
+      res.json(rated);
+    }
+  } catch (e) {
+    if (typeof e == "string") {
+      e = new Error(e);
+      e.code = 400;
+    }
+    if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
+    else return res.status(500).json(ErrorMessage(e.message));
+  }
+});
+
 //update
 router.put("users/update/:id", async (req, res) => {
   console.log("update");
