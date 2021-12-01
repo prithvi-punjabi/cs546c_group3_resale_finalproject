@@ -1,7 +1,7 @@
 const connection = require("../config/mongoConnection");
 const users = require("../data/users");
 const products = require("../data/products");
-const comments = require("../data/comments")
+const comments = require("../data/comments");
 
 //Important: Do not pass a hashed password to the create function, the password hashing takes place before insertion
 
@@ -48,7 +48,7 @@ async function main() {
       blender._id.toString(),
       michael._id,
       "Good blender lol, obviously, I posted it."
-    )
+    );
   } catch (e) {
     console.log(e);
   }
@@ -62,7 +62,7 @@ async function main() {
       "john.doe",
       "11/28/1993",
       "male",
-      "/public/uploads/profile4.png",
+      "/public/uploads/profile4.jpeg",
       {
         streetAddress: "15w 47 st",
         city: "New York",
@@ -144,7 +144,7 @@ async function main() {
       "iron.man",
       "10/10/1989",
       "male",
-      "/public/uploads/profile5.png",
+      "/public/uploads/profile5.jpeg",
       {
         streetAddress: "65 Willow Ave",
         city: "Jersey City",
