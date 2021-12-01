@@ -121,7 +121,7 @@ router.delete("/users/delete/:id", async (req, res) => {
 });
 
 // get user
-router.get("/users/:id", async (req, res) => {
+router.get("/user/:id", async (req, res) => {
   const id = req.params.id;
   try {
     console.log("here id");
@@ -131,6 +131,14 @@ router.get("/users/:id", async (req, res) => {
     const thisuser = await usersData.get(id);
     const listprod = await thisuser.listedProducts;
     let arr = [];
+    let rating = 0;
+    let finRating;
+    if (thisuser.rating.length > 0) {
+      thisuser.rating.forEach((x) => {
+        rating += x;
+      });
+      finRating = rating / thisuser.rating.length;
+    } else finRating = 0;
 
     for (let i = 0; i < listprod.length; i++) {
       let obj = {};
@@ -156,8 +164,7 @@ router.get("/users/:id", async (req, res) => {
     }
     // return res.status(200).json(thisuser);
     return res.render("userprofile", {
-      firstName: thisuser.firstName,
-      lastName: thisuser.lastName,
+      nameOfUser: thisuser.firstName + " " + thisuser.lastName,
       email: thisuser.email,
       phoneNumber: thisuser.phoneNumber,
       userName: thisuser.userName,
@@ -166,7 +173,7 @@ router.get("/users/:id", async (req, res) => {
       profilePicture: thisuser.profilePicture,
       address: thisuser.address,
       biography: thisuser.biography,
-      rating: thisuser.rating,
+      rating: finRating,
       listedProducts: arr,
       favouriteProducts: arr1,
     });

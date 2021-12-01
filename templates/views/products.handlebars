@@ -12,7 +12,8 @@
   </div>
   <div class="search-container">
     {{#if user}}
-      <a href="/user">Hello, {{user.firstName}}!</a>
+      {{! prettier-ignore }}
+      <a href="/user/{{user._id}}">Hello, {{user.firstName}}!</a>
       <a href="/products/new">Sell Products</a>
     {{else}}
       <a id="a-login" href="/login">Login</a>
