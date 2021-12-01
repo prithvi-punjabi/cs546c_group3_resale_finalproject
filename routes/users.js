@@ -4,10 +4,11 @@ const data = require("../data");
 const validate = require("../helper/validator");
 const utils = require("../helper/utils");
 const usersData = data.users;
+const productData = data.products;
 const validator = require("../helper/validator");
 const { errorCode } = require("../helper/common");
 const { ErrorMessage } = require("../helper/message");
-
+const { getById } = require("../data/products");
 //Important: Do not pass a hashed password to the create function, the password hashing takes place before insertion
 
 router.get("/login", (req, res) => {
@@ -128,6 +129,31 @@ router.get("/users/:id", async (req, res) => {
     validate.checkString(id);
     utils.parseObjectId(id, "User ID");
     const thisuser = await usersData.get(id);
+    const listprod = await thisuser.listedProducts;
+    let arr = [];
+
+    for (let i = 0; i < listprod.length; i++) {
+      let obj = {};
+      obj.image = listprod[i].images[0];
+      obj.names = listprod[i].name;
+      obj.idno = listprod[i]._id.toString();
+      arr.push(obj);
+    }
+    console.log(arr);
+    let listlike = await thisuser.favouriteProducts;
+    let prod = await productData;
+    let arr1 = [];
+    for (let j = 0; j < listlike.length; j++) {
+      let getprod = await getById(listlike[j]);
+      let idno = listlike[j];
+      let imgdis = getprod.images[0];
+      let prodname = getprod.name;
+      let obj1 = {};
+      obj1.imageprod = imgdis;
+      obj1.prodname = prodname;
+      obj1.prodid = idno;
+      arr1.push(obj1);
+    }
     // return res.status(200).json(thisuser);
     return res.render("userprofile", {
       firstName: thisuser.firstName,
@@ -141,8 +167,8 @@ router.get("/users/:id", async (req, res) => {
       address: thisuser.address,
       biography: thisuser.biography,
       rating: thisuser.rating,
-      listedProducts: thisuser.listedProducts,
-      favouriteProducts: thisuser.favouriteProducts,
+      listedProducts: arr,
+      favouriteProducts: arr1,
     });
   } catch (e) {
     console.log(e);
