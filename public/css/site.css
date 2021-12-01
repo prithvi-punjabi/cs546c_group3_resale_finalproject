@@ -709,13 +709,18 @@ body {
   #colu1,
   #colu2,
   #colu3,
-  #colu4 {
+  #colu4,
+  #butCol {
     width: 100%;
     display: block;
     margin-bottom: 20px;
   }
   #abtUsCont {
     margin-top: 10px;
+  }
+  #butCol #buyresale {
+    position: relative;
+    left: 0;
   }
 }
 
@@ -739,4 +744,120 @@ body {
 .column h3 {
   text-align: center;
   font-weight: bold;
+}
+
+@media (hover: hover) {
+  #creditcard {
+    transform: translateY(110px);
+    transition: transform 0.1s ease-in-out;
+  }
+
+  #money {
+    transform: translateY(180px);
+    transition: transform 0.1s ease-in-out;
+  }
+
+  #buyresale:hover #creditcard {
+    transform: translateY(0px);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  #buyresale:hover #money {
+    transform: translateY(0px);
+    transition: transform 0.3s ease-in-out;
+  }
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.25rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+#buyresale:hover .button__text span {
+  transform: translateY(-0.25rem);
+  transition: transform 0.2s ease-in-out;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap");
+
+#butCol {
+  position: relative;
+}
+
+#buyresale {
+  border: none;
+  outline: none;
+  text-align: center;
+  background-color: purple;
+  padding: 1rem 90px 1rem 2rem;
+  position: absolute;
+  top: 18px;
+  left: 41.5%;
+  margin: auto 0;
+  border-radius: 8px;
+  letter-spacing: 0.7px;
+  background-color: #5086bd;
+  color: #fff;
+  font-size: 21px;
+  font-family: "Lato", sans-serif;
+  cursor: pointer;
+  box-shadow: rgba(0, 9, 61, 0.2) 0px 4px 8px 0px;
+}
+
+#buyresale:active {
+  transform: translateY(1px);
+}
+
+.button__svg {
+  position: absolute;
+  overflow: visible;
+  bottom: 6px;
+  right: 0.2rem;
+  height: 140%;
+}
+
+#testimonialHead {
+  text-align: center;
+  margin-top: 7%;
+  font-family: "Gagalin";
+}
+
+#testDiv,
+#butCol {
+  text-align: center;
+  position: relative;
+}
+#butCol {
+  height: 50px;
+}
+
+.divimage2 {
+  position: relative;
+  padding-top: 10px;
+  height: 17rem;
+}
+
+.card-img-top2 {
+  max-height: 75%;
+  max-width: 75%;
+  width: auto;
+  height: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 50%;
+}
+
+#allTestimonials {
+  margin-left: 5px;
 }

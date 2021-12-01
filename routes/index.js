@@ -1,6 +1,7 @@
 const users = require("./users");
 const products = require("./products");
 const comments = require("./comments");
+const about = require("./about");
 const multer = require("multer");
 const { ErrorMessage } = require("../helper/message");
 const productsData = require("../data").products;
@@ -25,6 +26,7 @@ module.exports = async (app) => {
   app.use("/", users);
   app.use("/products", products);
   app.use("/comments", comments);
+  app.use("/about", about);
 
   app.post("/uploadSingle", (req, res) => {
     uploadSingle(req, res, function (err) {
@@ -74,10 +76,6 @@ module.exports = async (app) => {
         return res.status(e.code).json(ErrorMessage(e.message));
       else return res.status(500).json(ErrorMessage(e.message));
     }
-  });
-
-  app.get("/about", async (req, res) => {
-    res.render("about");
   });
 
   app.use("/*", (req, res) => {

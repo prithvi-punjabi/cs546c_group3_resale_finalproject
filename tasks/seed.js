@@ -2,6 +2,7 @@ const connection = require("../config/mongoConnection");
 const users = require("../data/users");
 const products = require("../data/products");
 const comments = require("../data/comments");
+const testimonials = require("../data/testimonials");
 
 //Important: Do not pass a hashed password to the create function, the password hashing takes place before insertion
 
@@ -49,6 +50,12 @@ async function main() {
       michael._id,
       "Good blender lol, obviously, I posted it."
     );
+    await testimonials.create(
+      michael._id.toString(),
+      michael.profilePicture,
+      michael.firstName + " " + michael.lastName,
+      "Dude what a BRILLIANT website. Always blows my mind how the creators can be so thorough!"
+    );
   } catch (e) {
     console.log(e);
   }
@@ -89,6 +96,12 @@ async function main() {
       "Available",
       "Not Used",
       "04/14/2020"
+    );
+    await testimonials.create(
+      john._id.toString(),
+      john.profilePicture,
+      john.firstName + " " + john.lastName,
+      "Wow I love this website so so so so much!"
     );
   } catch (e) {
     console.log(e);
@@ -131,6 +144,12 @@ async function main() {
       "Fairly Used",
       "06/09/2019"
     );
+    await testimonials.create(
+      ariana._id.toString(),
+      ariana.profilePicture,
+      ariana.firstName + " " + ariana.lastName,
+      "This is genuinely my most favorite shopping website EVER! It's way better than amazon etc. re$ale has a clear purpose, and it delivers an exceptional platform and product."
+    );
   } catch (e) {
     console.log(e);
   }
@@ -171,6 +190,12 @@ async function main() {
       "Available",
       "Barely Used",
       "11/21/2021"
+    );
+    await testimonials.create(
+      iron_man._id.toString(),
+      iron_man.profilePicture,
+      iron_man.firstName + " " + iron_man.lastName,
+      "Man, this is my most favourite site ever. Sometimes I just go on here and look at stuff for fun."
     );
   } catch (e) {
     console.log(e);
