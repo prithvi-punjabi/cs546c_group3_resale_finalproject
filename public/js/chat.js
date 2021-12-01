@@ -10,6 +10,9 @@
       window.location.href = "/chat/" + $(li).attr("id");
     });
   });
+  if ($("#ul-chat li").length == 0) {
+    $("#ul-chat").append("<li class='text-center'>No chats<li>");
+  }
   $("#input-msg").focus();
   $("#input-msg").keypress(function (e) {
     var key = e.which;
