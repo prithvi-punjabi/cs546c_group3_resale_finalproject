@@ -710,10 +710,17 @@ body {
   #colu2,
   #colu3,
   #colu4,
-  #butCol {
+  #butCol,
+  .abtcard {
     width: 100%;
     display: block;
     margin-bottom: 20px;
+  }
+
+  .abtcard {
+    width: 100%;
+    display: block;
+    margin-left: 10px;
   }
   #abtUsCont {
     margin-top: 10px;
@@ -730,7 +737,7 @@ body {
   padding: 16px;
   height: inherit;
   text-align: justify;
-  background-color: #f1f1f1;
+  background-color: white;
 }
 
 .abtcard p {
@@ -742,7 +749,7 @@ body {
   margin-top: 110px;
 }
 
-.column h3 {
+.column h4 {
   text-align: center;
   font-weight: bold;
 }
