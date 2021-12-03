@@ -335,6 +335,12 @@ input:checked + .slider:before {
 
 .sidebarButton {
   margin-top: 6px;
+  margin-left: 25%;
+}
+
+#clearAllDiv > .btn-danger {
+  display: inline-block;
+  right: 30%;
 }
 
 .productCont {
@@ -887,4 +893,23 @@ body {
 
 .card-img-top:hover + .hide {
   display: block;
+}
+#loginAlert,
+#ratingAlert {
+  text-align: center;
+}
+
+#emailAlert {
+  text-align: center;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+#commentMsgAlert {
+  text-align: center;
+  font-size: 15px;
+}
+
+#commentAlert {
+  text-align: center;
 }

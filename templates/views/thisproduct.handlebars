@@ -33,6 +33,19 @@
             <input type="radio" name="rating" value="5" /><i></i>
           </span>
         </form>
+        <div
+          class="alert alert-warning alert-dismissible fade show"
+          role="alert"
+          id="ratingAlert"
+        >
+          <span id="ratingMsgAlert"></span>
+          <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            id="closeRatingAlert"
+          ></button>
+        </div>
       </div>
       <div class="modal-footer">
         <button
@@ -80,7 +93,7 @@
           id="emailForm"
         >
           <label for="message" class="emailLabel">Message:</label><br />
-          <textarea name="message" rows="5" cols="56"></textarea>
+          <textarea name="message" rows="5" cols="56" id="message"></textarea>
           <input
             type="text"
             id="nameOfSeller"
@@ -95,6 +108,19 @@
             value="{{seller.email}}"
             hidden
           />
+          <div
+            class="alert alert-warning alert-dismissible fade show"
+            role="alert"
+            id="emailAlert"
+          >
+            <span id="emailMsgAlert"></span>
+            <button
+              type="button"
+              class="btn-close"
+              aria-label="Close"
+              id="closeEmailAlert"
+            ></button>
+          </div>
         </form>
       </div>
       <div class="modal-footer">
@@ -188,6 +214,19 @@
           ></textarea>
         </label>
         <br />
+        <div
+          class="alert alert-warning alert-dismissible fade show"
+          role="alert"
+          id="commentAlert"
+        >
+          <span id="commentMsgAlert"></span>
+          <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            id="closeCommentAlert"
+          ></button>
+        </div>
         <button type="button" class="btn btn-success" id="submitComment">Post
           Comment</button>
       </form>

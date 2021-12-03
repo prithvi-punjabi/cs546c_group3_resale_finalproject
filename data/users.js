@@ -274,20 +274,53 @@ async function removeFavourite(userId, prodId) {
   } else return "Product does not exist in favourites";
 }
 
-async function rateUser(userId, currrating) {
+async function rateUser(userId, currrating, thisUser) {
   currrating = parseInt(currrating);
-  validate.checkNonNull(userId), validate.checkNonNull(currrating);
-  validate.isValidObjectID(userId);
+  validate.checkNonNull(userId),
+    validate.checkNonNull(currrating),
+    validate.checkNonNull(thisUser);
+  validate.isValidObjectID(userId), validate.isValidObjectID(thisUser);
   validate.checkNumber(currrating);
   const usercol = await users();
-  const userRating = await usercol.updateOne(
-    { _id: ObjectId(userId) },
-    { $push: { rating: currrating } }
-  );
-  if (userRating.modifiedCount === 0) {
-    throw "Could not add rating";
+  const alreadyRated = await usercol.findOne({
+    _id: ObjectId(userId),
+    rating: { $elemMatch: { rater_id: thisUser } },
+  });
+  if (alreadyRated) {
+    return "Already rated";
+  } else {
+    let thisUsersRating = {};
+    thisUsersRating["rater_id"] = thisUser;
+    thisUsersRating["rating"] = currrating;
+    const userRating = await usercol.updateOne(
+      { _id: ObjectId(userId) },
+      { $push: { rating: thisUsersRating } }
+    );
+    if (userRating.modifiedCount === 0) {
+      throw "Could not add rating";
+    }
+    return currrating;
   }
-  return currrating;
+}
+
+async function getRating(userId) {
+  validate.checkNonNull(userId);
+  validate.isValidObjectID(userId);
+  const usercol = await users();
+  const usersRating = await usercol.findOne(
+    { _id: ObjectId(userId) },
+    { projection: { rating: 1, _id: 0 } }
+  );
+  let count = 0;
+  let totalRating = 0;
+  if (usersRating.rating.length > 0) {
+    usersRating.rating.forEach((x) => {
+      totalRating += x.rating;
+      count += 1;
+    });
+    let finRating = totalRating / count;
+    return Math.round(finRating * 100) / 100;
+  } else return 0;
 }
 
 module.exports = {
@@ -300,4 +333,5 @@ module.exports = {
   addFavourite,
   removeFavourite,
   rateUser,
+  getRating,
 };

@@ -12,6 +12,9 @@ const { getById } = require("../data/products");
 //Important: Do not pass a hashed password to the create function, the password hashing takes place before insertion
 
 router.get("/login", (req, res) => {
+  if (req.session.user) {
+    return res.redirect("/");
+  }
   return res.render("login");
 });
 
@@ -130,16 +133,8 @@ router.get("/user/:id", async (req, res) => {
     utils.parseObjectId(id, "User ID");
     const thisuser = await usersData.get(id);
     const listprod = await thisuser.listedProducts;
+    const finRating = await usersData.getRating(id);
     let arr = [];
-    let rating = 0;
-    let finRating;
-    if (thisuser.rating.length > 0) {
-      thisuser.rating.forEach((x) => {
-        rating += x;
-      });
-      finRating = rating / thisuser.rating.length;
-    } else finRating = 0;
-
     for (let i = 0; i < listprod.length; i++) {
       let obj = {};
       obj.image = listprod[i].images[0];
@@ -226,8 +221,11 @@ router.post("/users/rate/:id", async (req, res) => {
   try {
     let userId = req.params.id;
     let rating = req.body.rating;
-    const rated = await usersData.rateUser(userId, rating);
-    if (rated) {
+    let thisUser = req.session.user._id;
+    const rated = await usersData.rateUser(userId, rating, thisUser);
+    if (typeof rated === "string") {
+      res.json(-1);
+    } else {
       res.json(rated);
     }
   } catch (e) {
