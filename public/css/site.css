@@ -876,6 +876,22 @@ body {
   margin-left: 5px;
 }
 
-#loginAlert {
+#loginAlert,
+#ratingAlert {
+  text-align: center;
+}
+
+#emailAlert {
+  text-align: center;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+#commentMsgAlert {
+  text-align: center;
+  font-size: 15px;
+}
+
+#commentAlert {
   text-align: center;
 }
