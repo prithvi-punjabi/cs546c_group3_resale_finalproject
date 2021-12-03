@@ -361,13 +361,13 @@ input:checked + .slider:before {
   margin-top: 60px;
 }
 
-.left-column img.active {
+.left-column #prodImageCarousel {
   opacity: 1;
   margin-left: auto;
   margin-top: auto;
   margin-right: auto;
   display: block;
-  max-width: 90%;
+  max-width: 75%;
 }
 
 .product-description {
@@ -894,4 +894,10 @@ body {
 
 #commentAlert {
   text-align: center;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: black;
+  /* color: black; */
 }
