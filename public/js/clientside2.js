@@ -82,12 +82,19 @@
               icon: "success",
               confirmButtonText: "That's great!",
             });
-          } else {
+          } else if (thisRate > 0 && thisRate < 3) {
             Swal.fire({
               title: "Awww..",
               text: `${seller} will take your ${thisRate} star rating into account, and improve!`,
               icon: "success",
               confirmButtonText: "Good to know!",
+            });
+          } else {
+            Swal.fire({
+              title: "Already rated!",
+              text: `You have already rated ${seller}!`,
+              icon: "info",
+              confirmButtonText: "Oh, oops! Got it!",
             });
           }
         },

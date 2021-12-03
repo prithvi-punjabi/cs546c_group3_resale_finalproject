@@ -9,9 +9,7 @@ const { errorCode } = require("../helper/common");
 const { ErrorMessage } = require("../helper/message");
 
 router.get("/", async (req, res) => {
-  console.log("hitting");
   const allTestimonials = await testimonialsData.getAll();
-  console.log(allTestimonials);
   res.render("about", { test: allTestimonials, user: req.session.user });
 });
 

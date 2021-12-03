@@ -1,7 +1,7 @@
 const utils = require("./utils");
 
 module.exports = async (app) => {
-  app.use("/products/new", (req, res, next) => {
+  app.use("/products/get/private", (req, res, next) => {
     if (!utils.isUserLoggedIn(req)) {
       return res.redirect("/login");
     }
