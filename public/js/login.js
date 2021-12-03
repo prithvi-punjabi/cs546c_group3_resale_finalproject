@@ -4,6 +4,13 @@ function removeErrorClass(element) {
   document.getElementById("usernameHelp").classList.remove("visually-hidden");
 }
 (function ($) {
+  $("#loginAlert").hide();
+  const urlParams = new URLSearchParams(window.location.search);
+  const myParam = urlParams.get("error");
+  if (myParam) {
+    $("#loginAlert").html(myParam);
+    $("#loginAlert").show();
+  }
   const username = document.getElementById("username");
   const password = document.getElementById("password");
   const error = document.getElementById("error-div");

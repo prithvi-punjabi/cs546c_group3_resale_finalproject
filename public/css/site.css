@@ -869,3 +869,7 @@ body {
 #allTestimonials {
   margin-left: 5px;
 }
+
+#loginAlert {
+  text-align: center;
+}

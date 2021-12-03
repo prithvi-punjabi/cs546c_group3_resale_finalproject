@@ -12,6 +12,9 @@ const { getById } = require("../data/products");
 //Important: Do not pass a hashed password to the create function, the password hashing takes place before insertion
 
 router.get("/login", (req, res) => {
+  if (req.session.user) {
+    return res.redirect("/");
+  }
   return res.render("login");
 });
 
