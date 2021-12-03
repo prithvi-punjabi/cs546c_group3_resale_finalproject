@@ -335,6 +335,12 @@ input:checked + .slider:before {
 
 .sidebarButton {
   margin-top: 6px;
+  margin-left: 25%;
+}
+
+#clearAllDiv > .btn-danger {
+  display: inline-block;
+  right: 30%;
 }
 
 .productCont {
