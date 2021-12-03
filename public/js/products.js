@@ -17,8 +17,8 @@ function imageUploadChange() {
   }
   function addPost(newPost) {
     $.ajax({
-      type: isEdit() ? "PUT" : "POST",
-      url: "/products/" + (isEdit() ? product_id : ""),
+      type: "POST",
+      url: "/products/" + (isEdit() ? "edit/" + product_id : "/new"),
       contentType: "application/json",
       data: JSON.stringify(newPost),
       dataType: "text",

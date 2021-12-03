@@ -90,32 +90,47 @@ router.get("/edit/:id", async (req, res) => {
   try {
     const productId = req.params.id;
     utils.parseObjectId(productId, "ProductId");
-    const product = await productsData.getById(productId);
-    let category = null,
-      keywords = null;
-    for (const key in product.category) {
-      const value = product.category[key];
-      if (category == null) {
-        category = value;
-      } else {
-        category += ", " + value;
+
+    try {
+      const product = await productsData.getById(req.params.id);
+      if (product.seller_id.toString() != req.session.user._id.toString()) {
+        return res
+          .status(403)
+          .json({ message: "You're not authorized to edit others' products" });
       }
-    }
-    product.category = category;
-    for (const key in product.keywords) {
-      const value = product.keywords[key];
-      if (keywords == null) {
-        keywords = value;
-      } else {
-        keywords += ", " + value;
+
+      let category = null,
+        keywords = null;
+      for (const key in product.category) {
+        const value = product.category[key];
+        if (category == null) {
+          category = value;
+        } else {
+          category += ", " + value;
+        }
       }
+      product.category = category;
+      for (const key in product.keywords) {
+        const value = product.keywords[key];
+        if (keywords == null) {
+          keywords = value;
+        } else {
+          keywords += ", " + value;
+        }
+      }
+      product.keywords = keywords;
+      product.isAvailable = product.status.toLowerCase() == "available";
+      product.isNew = product.condition.toLowerCase() == "new";
+      product.isBarelyUsed = product.condition.toLowerCase() == "barely used";
+      product.isFairlyUsed = product.condition.toLowerCase() == "fairly used";
+      return res.render("addProduct", { product: product });
+    } catch (e) {
+      if (typeof e == "string") {
+        e = new Error(e);
+        e.code = 500;
+      }
+      res.status(e.code).json({ message: e.message });
     }
-    product.keywords = keywords;
-    product.isAvailable = product.status.toLowerCase() == "available";
-    product.isNew = product.condition.toLowerCase() == "new";
-    product.isBarelyUsed = product.condition.toLowerCase() == "barely used";
-    product.isFairlyUsed = product.condition.toLowerCase() == "fairly used";
-    return res.render("addProduct", { product: product });
   } catch (e) {
     console.log(e);
     if (typeof e == "string") {
@@ -147,7 +162,7 @@ router.post("/post/:id", async (req, res) => {
   });
 });
 
-router.post("/", async (req, res) => {
+router.post("/new", async (req, res) => {
   try {
     if (req.body == null)
       return res.status(400).json(ErrorMessage("Missing body parameters"));
@@ -217,7 +232,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.post("/edit/:id", async (req, res) => {
   try {
     if (req.body == null)
       return res.status(400).json(ErrorMessage("Missing body parameters"));
@@ -254,7 +269,12 @@ router.put("/:id", async (req, res) => {
     validator.checkString(condition, "Barely used");
 
     try {
-      await productsData.getById(req.params.id);
+      const product = await productsData.getById(req.params.id);
+      if (product.seller_id.toString() != req.session.user._id.toString()) {
+        return res
+          .status(403)
+          .json({ message: "You're not authorized to edit others' products" });
+      }
     } catch (e) {
       res.status(404).json({ message: "Product not found" });
     }
@@ -282,10 +302,22 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.post("/remove/:id", async (req, res) => {
   try {
     const productId = req.params.id;
     utils.parseObjectId(productId, "ProductId");
+    try {
+      const product = await productsData.getById(req.params.id);
+      if (product.seller_id.toString() != req.session.user._id.toString()) {
+        return res
+          .status(403)
+          .json({
+            message: "You're not authorized to remove others' products",
+          });
+      }
+    } catch (e) {
+      return res.status(404).json({ message: "Product not found" });
+    }
     const product = await productsData.remove(productId);
     return res.json(product);
   } catch (e) {
