@@ -33,7 +33,7 @@ module.exports = async (app) => {
       if (err) {
         return res.status(500).json("Failed to upload image");
       }
-      return res.json(req.file.destination + "/" + req.file.filename);
+      return res.json("/" + req.file.destination + "/" + req.file.filename);
     });
   });
 
@@ -45,7 +45,7 @@ module.exports = async (app) => {
       const images = [];
       for (let i = 0; i < req.files.length; i++) {
         const file = req.files[i];
-        images.push(file.path);
+        images.push("/" + file.path);
       }
       return res.json(images);
     });

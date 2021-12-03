@@ -178,8 +178,8 @@ const create = async (
   if (!Array.isArray(images)) throw "Images must be an array";
   validator.checkString(description, "description");
   validator.checkLocation(location);
-  validator.checkString(status, "status");
-  validator.checkString(condition, "condition");
+  validator.checkStatus(status);
+  validator.checkCondition(condition);
   validator.checkDate(dateListed, "Date Listed");
 
   const newProduct = {
@@ -223,13 +223,11 @@ const update = async (
   category,
   keywords,
   price,
-  seller_id,
   images,
   description,
   location,
   status,
-  condition,
-  dateListed
+  condition
 ) => {
   id = validator.isValidObjectID(id);
   validator.checkNonNull(
@@ -237,40 +235,50 @@ const update = async (
     category,
     keywords,
     price,
-    seller_id,
     images,
     description,
     location,
     status,
-    condition,
-    dateListed
+    condition
   );
   validator.checkString(name, "name");
   if (!Array.isArray(category)) throw "Category must be an array";
   if (!Array.isArray(keywords)) throw "keywords must be an array";
   validator.checkNumber(price, "price");
-  validator.checkString(seller_id, "seller_id");
-  seller_id = utils.parseObjectId(seller_id, "SellerId");
   if (!Array.isArray(images)) throw "Images must be an array";
   validator.checkString(description, "description");
   validator.checkLocation(location);
   validator.checkString(status, "status");
   validator.checkString(condition, "Barely used");
-  validator.checkDate(dateListed, "Date Listed");
 
-  const updateProduct = {
-    name: name,
-    category: category,
-    keywords: keywords,
-    price: parseFloat(price),
-    seller_id: seller_id,
-    images: images,
-    description: description,
-    location: location,
-    status: status,
-    condition: condition,
-    dateListed: dateListed,
-  };
+  const updateProduct = {};
+  if (name != null) {
+    updateProduct.name = name;
+  }
+  if (category != null) {
+    updateProduct.category = category;
+  }
+  if (keywords != null) {
+    updateProduct.keywords = keywords;
+  }
+  if (price != null) {
+    updateProduct.price = parseFloat(price);
+  }
+  if (images != null) {
+    updateProduct.images = images;
+  }
+  if (description != null) {
+    updateProduct.description = description;
+  }
+  if (location != null) {
+    updateProduct.location = location;
+  }
+  if (status != null) {
+    updateProduct.status = status;
+  }
+  if (condition != null) {
+    updateProduct.condition = condition;
+  }
 
   const products = await productCollections();
   const updateInfo = await products.updateOne(
