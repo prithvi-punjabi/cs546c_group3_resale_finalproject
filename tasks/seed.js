@@ -94,7 +94,7 @@ async function main() {
       "KING CHAIR. If you sit on this, you'll feel like sitting on throne and ruling 7 kingdom",
       john.address,
       "Available",
-      "Not Used",
+      "New",
       "04/14/2020"
     );
     await testimonials.create(
@@ -140,7 +140,7 @@ async function main() {
       ],
       "Old keyboard. I've used it for many years and still working fine.",
       ariana.address,
-      "Not Available",
+      "Sold",
       "Fairly Used",
       "06/09/2019"
     );

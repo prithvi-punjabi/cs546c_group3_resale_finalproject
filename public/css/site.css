@@ -876,6 +876,24 @@ body {
   margin-left: 5px;
 }
 
+.size-100 {
+  height: 100px !important;
+  width: 100px !important;
+}
+
+.span-x {
+  width: 25%;
+  z-index: 1;
+  background: #8080805c;
+}
+
+.hide {
+  display: none;
+}
+
+.card-img-top:hover + .hide {
+  display: block;
+}
 #loginAlert,
 #ratingAlert {
   text-align: center;

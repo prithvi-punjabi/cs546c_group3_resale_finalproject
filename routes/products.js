@@ -86,6 +86,62 @@ router.get("/new", async (req, res) => {
   }
 });
 
+router.get("/edit/:id", async (req, res) => {
+  try {
+    const productId = req.params.id;
+    utils.parseObjectId(productId, "ProductId");
+
+    try {
+      const product = await productsData.getById(req.params.id);
+      if (product.seller_id.toString() != req.session.user._id.toString()) {
+        return res
+          .status(403)
+          .json({ message: "You're not authorized to edit others' products" });
+      }
+
+      let category = null,
+        keywords = null;
+      for (const key in product.category) {
+        const value = product.category[key];
+        if (category == null) {
+          category = value;
+        } else {
+          category += ", " + value;
+        }
+      }
+      product.category = category;
+      for (const key in product.keywords) {
+        const value = product.keywords[key];
+        if (keywords == null) {
+          keywords = value;
+        } else {
+          keywords += ", " + value;
+        }
+      }
+      product.keywords = keywords;
+      product.isAvailable = product.status.toLowerCase() == "available";
+      product.isNew = product.condition.toLowerCase() == "new";
+      product.isBarelyUsed = product.condition.toLowerCase() == "barely used";
+      product.isFairlyUsed = product.condition.toLowerCase() == "fairly used";
+      return res.render("addProduct", { product: product });
+    } catch (e) {
+      if (typeof e == "string") {
+        e = new Error(e);
+        e.code = 500;
+      }
+      res.status(e.code).json({ message: e.message });
+    }
+  } catch (e) {
+    console.log(e);
+    if (typeof e == "string") {
+      e = new Error(e);
+      e.code = 400;
+    }
+    if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
+    else return res.status(500).json(ErrorMessage(e.message));
+  }
+});
+
 router.post("/post/:id", async (req, res) => {
   let id = req.params.id;
   let from = req.session.user.email;
@@ -106,7 +162,7 @@ router.post("/post/:id", async (req, res) => {
   });
 });
 
-router.post("/", async (req, res) => {
+router.post("/new", async (req, res) => {
   try {
     if (req.body == null)
       return res.status(400).json(ErrorMessage("Missing body parameters"));
@@ -176,7 +232,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.post("/edit/:id", async (req, res) => {
   try {
     if (req.body == null)
       return res.status(400).json(ErrorMessage("Missing body parameters"));
@@ -185,41 +241,40 @@ router.put("/:id", async (req, res) => {
       category,
       keywords,
       price,
-      seller_id,
       images,
       description,
       location,
       status,
       condition,
-      dateListed,
     } = req.body;
     validator.checkNonNull(
       name,
       category,
       keywords,
       price,
-      seller_id,
       images,
       description,
       location,
       status,
-      condition,
-      dateListed
+      condition
     );
     validator.checkString(name, "name");
     if (!Array.isArray(category)) throw "Category must be an array";
     if (!Array.isArray(keywords)) throw "keywords must be an array";
     validator.checkNumber(price, "price");
-    validator.checkString(seller_id, "seller_id");
     if (!Array.isArray(images)) throw "Images must be an array";
     validator.checkString(description, "description");
     validator.checkLocation(location);
     validator.checkString(status, "status");
     validator.checkString(condition, "Barely used");
-    validator.checkDate(dateListed, "Date Listed");
 
     try {
-      await productsData.getById(req.params.id);
+      const product = await productsData.getById(req.params.id);
+      if (product.seller_id.toString() != req.session.user._id.toString()) {
+        return res
+          .status(403)
+          .json({ message: "You're not authorized to edit others' products" });
+      }
     } catch (e) {
       res.status(404).json({ message: "Product not found" });
     }
@@ -230,13 +285,11 @@ router.put("/:id", async (req, res) => {
       category,
       keywords,
       price,
-      seller_id,
       images,
       description,
       location,
       status,
-      condition,
-      dateListed
+      condition
     );
     return res.json(product);
   } catch (e) {
@@ -249,10 +302,22 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.post("/remove/:id", async (req, res) => {
   try {
     const productId = req.params.id;
     utils.parseObjectId(productId, "ProductId");
+    try {
+      const product = await productsData.getById(req.params.id);
+      if (product.seller_id.toString() != req.session.user._id.toString()) {
+        return res
+          .status(403)
+          .json({
+            message: "You're not authorized to remove others' products",
+          });
+      }
+    } catch (e) {
+      return res.status(404).json({ message: "Product not found" });
+    }
     const product = await productsData.remove(productId);
     return res.json(product);
   } catch (e) {

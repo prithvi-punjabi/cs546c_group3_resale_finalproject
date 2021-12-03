@@ -1,9 +1,14 @@
 <div class="sidenav">
   <div class="login-main-text">
+    {{#if product}}
+    <h1>Update product</h1>
+    {{else}}
     <h1>Add product</h1>
+    {{/if}}
     <p>Describe your product correctly</p>
   </div>
 </div>
+<input type="hidden" id="product_id" value="{{product._id}}">
 <div class="main">
   <div class="col-md-12 col-sm-12">
     <div class="add-product-form">
@@ -22,6 +27,7 @@
             name="name"
             aria-label="name"
             aria-describedby="span-name"
+            value="{{product.name}}"
             required
           />
           <div class="invalid-feedback">
@@ -40,13 +46,23 @@
             aria-label="imageUpload"
             aria-describedby="span-image"
             onchange="imageUploadChange()"
-            required
+            {{#if product}}{{else}}required{{/if}}
             multiple
           />
-          <div class="invalid-feedback">
+          <div id="invalid-image" class="invalid-feedback">
             Please select at least one image
           </div>
         </div>
+        {{#if product}}
+            <div id="uploaded-imgs" class="row mb-3">
+              {{#each product.images}}
+                <div class="card col-md-3 size-100">
+                    <img class="uploaded-img card-img-top" src="{{this}}">
+                    <span class="span-x hide">X</span>
+                </div>
+              {{/each}}
+            </div>
+        {{/if}}
         <div class="input-group mb-3">
           <span class="input-group-text" id="span-category">Category</span>
           <input
@@ -57,6 +73,7 @@
             name="category"
             aria-label="category"
             aria-describedby="span-category"
+            value="{{product.category}}"
             required
           />
           <div class="invalid-feedback">
@@ -73,6 +90,7 @@
             name="keywords"
             aria-label="keywords"
             aria-describedby="span-keywords"
+            value="{{product.keywords}}"
           />
         </div>
         <div class="input-group mb-3">
@@ -85,6 +103,7 @@
             name="price"
             aria-label="price"
             aria-describedby="span-price"
+            value="{{product.price}}"
             required
           />
           <div class="invalid-feedback">
@@ -104,7 +123,7 @@
             aria-describedby="span-description"
             placeholder="Describe your product here"
             required
-          ></textarea>
+          >{{product.description}}</textarea>
         </div>
         <div class="input-group mb-3">
           <span class="input-group-text" id="span-street">Address</span>
@@ -116,6 +135,7 @@
             name="street"
             aria-label="street"
             aria-describedby="span-street"
+            value="{{product.location.streetAddress}}"
             required
           />
           <div class="invalid-feedback">
@@ -133,6 +153,7 @@
             name="city"
             aria-label="city"
             aria-describedby="span-city"
+            value="{{product.location.city}}"
             required
           />
           <span class="input-group-text" id="span-state">State</span>
@@ -145,6 +166,7 @@
             aria-label="state"
             maxlength="2"
             aria-describedby="span-state"
+            value="{{product.location.state}}"
             required
           />
           <span class="input-group-text" id="span-zip">Zip</span>
@@ -157,12 +179,14 @@
             aria-label="zip"
             pattern="[0-9]{5}"
             aria-describedby="span-zip"
+            value="{{product.location.zip}}"
             required
           />
           <div class="invalid-feedback">
             Please enter valid address
           </div>
         </div>
+        {{#if product}}
         <div class="input-group mb-3">
           <span class="input-group-text" id="span-status">Status</span>
           <div class="form-control">
@@ -172,7 +196,7 @@
                 type="radio"
                 name="status"
                 id="status_available"
-                checked
+                {{#if product.isAvailable}}checked{{/if}}
               />
               <label class="form-check-label" for="status_available">
                 Available
@@ -184,6 +208,7 @@
                 type="radio"
                 name="status"
                 id="status_sold"
+                {{#if product.isAvailable}}{{else}}checked{{/if}}
               />
               <label class="form-check-label" for="status_sold">
                 Sold
@@ -191,7 +216,7 @@
             </div>
           </div>
         </div>
-
+        {{/if}}
         <div class="input-group mb-3">
           <span class="input-group-text" id="span-condition">Condition</span>
           <div class="form-control">
@@ -201,12 +226,22 @@
                 type="radio"
                 name="condition"
                 id="condition_new"
+                {{#if product.isNew}}checked{{/if}}
               />
               <label class="form-check-label" for="condition_new">
                 New
               </label>
             </div>
             <div class="form-check form-check-inline">
+              {{#if product}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="condition"
+                  id="condition_barely_used"
+                  {{#if product.isBarelyUsed}}checked{{/if}}
+                />
+              {{else}}
               <input
                 class="form-check-input"
                 type="radio"
@@ -214,6 +249,7 @@
                 id="condition_barely_used"
                 checked
               />
+              {{/if}}
               <label class="form-check-label" for="condition_barely_used">
                 Barely Used
               </label>
@@ -224,6 +260,7 @@
                 type="radio"
                 name="condition"
                 id="condition_fairly_used"
+                {{#if product.isFairlyUsed}}checked{{/if}}
               />
               <label class="form-check-label" for="condition_fairly_used">
                 Fairly Used
@@ -234,7 +271,7 @@
         <div>{{error}}</div>
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-secondary">Add</button>
+            <button type="submit" class="btn btn-secondary">{{#if product}}Update{{else}}Add{{/if}}</button>
           </div>
         </div>
       </form>

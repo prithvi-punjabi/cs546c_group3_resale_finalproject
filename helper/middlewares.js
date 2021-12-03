@@ -21,6 +21,26 @@ module.exports = async (app) => {
     next();
   });
 
+  app.use("/products/edit", (req, res, next) => {
+    if (!utils.isUserLoggedIn(req)) {
+      return res.redirect(
+        "/login?error=" +
+          encodeURIComponent("You need to be logged in to update a product!")
+      );
+    }
+    next();
+  });
+
+  app.use("/products/remove", (req, res, next) => {
+    if (!utils.isUserLoggedIn(req)) {
+      return res.redirect(
+        "/login?error=" +
+          encodeURIComponent("You need to be logged in to remove a product!")
+      );
+    }
+    next();
+  });
+
   app.use("/products/post", (req, res, next) => {
     if (!utils.isUserLoggedIn(req)) {
       return res.redirect(
