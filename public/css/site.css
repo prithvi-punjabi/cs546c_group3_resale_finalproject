@@ -917,5 +917,10 @@ body {
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   background-color: black;
-  /* color: black; */
+}
+
+#updateBtn {
+  position: fixed;
+  right: 10px;
+  top: 10px;
 }

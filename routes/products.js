@@ -56,12 +56,25 @@ router.get("/get/:id", async (req, res) => {
         }
       });
     });
-    return res.render("thisproduct", {
-      product: product,
-      title: product.name,
-      seller: seller,
-      comments: comments,
-    });
+    let update = {};
+    if (req.session.user._id === seller._id.toString()) {
+      update.updated = true;
+
+      return res.render("thisproduct", {
+        product: product,
+        title: product.name,
+        seller: seller,
+        comments: comments,
+        update: update,
+      });
+    } else {
+      return res.render("thisproduct", {
+        product: product,
+        title: product.name,
+        seller: seller,
+        comments: comments,
+      });
+    }
   } catch (e) {
     if (typeof e == "string") {
       e = new Error(e);
@@ -309,11 +322,9 @@ router.post("/remove/:id", async (req, res) => {
     try {
       const product = await productsData.getById(req.params.id);
       if (product.seller_id.toString() != req.session.user._id.toString()) {
-        return res
-          .status(403)
-          .json({
-            message: "You're not authorized to remove others' products",
-          });
+        return res.status(403).json({
+          message: "You're not authorized to remove others' products",
+        });
       }
     } catch (e) {
       return res.status(404).json({ message: "Product not found" });

@@ -139,6 +139,11 @@
     </div>
   </div>
 </div>
+{{#if update}}
+  <form method="GET" action="/products/edit/{{product._id}}">
+    <button id="updateBtn" class="btn btn-dark" type="submit">Update</button>
+  </form>
+{{/if}}
 <main class="container productCont">
   <div class="left-column">
     {{! prettier-ignore }}
