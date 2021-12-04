@@ -18,7 +18,7 @@ async function main() {
       "michael.jordan",
       "10/29/1990",
       "male",
-      "/public/uploads/profile1.png",
+      "/public/uploads/profile1.jpg",
       {
         streetAddress: "170 NY st",
         city: "New York",
@@ -164,7 +164,7 @@ async function main() {
       "iron.man",
       "10/10/1989",
       "male",
-      "/public/uploads/profile5.jpeg",
+      "/public/uploads/profile5.png",
       {
         streetAddress: "65 Willow Ave",
         city: "Jersey City",
@@ -211,7 +211,7 @@ async function main() {
       "ronaldo.christiano",
       "05/03/1995",
       "male",
-      "/public/uploads/ronaldo.jpeg",
+      "/public/uploads/ronaldo.png",
       {
         streetAddress: "164 North Ave",
         city: "Hoboken",
