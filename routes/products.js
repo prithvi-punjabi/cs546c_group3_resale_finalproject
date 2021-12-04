@@ -54,6 +54,7 @@ router.get("/get/:id", async (req, res) => {
         }
       });
     });
+    product.isSold = product.status.toLowerCase() == "sold";
     let update = {};
     if (req.session.user._id === product.seller._id.toString()) {
       update.updated = true;

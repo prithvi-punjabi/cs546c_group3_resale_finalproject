@@ -136,7 +136,7 @@ const getByQuery = async (query) => {
 
 const getAll = async () => {
   const productsCol = await productCollections();
-  let products = await productsCol.find({}).toArray();
+  let products = await productsCol.find({ status: { $ne: "Sold" } }).toArray();
   if (!Array.isArray(products) || products.length == 0) {
     const error = new Error(`No products found`);
     error.code = errorCode.NOT_FOUND;
