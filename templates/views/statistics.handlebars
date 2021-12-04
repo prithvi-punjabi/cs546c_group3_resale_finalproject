@@ -1,23 +1,38 @@
 <main>
   <h1>re$ale Statistics</h1>
   <div>
-    <div class="card prodCard">
-      <div class="card-header">Highest Rating</div>
-      <div class="divimage2">
-        <img
-          src={{rating.profilePicture}}
-          class="card-img-top2"
-          alt="{{rating.name}}"
-        />
+    {{#if noRating}}
+      <div class="card prodCard">
+        <div class="card-header">Highest Rated User</div>
+        <div class="divimage2">
+          <img
+            src="/public/images/norating.png"
+            class="card-img-top2"
+            alt="No rating available"
+          />
+        </div>
+        <div class="card-body">
+          <p class="card-text">We're sorry, but we cannot find a user with the
+            highest rating!</p></div>
       </div>
-      <div class="card-body">
-        <p class="card-text">Our highest rated user is
-          {{rating.name}}
-          with a rating of
-          {{rating.finalRating}}
-          stars.</p></div>
-    </div>
-
+    {{else}}
+      <div class="card prodCard">
+        <div class="card-header">Highest Rated User</div>
+        <div class="divimage2">
+          <img
+            src={{rating.profilePicture}}
+            class="card-img-top2"
+            alt="{{rating.name}}"
+          />
+        </div>
+        <div class="card-body">
+          <p class="card-text">Our highest rated user is
+            {{rating.name}}
+            with a rating of
+            {{rating.finalRating}}
+            stars.</p></div>
+      </div>
+    {{/if}}
     <div class="card prodCard">
       <div class="card-header">Most Listings</div>
       <div class="divimage2">
