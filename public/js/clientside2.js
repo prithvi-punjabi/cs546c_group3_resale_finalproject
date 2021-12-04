@@ -93,6 +93,10 @@
     }
   });
 
+  $("#btn-chat").click(function () {
+    window.location.href = "/chat/" + $("#product_id").val();
+  });
+
   $("#ratingFormSubmit").click(function (event) {
     event.preventDefault();
     const ratingForm = $("#ratingForm");
