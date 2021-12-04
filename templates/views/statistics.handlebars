@@ -1,5 +1,6 @@
 <main>
-  <h1>re$ale Statistics</h1>
+  <h1 class="text-center p-3 mt-4">re$ale Statistics</h1>
+  <div class="text-center">Here are some statistics from re$ale. We analyze the listings and prepare some useful information to encourage people with products listings.</div>
   <div>
     {{#if noRating}}
       <div class="card prodCard">
@@ -34,7 +35,7 @@
       </div>
     {{/if}}
     <div class="card prodCard">
-      <div class="card-header">Most Listings</div>
+      <div class="card-header">Most Listings By User</div>
       <div class="divimage2">
         <img
           src={{listing.profilePicture}}
@@ -49,5 +50,77 @@
           {{listing.numOfProducts}}
           listings.</p></div>
     </div>
+    <div class="card prodCard">
+      <div class="card-header">Most Listings By Category</div>
+      <div class="divimage2">
+        <img
+          src="/public/uploads/category.png"
+          class="card-img-top2"
+          alt="{{highestListingCategory.category}}"
+        />
+      </div>
+      <div class="card-body">
+        <p class="card-text">Most products are listed within {{highestListingCategory.category}} category with {{highestListingCategory.count}} listings.</p></div>
+    </div>
+    <div class="card prodCard">
+      <div class="card-header">Most Listings By Month</div>
+      <div class="divimage2">
+        <img
+          src="/public/uploads/calendar.png"
+          class="card-img-top2"
+          alt="{{highestListingMonth.month}}"
+        />
+      </div>
+      <div class="card-body">
+        <p class="card-text">Most products are listed during {{highestListingMonth.month}} with {{highestListingMonth.count}} listings.</p></div>
+    </div>
+    <div class="card prodCard">
+      <div class="card-header">Most Listings By City</div>
+      <div class="divimage2">
+        <img
+          src="/public/uploads/city.png"
+          class="card-img-top2"
+          alt="{{highestListingCity.city}}"
+        />
+      </div>
+      <div class="card-body">
+        <p class="card-text">Most products are listed in {{highestListingCity.city}} with {{highestListingCity.count}} listings.</p></div>
+    </div>
+  </div>
+  <h1 class="text-center p-3 mt-4">Chart Statistics</h1>
+  <div class="mx-5 px-5">
+    <canvas id="chart"></canvas>
   </div>
 </main>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js">
+</script>
+<script>
+  const ctx = document.getElementById("chart").getContext('2d');
+  const categories = [], colors = [];
+  {{#each categories}}
+    categories.push("{{this}}");
+    colors.push("#"+Math.floor(Math.random()*16777215).toString(16));
+  {{/each}}
+  const categoryCounts = [{{categoryCounts}}];
+  const myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: categories,
+      datasets: [{
+        label: 'Products listed by categories',
+        backgroundColor: colors,
+        data: categoryCounts,
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+          }
+        }]
+      }
+    },
+  });
+</script>

@@ -12,8 +12,29 @@ router.get("/", async (req, res) => {
   try {
     const maxRating = await statData.highestRating();
     const maxListings = await statData.mostListings();
+    const highestListingMonth = await statData.highestProductListedByMonth();
+    const highestListingCity = await statData.highestProductListedByCity();
+    const highestListingCategory =
+      await statData.highestProductListedByCategory();
+    const listingsByCategory = await statData.getListingsByCategory();
+    const categories = [],
+      categoryCounts = [];
+    for (const key in listingsByCategory) {
+      if (Object.hasOwnProperty.call(listingsByCategory, key)) {
+        categories.push(key.toString());
+        categoryCounts.push(listingsByCategory[key]);
+      }
+    }
     if (maxRating !== false) {
-      res.render("statistics", { rating: maxRating, listing: maxListings });
+      res.render("statistics", {
+        rating: maxRating,
+        listing: maxListings,
+        highestListingMonth,
+        highestListingCity,
+        highestListingCategory,
+        categories: categories,
+        categoryCounts: categoryCounts,
+      });
     } else {
       res.render("statistics", { noRating: true, listing: maxListings });
     }
