@@ -36,7 +36,15 @@ router.get("/", async (req, res) => {
         categoryCounts: categoryCounts,
       });
     } else {
-      res.render("statistics", { noRating: true, listing: maxListings });
+      res.render("statistics", {
+        noRating: true,
+        listing: maxListings,
+        highestListingMonth,
+        highestListingCity,
+        highestListingCategory,
+        categories: categories,
+        categoryCounts: categoryCounts,
+      });
     }
   } catch (e) {
     if (typeof e == "string") {
