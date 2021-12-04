@@ -286,7 +286,7 @@ router.post("/edit/:id", async (req, res) => {
           .json({ message: "You're not authorized to edit others' products" });
       }
     } catch (e) {
-      res.status(404).json({ message: "Product not found" });
+      return res.status(404).json({ message: "Product not found" });
     }
 
     const product = await productsData.update(

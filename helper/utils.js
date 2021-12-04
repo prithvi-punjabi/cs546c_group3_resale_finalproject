@@ -1,6 +1,20 @@
 const errorCode = require("./common").errorCode;
 const { ObjectId } = require("mongodb");
 const moment = require("moment");
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 module.exports = {
   parseObjectId(id, varName) {
@@ -33,5 +47,8 @@ module.exports = {
   },
   getDateObject(date) {
     return moment(date, "MM/DD/YYYY").toDate();
+  },
+  getMonthInString(month) {
+    return months[month];
   },
 };

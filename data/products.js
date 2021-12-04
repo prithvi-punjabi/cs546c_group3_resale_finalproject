@@ -62,7 +62,7 @@ const getByQuery = async (query) => {
 
   //#region seller
   if (typeof seller == "string") {
-    const seller_id = utils.parseObjectId(seller);
+    const seller_id = utils.parseObjectId(seller, "SellerId");
     main_query.push({ seller_id: seller_id });
   } else if (Array.isArray(seller)) {
     for (let i = 0; i < seller.length; i++) {
@@ -202,9 +202,14 @@ const getByQuery = async (query) => {
   return products;
 };
 
-const getAll = async () => {
+const getAll = async (includeSold) => {
   const productsCol = await productCollections();
-  let products = await productsCol.find({ status: { $ne: "Sold" } }).toArray();
+  let products;
+  if (includeSold) {
+    products = await productsCol.find({ status: { $ne: "Sold" } }).toArray();
+  } else {
+    products = await productsCol.find({}).toArray();
+  }
   if (!Array.isArray(products) || products.length == 0) {
     const error = new Error(`No products found`);
     error.code = errorCode.NOT_FOUND;
