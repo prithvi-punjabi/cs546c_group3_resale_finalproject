@@ -3,16 +3,20 @@ const router = express.Router();
 const data = require("../data");
 const validate = require("../helper/validator");
 const utils = require("../helper/utils");
-const userData = data.users;
+const statData = data.statistics;
 const validator = require("../helper/validator");
 const { errorCode } = require("../helper/common");
 const { ErrorMessage } = require("../helper/message");
 
 router.get("/", async (req, res) => {
   try {
-    const maxRating = await userData.highestRating();
-    const maxListings = await userData.mostListings();
-    res.render("statistics", { rating: maxRating, listing: maxListings });
+    const maxRating = await statData.highestRating();
+    const maxListings = await statData.mostListings();
+    if (maxRating !== false) {
+      res.render("statistics", { rating: maxRating, listing: maxListings });
+    } else {
+      res.render("statistics", { noRating: true, listing: maxListings });
+    }
   } catch (e) {
     if (typeof e == "string") {
       e = new Error(e);
