@@ -921,7 +921,15 @@ body {
 
 #updateBtn {
   position: fixed;
+  display: inline-block;
   right: 10px;
+  top: 10px;
+}
+
+#backBtn {
+  position: fixed;
+  display: inline-block;
+  left: 10px;
   top: 10px;
 }
 

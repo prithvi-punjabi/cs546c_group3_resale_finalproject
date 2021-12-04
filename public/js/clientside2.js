@@ -24,28 +24,30 @@
     });
   });
 
-  function delBut() {
-    const prodId = $("#prodID").text();
-    var comms = new Array();
-    $(".commId").each(function () {
-      var comment = $(this).text();
-      comms.push(comment);
-    });
-    $.ajax({
-      type: "GET",
-      url: `/comments/getall/${prodId}`,
-      complete: function (response) {
-        response.responseJSON.forEach((x) => {
-          comms.forEach((y) => {
-            if (x === y) {
-              $(`#${y}`).show();
-            }
-          });
+  const prodId = $("#prodID").text();
+  var comms = new Array();
+  $(".commId").each(function () {
+    var comment = $(this).text();
+    comms.push(comment);
+  });
+  $.ajax({
+    type: "GET",
+    url: `/comments/getall/${prodId}`,
+    complete: function (response) {
+      response.responseJSON.forEach((x) => {
+        comms.forEach((y) => {
+          if (x === y) {
+            $(`#${y}`).show();
+          }
         });
-      },
-    });
-  }
-  delBut();
+      });
+      $(document).on("click", ".btn-danger", function (event) {
+        const commId = this.id;
+        console.log(commId);
+        // $(this).parent().remove();
+      });
+    },
+  });
 
   $("#closeEmailAlert").click(function (event) {
     $("#emailAlert").hide();
