@@ -42,8 +42,6 @@ router.get("/get/:id", async (req, res) => {
     const productId = req.params.id;
     utils.parseObjectId(productId, "ProductId");
     const product = await productsData.getById(productId);
-    const sellerId = product.seller_id.toString();
-    const seller = await userData.get(sellerId);
     const comments = await commentData.getAllComments(productId);
     const allusers = await userData.getAll();
     comments.forEach((x, index) => {
@@ -56,14 +54,14 @@ router.get("/get/:id", async (req, res) => {
         }
       });
     });
+    product.isSold = product.status.toLowerCase() == "sold";
     let update = {};
-    if (req.session.user._id === seller._id.toString()) {
+    if (req.session.user._id === product.seller._id.toString()) {
       update.updated = true;
 
       return res.render("thisproduct", {
         product: product,
         title: product.name,
-        seller: seller,
         comments: comments,
         update: update,
       });
@@ -71,7 +69,6 @@ router.get("/get/:id", async (req, res) => {
       return res.render("thisproduct", {
         product: product,
         title: product.name,
-        seller: seller,
         comments: comments,
       });
     }

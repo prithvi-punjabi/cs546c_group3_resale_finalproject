@@ -150,4 +150,14 @@ module.exports = async (app) => {
     }
     next();
   });
+
+  app.use("/chat", (req, res, next) => {
+    if (!utils.isUserLoggedIn(req)) {
+      return res.redirect(
+        "/login?error=" +
+          encodeURIComponent("You need to be logged in to chat!")
+      );
+    }
+    next();
+  });
 };

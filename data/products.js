@@ -4,6 +4,7 @@ const userCollections = mongoCollections.users;
 const validator = require("../helper/validator");
 const utils = require("../helper/utils");
 const errorCode = require("../helper/common").errorCode;
+const userData = require("../data/users");
 
 const getById = async (id) => {
   validator.checkNonNull(id);
@@ -11,12 +12,13 @@ const getById = async (id) => {
 
   id = utils.parseObjectId(id);
   const productsCol = await productCollections();
-  const product = await productsCol.findOne({ _id: id });
+  let product = await productsCol.findOne({ _id: id });
   if (product == null) {
     const error = new Error(`No product found with id - ${id.toString()}`);
     error.code = errorCode.NOT_FOUND;
     throw error;
   }
+  product = addUserToProduct(product);
   return product;
 };
 
@@ -118,7 +120,7 @@ const getByQuery = async (query) => {
     return await getAll();
   }
   const productsCol = await productCollections();
-  const products = await productsCol
+  let products = await productsCol
     .find({
       $and: main_query,
     })
@@ -128,17 +130,19 @@ const getByQuery = async (query) => {
     error.code = errorCode.NOT_FOUND;
     throw error;
   }
+  products = addUserToProducts(products);
   return products;
 };
 
 const getAll = async () => {
   const productsCol = await productCollections();
-  const products = await productsCol.find({}).toArray();
+  let products = await productsCol.find({ status: { $ne: "Sold" } }).toArray();
   if (!Array.isArray(products) || products.length == 0) {
     const error = new Error(`No products found`);
     error.code = errorCode.NOT_FOUND;
     throw error;
   }
+  products = addUserToProducts(products);
   return products;
 };
 
@@ -314,6 +318,32 @@ const remove = async (id) => {
   }
   return `${oldProduct.name}( id: ${oldProduct._id}) has been successfully deleted!`;
 };
+
+async function addUserToProduct(product) {
+  try {
+    const user = await userData.get(product.seller_id.toString());
+    product.seller = {
+      _id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      userName: user.userName,
+      profilePicture: user.profilePicture,
+      rating: user.rating,
+    };
+  } catch (e) {
+    console.log(e);
+  }
+  return product;
+}
+
+async function addUserToProducts(products) {
+  for (let i = 0; i < products.length; i++) {
+    products[i] = await addUserToProduct(products[i]);
+  }
+  return products;
+}
 
 module.exports = {
   create,

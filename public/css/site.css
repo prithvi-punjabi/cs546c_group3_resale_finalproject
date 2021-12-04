@@ -1189,3 +1189,10 @@ body {
 .float-right {
   float: right;
 }
+
+.sold {
+  background-color: red;
+  color: white !important;
+  padding: 5px 15px;
+  border-radius: 5px;
+}

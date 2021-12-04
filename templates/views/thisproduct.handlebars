@@ -5,13 +5,13 @@
   aria-labelledby="ratingModalLabel"
   aria-hidden="true"
 >
-<input type="hidden" id="product_id" value="{{seller._id}}">
+<input type="hidden" id="product_id" value="{{product.seller._id}}">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="ratingModalLabel">Rate
-          {{seller.firstName}}
-          {{seller.lastName}}</h5>
+          {{product.seller.firstName}}
+          {{product.seller.lastName}}</h5>
         <button
           type="button"
           class="btn-close"
@@ -76,8 +76,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="emailModalLabel">Send an email to
-          {{seller.firstName}}
-          {{seller.lastName}}</h5>
+          {{product.seller.firstName}}
+          {{product.seller.lastName}}</h5>
         <button
           type="button"
           class="btn-close"
@@ -99,14 +99,14 @@
             type="text"
             id="nameOfSeller"
             name="nameOfSeller"
-            value="{{seller.firstName}} {{seller.lastName}}"
+            value="{{product.seller.firstName}} {{product.seller.lastName}}"
             hidden
           />
           <input
             type="text"
             id="emailOfSeller"
             name="emailOfSeller"
-            value="{{seller.email}}"
+            value="{{product.seller.email}}"
             hidden
           />
           <div
@@ -187,6 +187,9 @@
   <div class="right-column">
 
     <div class="product-description">
+      {{#if product.isSold}}
+      <span class="sold">SOLD</span><br />
+      {{/if}}
       <h1>{{title}}</h1>
       <label for="favourite" class="custom-checkbox" id="favLabel">
         <input type="checkbox" id="favourite" class="custom-checkbox" />
@@ -200,8 +203,8 @@
     <div class="product-configuration">
       <div class="product-details">
         <span>Listed by:</span>
-        <span hidden id="sellerEmail">{{seller.email}}</span>
-        <p id="sellerName">{{seller.firstName}} {{seller.lastName}}</p>
+        <span hidden id="sellerEmail">{{product.seller.email}}</span>
+        <p id="sellerName">{{product.seller.firstName}} {{product.seller.lastName}}</p>
         <button
           type="button"
           class="btn btn-primary btn-sm"
