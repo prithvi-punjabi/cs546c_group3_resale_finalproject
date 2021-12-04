@@ -1,6 +1,7 @@
 const users = require("./users");
 const products = require("./products");
 const comments = require("./comments");
+const statistics = require("./statistics");
 const about = require("./about");
 const chats = require("./chat");
 const multer = require("multer");
@@ -28,6 +29,7 @@ module.exports = async (app) => {
   app.use("/products", products);
   app.use("/comments", comments);
   app.use("/about", about);
+  app.use("/statistics", statistics);
   app.use("/chat", chats);
 
   app.post("/uploadSingle", (req, res) => {

@@ -1,0 +1,38 @@
+<main>
+  <h1>re$ale Statistics</h1>
+  <div>
+    <div class="card prodCard">
+      <div class="card-header">Highest Rating</div>
+      <div class="divimage2">
+        <img
+          src={{rating.profilePicture}}
+          class="card-img-top2"
+          alt="{{rating.name}}"
+        />
+      </div>
+      <div class="card-body">
+        <p class="card-text">Our highest rated user is
+          {{rating.name}}
+          with a rating of
+          {{rating.finalRating}}
+          stars.</p></div>
+    </div>
+
+    <div class="card prodCard">
+      <div class="card-header">Most Listings</div>
+      <div class="divimage2">
+        <img
+          src={{listing.profilePicture}}
+          class="card-img-top2"
+          alt="{{listing.name}}"
+        />
+      </div>
+      <div class="card-body">
+        <p class="card-text">The user with the most listings is
+          {{listing.name}}
+          with
+          {{listing.numOfProducts}}
+          listings.</p></div>
+    </div>
+  </div>
+</main>
