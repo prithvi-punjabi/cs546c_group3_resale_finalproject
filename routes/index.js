@@ -29,11 +29,8 @@ module.exports = async (app) => {
   app.use("/products", products);
   app.use("/comments", comments);
   app.use("/about", about);
-<<<<<<< HEAD
   app.use("/statistics", statistics);
-=======
   app.use("/chat", chats);
->>>>>>> c94ed5c8a8c585bdd0c76948a3d7244f69e933a5
 
   app.post("/uploadSingle", (req, res) => {
     uploadSingle(req, res, function (err) {
