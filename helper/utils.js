@@ -1,5 +1,6 @@
 const errorCode = require("./common").errorCode;
 const { ObjectId } = require("mongodb");
+const moment = require("moment");
 
 module.exports = {
   parseObjectId(id, varName) {
@@ -29,5 +30,8 @@ module.exports = {
   },
   isUserLoggedIn(req) {
     return req.session.user != null;
+  },
+  getDateObject(date) {
+    return moment(date, "MM/DD/YYYY").toDate();
   },
 };

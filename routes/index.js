@@ -58,6 +58,19 @@ module.exports = async (app) => {
   app.get("/", async (req, res) => {
     try {
       let products;
+      if (req.query.sort_by == null) {
+        req.query.sort_by = "date";
+      } else {
+        if (
+          req.query.sort_by != "date" &&
+          req.query.sort_by != "user_rating" &&
+          req.query.sort_by != "price" &&
+          req.query.sort_by != "price_low_to_high" &&
+          req.query.sort_by != "price_high_to_low"
+        ) {
+          req.query.sort_by = "date";
+        }
+      }
       if (utils.isEmptyObject(req.query)) {
         products = await productsData.getAll();
       } else {
@@ -66,10 +79,24 @@ module.exports = async (app) => {
       products.forEach((x) => {
         x.images = x.images[0];
       });
+
       return res.render("products", {
         user: req.session.user,
         products: products,
         title: "re$ale",
+        isSortByDate:
+          req.query.sort_by != null &&
+          req.query.sort_by.toLowerCase() == "date",
+        isSortByUserRating:
+          req.query.sort_by != null &&
+          req.query.sort_by.toLowerCase() == "user_rating",
+        isSortByPrice:
+          req.query.sort_by != null &&
+          (req.query.sort_by.toLowerCase() == "price" ||
+            req.query.sort_by.toLowerCase() == "price_low_to_high"),
+        isSortByPriceHighToLow:
+          req.query.sort_by != null &&
+          req.query.sort_by.toLowerCase() == "price_high_to_low",
       });
     } catch (e) {
       if (typeof e == "string") {
