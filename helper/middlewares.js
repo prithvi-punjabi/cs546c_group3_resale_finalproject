@@ -8,6 +8,13 @@ function checkLogin(req, res, next) {
 }
 
 module.exports = async (app) => {
+  app.use((req, res, next) => {
+    res.header("Cache-Control", "private, no-cache, no-store, must-revalidate");
+    res.header("Expires", "-1");
+    res.header("Pragma", "no-cache");
+    next();
+  });
+
   app.use("/products/get", (req, res, next) => {
     if (!utils.isUserLoggedIn(req)) {
       return res.redirect(
