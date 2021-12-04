@@ -5,6 +5,7 @@
   aria-labelledby="ratingModalLabel"
   aria-hidden="true"
 >
+<input type="hidden" id="product_id" value="{{seller._id}}">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -214,7 +215,16 @@
           data-bs-target="#ratingModal"
         ><i class="bi bi-hand-thumbs-up"></i><i
             class="bi bi-hand-thumbs-down"
-          ></i></button><br />
+          ></i></button>
+        {{#if update}}
+        {{else}}
+        <button
+          id="btn-chat"
+          type="button"
+          class="btn btn-primary btn-sm"
+        ><i class="bi bi-chat-dots"></i></button>
+        {{/if}}
+        <br />
         <span>Location:</span>
         <p>{{product.location.streetAddress}},
           {{product.location.city}},

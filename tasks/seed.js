@@ -50,6 +50,7 @@ async function main() {
       michael._id,
       "Good blender lol, obviously, I posted it."
     );
+
     await testimonials.create(
       michael._id.toString(),
       michael.profilePicture,
@@ -69,7 +70,7 @@ async function main() {
       "john.doe",
       "11/28/1993",
       "male",
-      "/public/uploads/profile4.png",
+      "/public/uploads/profile4.jpeg",
       {
         streetAddress: "15w 47 st",
         city: "New York",
@@ -163,7 +164,7 @@ async function main() {
       "iron.man",
       "10/10/1989",
       "male",
-      "/public/uploads/profile5.png",
+      "/public/uploads/profile5.jpeg",
       {
         streetAddress: "65 Willow Ave",
         city: "Jersey City",
