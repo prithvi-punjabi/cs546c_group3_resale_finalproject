@@ -58,7 +58,59 @@
       aria-label="Close"
     ></button>
   </div>
+
   <div class="offcanvas-body">
+    <div>
+      Sort by:
+    <br />
+    <input
+      class="form-check-input"
+      type="radio"
+      id="sort_date"
+      name="sort_by"
+      value="date"
+      {{#if isSortByDate}}checked{{/if}}
+    />
+    <label class="form-check-label" for="sort_date">
+      Date Listed
+    </label>
+    <br />
+    <input
+      class="form-check-input"
+      type="radio"
+      id="sort_rating"
+      name="sort_by"
+      value="user_rating"
+      {{#if isSortByUserRating}}checked{{/if}}
+    />
+    <label class="form-check-label" for="sort_rating">
+      User Rating
+    </label>
+    <br />
+    <input
+      class="form-check-input"
+      type="radio"
+      id="sort_price"
+      name="sort_by"
+      value="price"
+      {{#if isSortByPrice}}checked{{/if}}
+    />
+    <label class="form-check-label" for="sort_price">
+      Price (Low to High)
+    </label>
+    <br />
+    <input
+      class="form-check-input"
+      type="radio"
+      id="sort_price_high_to_low"
+      name="sort_by"
+      value="price_high_to_low"
+      {{#if isSortByPriceHighToLow}}checked{{/if}}
+    />
+    <label class="form-check-label" for="sort_price_high_to_low">
+      Price (High to Low)
+    </label>
+    </div>
     <div id="priceDiv">
       By Price:
       <br />

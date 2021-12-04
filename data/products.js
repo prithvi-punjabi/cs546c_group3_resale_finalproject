@@ -31,7 +31,7 @@ const getByQuery = async (query) => {
     zipCode,
     status,
     condition,
-    sort_type,
+    sort_by,
     city,
     state,
   } = query;
@@ -116,21 +116,89 @@ const getByQuery = async (query) => {
   }
   //#endregion
 
-  if (main_query.length == 0) {
-    return await getAll();
+  const sortBy = {};
+  if (sort_by != null) {
+    if (sort_by.toLowerCase() == "price_high_to_low") {
+      sortBy["price"] = -1;
+    } else if (
+      sort_by.toLowerCase() == "price" ||
+      sort_by.toLowerCase() == "price_low_to_high"
+    ) {
+      sortBy["price"] = 1;
+    } else {
+      sortBy["dateListed"] = 1;
+    }
   }
+
+  let products;
   const productsCol = await productCollections();
-  let products = await productsCol
-    .find({
-      $and: main_query,
-    })
-    .toArray();
+  if (main_query.length == 0 && validator.isEmptyObject(sortBy)) {
+    products = await productsCol.find({ status: { $ne: "Sold" } }).toArray();
+  } else if (main_query.length == 0 && !validator.isEmptyObject(sortBy)) {
+    products = await productsCol
+      .find({ status: { $ne: "Sold" } })
+      .sort(sortBy)
+      .toArray();
+  } else if (main_query.length != 0 && validator.isEmptyObject(sortBy)) {
+    products = await productsCol
+      .find({
+        status: { $ne: "Sold" },
+        $and: main_query,
+      })
+      .toArray();
+  } else {
+    products = await productsCol
+      .find({
+        status: { $ne: "Sold" },
+        $and: main_query,
+      })
+      .sort(sortBy)
+      .toArray();
+  }
   if (!Array.isArray(products) || products.length == 0) {
     const error = new Error(`No product found`);
     error.code = errorCode.NOT_FOUND;
     throw error;
   }
-  products = addUserToProducts(products);
+  products = await addUserToProducts(products);
+  if (sort_by.toLowerCase() == "date") {
+    products.sort((a, b) => {
+      const d1 = utils.getDateObject(a.dateListed);
+      const d2 = utils.getDateObject(b.dateListed);
+      return d2.getTime() - d1.getTime();
+    });
+  } else if (sort_by.toLowerCase() == "user_rating") {
+    products.sort((a, b) => {
+      let r1 = 0,
+        r2 = 0;
+      if (
+        a != null &&
+        a.seller != null &&
+        a.seller.rating != null &&
+        Array.isArray(a.seller.rating) &&
+        a.seller.rating.length > 0
+      ) {
+        a.seller.rating.forEach((rating) => {
+          r1 += rating.rating;
+        });
+        r1 /= a.seller.rating.length;
+      }
+
+      if (
+        b != null &&
+        b.seller != null &&
+        b.seller.rating != null &&
+        Array.isArray(b.seller.rating) &&
+        b.seller.rating.length > 0
+      ) {
+        b.seller.rating.forEach((rating) => {
+          r2 += rating.rating;
+        });
+        r2 /= b.seller.rating.length;
+      }
+      return r2 - r1;
+    });
+  }
   return products;
 };
 
@@ -142,7 +210,7 @@ const getAll = async () => {
     error.code = errorCode.NOT_FOUND;
     throw error;
   }
-  products = addUserToProducts(products);
+  products = await addUserToProducts(products);
   return products;
 };
 
