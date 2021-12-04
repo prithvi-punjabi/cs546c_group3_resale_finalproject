@@ -136,24 +136,29 @@ router.get("/user/:id", async (req, res) => {
       let obj = {};
       obj.image = listprod[i].images[0];
       obj.names = listprod[i].name;
+      obj.price = listprod[i].price;
       obj.idno = listprod[i]._id.toString();
       arr.push(obj);
     }
     console.log(arr);
     let listlike = await thisuser.favouriteProducts;
-    let prod = await productData;
+    // let prod = await productData;
     let arr1 = [];
     for (let j = 0; j < listlike.length; j++) {
-      let getprod = await getById(listlike[j]);
+      let getprod = await getById(listlike[j].toString());
       let idno = listlike[j];
       let imgdis = getprod.images[0];
       let prodname = getprod.name;
+      let pricep = getprod.price;
+      console.log(pricep);
       let obj1 = {};
       obj1.imageprod = imgdis;
       obj1.prodname = prodname;
       obj1.prodid = idno;
+      obj1.prices = pricep;
       arr1.push(obj1);
     }
+    console.log(arr1);
     // return res.status(200).json(thisuser);
     return res.render("userprofile", {
       nameOfUser: thisuser.firstName + " " + thisuser.lastName,
