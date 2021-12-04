@@ -49,29 +49,32 @@ async function create(product_id, user_id, comment) {
       };
       const insertInfo = await commentsCollection.insertOne(newProdComment);
       if (insertInfo.insertedCount === 0) throw "Could not add comment";
-      else return insertInfo.insertedId;
+      else return newProdComment.comments[0]._id;
     }
   } else throw `Product with ID ${product_id} does not exist`;
 }
 
-async function deleteCommentById(id) {
-  validator.checkNonNull(id),
-    validator.checkString(id),
-    validator.isValidObjectID(id);
-  let thiscomment = await getCommentById(id);
+async function deleteCommentById(commId, prodId) {
+  validator.checkNonNull(commId),
+    validator.checkString(commId),
+    validator.isValidObjectID(commId);
+  validator.checkNonNull(prodId),
+    validator.checkString(prodId),
+    validator.isValidObjectID(prodId);
+  let thiscomment = await getCommentById(commId);
   if (thiscomment) {
     const commentsCollection = await comments();
-    const deletedInfo = await commentsCollection.updateMany(
-      {},
+    const deletedInfo = await commentsCollection.updateOne(
+      { product_id: ObjectId(prodId) },
       {
         $pull: {
           comments: {
-            _id: ObjectId(id),
+            _id: ObjectId(commId),
           },
         },
       }
     );
-    if (deletedInfo.deletedCount === 0) throw "Could not delete comment";
+    if (deletedInfo.modifiedCount === 0) throw "Could not delete comment";
     return true;
   } else throw `Comment with ID ${id} does not exist`;
 }
@@ -110,16 +113,17 @@ async function getCommentById(id) {
   validator.checkNonNull(id);
   validator.checkString(id);
   validator.isValidObjectID(id);
-
   const commentsCollection = await comments();
   let product = await commentsCollection
     .find({ comments: { $elemMatch: { _id: ObjectId(id) } } })
     .toArray();
-  for (let index in product[0].comments) {
-    if (product[0].comments[index]._id.toString() === id) {
-      return product[0].comments[index];
+  if (product.length > 0) {
+    for (let index in product[0].comments) {
+      if (product[0].comments[index]._id.toString() === id) {
+        return product[0].comments[index];
+      }
     }
-  }
+  } else return [];
   throw "No comment with the provided id found";
 }
 

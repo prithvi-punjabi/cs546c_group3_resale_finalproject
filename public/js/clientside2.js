@@ -4,25 +4,6 @@
   $("#emailAlert").hide();
   $("#commentAlert").hide();
   $("#ratingAlert").hide();
-  $(".btn-danger").click(function (event) {
-    const commId = this.id;
-    const delButt = $(`#${commId}`);
-    $.ajax({
-      type: "POST",
-      url: `/comments/delete/${commId}`,
-      complete: function (response) {
-        if (response.responseJSON === true) {
-          event.target.closest(".list-group-item").remove();
-          Swal.fire({
-            title: "Success!",
-            text: `Your comment has been deleted!`,
-            icon: "success",
-            confirmButtonText: "Got it, thank you!",
-          });
-        }
-      },
-    });
-  });
 
   const prodId = $("#prodID").text();
   var comms = new Array();
@@ -41,12 +22,29 @@
           }
         });
       });
-      $(document).on("click", ".btn-danger", function (event) {
-        const commId = this.id;
-        console.log(commId);
-        // $(this).parent().remove();
-      });
     },
+  });
+
+  $(".btn-danger").click(function (event) {
+    const commId = this.id;
+    const prodId = $("#prodID").text();
+    const delButt = $(`#${commId}`);
+    $.ajax({
+      type: "POST",
+      url: `/comments/delete/${commId}`,
+      data: { prodId: prodId },
+      complete: function (response) {
+        if (response.responseJSON === true) {
+          event.target.closest(".list-group-item").remove();
+          Swal.fire({
+            title: "Success!",
+            text: `Your comment has been deleted!`,
+            icon: "success",
+            confirmButtonText: "Got it, thank you!",
+          });
+        }
+      },
+    });
   });
 
   $("#closeEmailAlert").click(function (event) {
@@ -147,6 +145,7 @@
 
   $("#submitComment").click(function (event) {
     event.preventDefault();
+    const prodId = $("#prodID").text();
     const commentForm = $("#commentForm");
     const commentDiv = $("#displayedComments");
     const commentBox = $("#commentBox");
@@ -170,6 +169,9 @@
         commentBox.val("");
         commentDiv.append(
           "<div class='list-group-item list-group-item-action' aria-current='true'>" +
+            "<span class='commId' hidden>" +
+            response.responseJSON.commentId +
+            "</span>" +
             "<div class='d-flex w-100 justify-content-between'>" +
             " <h5 class='mb-1 commentUserName'>" +
             response.responseJSON.usersname +
@@ -186,7 +188,24 @@
             response.responseJSON.commentId +
             "'>Delete</button>"
         );
-        delBut();
+        $(`#${response.responseJSON.commentId}`).on("click", function (event) {
+          $.ajax({
+            type: "POST",
+            url: `/comments/delete/${response.responseJSON.commentId}`,
+            data: { prodId: prodId },
+            complete: function (response) {
+              if (response.responseJSON === true) {
+                event.target.closest(".list-group-item").remove();
+                Swal.fire({
+                  title: "Success!",
+                  text: `Your comment has been deleted!`,
+                  icon: "success",
+                  confirmButtonText: "Got it, thank you!",
+                });
+              }
+            },
+          });
+        });
       },
     });
   });

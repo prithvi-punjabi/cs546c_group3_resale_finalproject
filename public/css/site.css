@@ -927,7 +927,7 @@ body {
 }
 
 #backBtn {
-  position: fixed;
+  position: relative;
   display: inline-block;
   left: 10px;
   top: 10px;

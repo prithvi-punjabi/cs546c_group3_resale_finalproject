@@ -44,6 +44,7 @@ router.get("/getall/:id", async (req, res) => {
         userComms.push(x._id.toString());
       }
     });
+
     res.json(userComms);
   } catch (e) {
     if (typeof e == "string") {
@@ -57,9 +58,15 @@ router.get("/getall/:id", async (req, res) => {
 router.post("/delete/:id", async (req, res) => {
   try {
     const commId = req.params.id;
-    const delComment = await comments.deleteCommentById(commId);
+    const prodId = req.body.prodId;
+    const delComment = await comments.deleteCommentById(commId, prodId);
+    const allProdComments = await comments.getAllComments(prodId);
+    if (allProdComments.length === 0) {
+      await comments.deleteAllComments(prodId);
+    }
     if (delComment) res.json(true);
   } catch (e) {
+    console.log(e);
     if (typeof e == "string") {
       e = new Error(e);
       e.code = errorCode.BAD_REQUEST;
