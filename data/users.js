@@ -125,16 +125,10 @@ async function update(
   lastName,
   email,
   phoneNumber,
-  userName,
-  dob,
   gender,
   profilePicture,
   address,
-  password,
-  biography,
-  rating,
-  listedProducts,
-  favouriteProducts
+  biography
 ) {
   validate.checkNonNull(id);
   validate.checkString(id); //update validation
@@ -142,57 +136,41 @@ async function update(
   validate.checkNonNull(lastName);
   validate.checkNonNull(email);
   validate.checkNonNull(phoneNumber);
-  validate.checkNonNull(userName);
-  validate.checkNonNull(dob);
   validate.checkNonNull(gender);
   validate.checkNonNull(profilePicture);
   validate.checkNonNull(address);
-  validate.checkNonNull(password);
   validate.checkNonNull(biography);
   validate.checkString(firstName);
   validate.checkString(lastName);
   validate.checkString(email);
   validate.checkString(phoneNumber);
-  validate.checkString(userName);
-  validate.checkString(dob);
   validate.checkString(gender);
   validate.checkString(profilePicture);
-  validate.checkString(password);
-  validate.checkString(biography);
   validate.checkEmail(email);
   validate.checkPhoneNumber(phoneNumber);
-  validate.checkDob(dob);
   validate.checkLocation(address);
   const userCol = await users();
-
-  password = await bcrypt.hash(password, saltRounds);
 
   const updated_users = {
     firstName: firstName,
     lastName: lastName,
     email: email,
     phoneNumber: phoneNumber,
-    userName: userName.toLowerCase(),
-    dob: dob,
     gender: gender,
     profilePicture: profilePicture,
     address: address,
-    password: password,
-    biography: biography,
-    rating: rating,
-    listedProducts: listedProducts,
-    favouriteProducts: favouriteProducts,
+    biography: biography
   };
+  
   const updatedone = await userCol.updateOne(
     { _id: ObjectId(id) },
     { $set: updated_users }
   );
 
   if (updatedone.modifiedCount == 0) {
-    throw "Could not update";
+    throw "No update made to profile";
   }
   let a = await this.get(id);
-
   return a;
 }
 // delete data

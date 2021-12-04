@@ -236,81 +236,141 @@ router.post("/users/rate/:id", async (req, res) => {
 });
 
 //update
-router.put("users/update/:id", async (req, res) => {
-  console.log("update");
+
+router.get("/users/update", async (req, res) => {
+  if (req.session.user) {
+    try{
+      let userId = req.session.user._id.toString();
+      const userInfo = await usersData.get(userId);
+      if(userInfo.gender.toLowerCase() == "male"){
+        userInfo.isMale = true;
+      }
+      else if(userInfo.gender.toLowerCase() == "female"){
+        userInfo.isFemale = true;
+      }
+      else{
+        userInfo.isOther = true;
+      }
+      return res.render("updateuser",{
+        title: "Update Profile",
+        user: userInfo,
+        nameOfUser: userInfo.firstName + " " + userInfo.lastName,
+      });
+    }
+    catch (e) {
+      if (typeof e == "string") {
+        e = new Error(e);
+        e.code = 400;
+      }
+      if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
+      else return res.status(500).json(ErrorMessage(e.message));
+    }  
+  }
+  else {
+    return res.render("login",);
+  }
+});
+
+router.post("/users/update/", async (req, res) => {
   const userData = req.body;
-  const id = req.params.id;
+  const id = req.session.user._id.toString();
   // update validation in routes
   try {
-    validate.checkNonNull(id);
-    validate.checkString(id);
     validate.checkNonNull(userData.firstName);
     validate.checkNonNull(userData.lastName);
     validate.checkNonNull(userData.email);
     validate.checkNonNull(userData.phoneNumber);
-    validate.checkNonNull(userData.userName);
-    validate.checkNonNull(userData.dob);
     validate.checkNonNull(userData.gender);
-    validate.checkNonNull(userData.profilePicture);
-    validate.checkNonNull(userData.address);
-    validate.checkNonNull(userData.password);
+    validate.checkNonNull(userData.street);
+    validate.checkNonNull(userData.city);
+    validate.checkNonNull(userData.state);
+    validate.checkNonNull(userData.zip);
     validate.checkNonNull(userData.biography);
     validate.checkString(userData.firstName);
     validate.checkString(userData.lastName);
     validate.checkString(userData.email);
     validate.checkString(userData.phoneNumber);
-    validate.checkString(userData.userName);
-    validate.checkString(userData.dob);
     validate.checkString(userData.gender);
-    validate.checkString(userData.profilePicture);
-    validate.checkString(userData.password);
+    validate.checkString(userData.street);
+    validate.checkString(userData.city);
+    validate.checkString(userData.state);
+    validate.checkString(userData.zip);
+    let address = {};
+    address.streetAddress = userData.street;
+    address.city = userData.city;
+    address.state = userData.state;
+    address.zip = userData.zip;
+    userData.address = address;
     validate.checkString(userData.biography);
     validate.checkEmail(userData.email);
     validate.checkPhoneNumber(userData.phoneNumber);
-    validate.checkDob(userData.dob);
     validate.checkLocation(userData.address);
+    if(userData.profilePicture){
+      validate.checkString(userData.profilePicture);
+    }
   } catch (e) {
-    res.status(400).json({ error: e });
-    return;
+    if(req.session.user.gender.toLowerCase() == "male"){
+      req.session.user.isMale = true;
+    }
+    else if(req.session.user.gender.toLowerCase() == "male"){
+      req.session.user.isFemale = true;
+    }
+    else{
+      req.session.user.isOther = true;
+    }
+    return res.render("updateuser", {
+      title: "Update Profile",
+      nameOfUser: req.session.user.firstName + " " + req.session.user.lastName,
+      user: req.session.user,
+      error: e
+    });
   }
   try {
-    const {
-      firstName,
-      lastName,
-      email,
-      phoneNumber,
-      userName,
-      dob,
-      gender,
-      profilePicture,
-      address,
-      password,
-      biography,
-      rating,
-      listedProducts,
-      favouriteProducts,
-    } = req.body;
+    const firstName = userData.firstName;
+    const lastName = userData.lastName;
+    const email = userData.email;
+    const phoneNumber = userData.phoneNumber;
+    const gender = userData.gender;
+    const address = userData.address;
+    const biography = userData.biography;
+    let profilePicture = "";
+    if(userData.profilePicture != ""){
+      profilePicture = userData.profilePicture;
+    }
+    else{
+      profilePicture = req.session.user.profilePicture;
+    }
     const newUser = await usersData.update(
       id,
       firstName,
       lastName,
       email,
       phoneNumber,
-      userName,
-      dob,
       gender,
       profilePicture,
       address,
-      password,
-      biography,
-      rating,
-      listedProducts,
-      favouriteProducts
+      biography
     );
-    res.status(200).json(newUser);
-    console.log(newUser);
+    req.session.user = newUser;
+    //return res.json(newUser);
+    res.redirect("/");
   } catch (e) {
-    res.status(500).json({ error: e });
+    if(req.session.user.gender.toLowerCase() == "male"){
+      req.session.user.isMale = true;
+    }
+    else if(req.session.user.gender.toLowerCase() == "male"){
+      req.session.user.isFemale = true;
+    }
+    else{
+      req.session.user.isOther = true;
+    }
+    return res.render("updateuser", {
+      title: "Update Profile",
+      nameOfUser: req.session.user.firstName + " " + req.session.user.lastName,
+      user: req.session.user,
+      error: e
+    });
+    //res.status(500).json({ error: e });
   }
 });
 module.exports = router;
