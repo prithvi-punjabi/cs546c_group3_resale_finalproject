@@ -1,0 +1,284 @@
+<div class="sidenav">
+  <form action="/">
+    <button class="btn btn-light" id="backBtn">Back to home</button>
+  </form>
+  <div class="login-main-text">
+    {{#if product}}
+    <h1>Update product</h1>
+    {{else}}
+    <h1>Add product</h1>
+    {{/if}}
+    <p>Describe your product correctly</p>
+  </div>
+</div>
+<input type="hidden" id="product_id" value="{{product._id}}">
+<div class="main">
+  <div class="col-md-12 col-sm-12">
+    <div class="add-product-form">
+      <form
+        id="form-product"
+        class="form-horizontal needs-validation"
+        novalidate
+      >
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-name">Name</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter name"
+            id="name"
+            name="name"
+            aria-label="name"
+            aria-describedby="span-name"
+            value="{{product.name}}"
+            required
+          />
+          <div class="invalid-feedback">
+            Please enter a product name
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-image">Images</span>
+          <input
+            id="imageUpload"
+            name="imageUpload"
+            accept="image/*"
+            class="form-control"
+            type="file"
+            id="formFileMultiple"
+            aria-label="imageUpload"
+            aria-describedby="span-image"
+            onchange="imageUploadChange()"
+            {{#if product}}{{else}}required{{/if}}
+            multiple
+          />
+          <div id="invalid-image" class="invalid-feedback">
+            Please select at least one image
+          </div>
+        </div>
+        {{#if product}}
+            <div id="uploaded-imgs" class="row mb-3">
+              {{#each product.images}}
+                <div class="card col-md-3 size-100">
+                    <img class="uploaded-img card-img-top" src="{{this}}">
+                    <span class="span-x hide">X</span>
+                </div>
+              {{/each}}
+            </div>
+        {{/if}}
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-category">Category</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter categories (Comma seperated)"
+            id="category"
+            name="category"
+            aria-label="category"
+            aria-describedby="span-category"
+            value="{{product.category}}"
+            required
+          />
+          <div class="invalid-feedback">
+            Please enter at least one category
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-keywords">Keywords</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter keywords (Comma seperated)"
+            id="keywords"
+            name="keywords"
+            aria-label="keywords"
+            aria-describedby="span-keywords"
+            value="{{product.keywords}}"
+          />
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-price">Price</span>
+          <input
+            type="number"
+            class="form-control"
+            placeholder="Enter price ($)"
+            id="price"
+            name="price"
+            aria-label="price"
+            aria-describedby="span-price"
+            value="{{product.price}}"
+            required
+          />
+          <div class="invalid-feedback">
+            Please enter product price
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <span
+            class="input-group-text"
+            id="span-description"
+          >Description</span>
+          <textarea
+            class="form-control"
+            id="description"
+            name="description"
+            aria-label="Description"
+            aria-describedby="span-description"
+            placeholder="Describe your product here"
+            required
+          >{{product.description}}</textarea>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-street">Address</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter street address"
+            id="street"
+            name="street"
+            aria-label="street"
+            aria-describedby="span-street"
+            value="{{product.location.streetAddress}}"
+            required
+          />
+          <div class="invalid-feedback">
+            Please enter street
+            <address></address>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-city">City</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter city"
+            id="city"
+            name="city"
+            aria-label="city"
+            aria-describedby="span-city"
+            value="{{product.location.city}}"
+            required
+          />
+          <span class="input-group-text" id="span-state">State</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter state"
+            id="state"
+            name="state"
+            aria-label="state"
+            maxlength="2"
+            aria-describedby="span-state"
+            value="{{product.location.state}}"
+            required
+          />
+          <span class="input-group-text" id="span-zip">Zip</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter Zip code"
+            id="zip"
+            name="zip"
+            aria-label="zip"
+            pattern="[0-9]{5}"
+            aria-describedby="span-zip"
+            value="{{product.location.zip}}"
+            required
+          />
+          <div class="invalid-feedback">
+            Please enter valid address
+          </div>
+        </div>
+        {{#if product}}
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-status">Status</span>
+          <div class="form-control">
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="status"
+                id="status_available"
+                {{#if product.isAvailable}}checked{{/if}}
+              />
+              <label class="form-check-label" for="status_available">
+                Available
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="status"
+                id="status_sold"
+                {{#if product.isAvailable}}{{else}}checked{{/if}}
+              />
+              <label class="form-check-label" for="status_sold">
+                Sold
+              </label>
+            </div>
+          </div>
+        </div>
+        {{/if}}
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-condition">Condition</span>
+          <div class="form-control">
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="condition"
+                id="condition_new"
+                {{#if product.isNew}}checked{{/if}}
+              />
+              <label class="form-check-label" for="condition_new">
+                New
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              {{#if product}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="condition"
+                  id="condition_barely_used"
+                  {{#if product.isBarelyUsed}}checked{{/if}}
+                />
+              {{else}}
+              <input
+                class="form-check-input"
+                type="radio"
+                name="condition"
+                id="condition_barely_used"
+                checked
+              />
+              {{/if}}
+              <label class="form-check-label" for="condition_barely_used">
+                Barely Used
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="condition"
+                id="condition_fairly_used"
+                {{#if product.isFairlyUsed}}checked{{/if}}
+              />
+              <label class="form-check-label" for="condition_fairly_used">
+                Fairly Used
+              </label>
+            </div>
+          </div>
+        </div>
+        <div>{{error}}</div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-secondary">{{#if product}}Update{{else}}Add{{/if}}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="/public/js/products.js"></script>

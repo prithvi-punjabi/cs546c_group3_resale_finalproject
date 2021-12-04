@@ -24,6 +24,24 @@ module.exports = {
       throw `${varName} must not be just empty spaces`;
   },
 
+  checkStatus(str) {
+    this.checkString(str, "Status");
+    if (str.toLowerCase() != "available" && str.toLowerCase() != "sold") {
+      throw "Status must be in (Available/Sold)";
+    }
+  },
+
+  checkCondition(str) {
+    this.checkString(str, "Condition");
+    if (
+      str.toLowerCase() != "new" &&
+      str.toLowerCase() != "barely used" &&
+      str.toLowerCase() != "fairly used"
+    ) {
+      throw "Condition must be in (New/Barely Used/Fairly Used)";
+    }
+  },
+
   checkPassword(str) {
     this.checkString(str, "Password");
     const regEx =

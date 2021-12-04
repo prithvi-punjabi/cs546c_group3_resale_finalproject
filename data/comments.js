@@ -58,14 +58,21 @@ async function deleteCommentById(id) {
   validator.checkNonNull(id),
     validator.checkString(id),
     validator.isValidObjectID(id);
-
-  let thiscomment = getCommentById(id);
+  let thiscomment = await getCommentById(id);
   if (thiscomment) {
     const commentsCollection = await comments();
-    const deletedInfo = await commentsCollection.deleteOne({
-      _id: ObjectId(id),
-    });
+    const deletedInfo = await commentsCollection.updateMany(
+      {},
+      {
+        $pull: {
+          comments: {
+            _id: ObjectId(id),
+          },
+        },
+      }
+    );
     if (deletedInfo.deletedCount === 0) throw "Could not delete comment";
+    return true;
   } else throw `Comment with ID ${id} does not exist`;
 }
 

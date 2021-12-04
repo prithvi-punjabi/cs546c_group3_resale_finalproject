@@ -4,8 +4,17 @@ const path = require("path");
 const hbs = require("hbs");
 const exphbs = require("express-handlebars");
 const configRoutes = require("./routes");
-const uest = require("uest");
+const configMiddlewares = require("./helper/middlewares");
+const session = require("express-session");
 
+app.use(
+  session({
+    name: "AuthCookie",
+    secret: "Shhhh...",
+    saveUninitialized: true,
+    resave: false,
+  })
+);
 app.use(express.json());
 app.use(
   "/css",
@@ -30,7 +39,7 @@ app.set("view engine", "handlebars");
 app.use("/public", express.static(__dirname + "/public"));
 hbs.registerPartials(partialsPath);
 
-app.use(uest());
+configMiddlewares(app);
 configRoutes(app);
 app.listen(3000, () => {
   console.log("Server started");

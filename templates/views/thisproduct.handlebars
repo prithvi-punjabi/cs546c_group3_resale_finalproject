@@ -1,0 +1,323 @@
+<div
+  class="modal fade"
+  id="ratingModal"
+  tabindex="-1"
+  aria-labelledby="ratingModalLabel"
+  aria-hidden="true"
+>
+  <input type="hidden" id="product_id" value="{{product.seller._id}}" />
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ratingModalLabel">Rate
+          {{product.seller.firstName}}
+          {{product.seller.lastName}}</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          id="ratingButClose"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form
+          method="POST"
+          action="/users/rate/{{product.seller_id}}"
+          id="ratingForm"
+        >
+          <span class="star-rating">
+            <input type="radio" name="rating" value="1" /><i></i>
+            <input type="radio" name="rating" value="2" /><i></i>
+            <input type="radio" name="rating" value="3" /><i></i>
+            <input type="radio" name="rating" value="4" /><i></i>
+            <input type="radio" name="rating" value="5" /><i></i>
+          </span>
+        </form>
+        <div
+          class="alert alert-warning alert-dismissible fade show"
+          role="alert"
+          id="ratingAlert"
+        >
+          <span id="ratingMsgAlert"></span>
+          <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            id="closeRatingAlert"
+          ></button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >Discard</button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          form="ratingForm"
+          id="ratingFormSubmit"
+        >Rate</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="emailModal"
+  tabindex="-1"
+  aria-labelledby="emailModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="emailModalLabel">Send an email to
+          {{product.seller.firstName}}
+          {{product.seller.lastName}}</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          id="emailButClose"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form
+          method="POST"
+          action="/products/post/{{product._id}}"
+          name="emailForm"
+          id="emailForm"
+        >
+          <label for="message" class="emailLabel">Message:</label><br />
+          <textarea name="message" rows="5" cols="56" id="message"></textarea>
+          <input
+            type="text"
+            id="nameOfSeller"
+            name="nameOfSeller"
+            value="{{product.seller.firstName}} {{product.seller.lastName}}"
+            hidden
+          />
+          <input
+            type="text"
+            id="emailOfSeller"
+            name="emailOfSeller"
+            value="{{product.seller.email}}"
+            hidden
+          />
+          <div
+            class="alert alert-warning alert-dismissible fade show"
+            role="alert"
+            id="emailAlert"
+          >
+            <span id="emailMsgAlert"></span>
+            <button
+              type="button"
+              class="btn-close"
+              aria-label="Close"
+              id="closeEmailAlert"
+            ></button>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >Discard</button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          form="emailForm"
+          id="emailFormSubmit"
+        >Send Email</button>
+      </div>
+    </div>
+  </div>
+</div>
+<form action="/">
+  <button class="btn btn-dark" id="backBtn">Back to home</button>
+</form>
+{{#if update}}
+  <form method="GET" action="/products/edit/{{product._id}}">
+    <button id="updateBtn" class="btn btn-dark" type="submit">Update</button>
+  </form>
+{{/if}}
+<main class="container productCont">
+  <div class="left-column">
+    {{! prettier-ignore }}
+    {{!-- <img class="active" src="{{product.images.[0]}}" alt="{{product.name}}" /> --}}
+    <div id="prodImageCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        {{#each product.images}}
+          {{#if @first}}
+            <div class="carousel-item active">
+              <img src={{this}} class="d-block w-100" alt="..." />
+            </div>
+          {{else}}
+            <div class="carousel-item">
+              <img src={{this}} class="d-block w-100" alt="..." />
+            </div>
+          {{/if}}
+        {{/each}}
+      </div>
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#prodImageCarousel"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#prodImageCarousel"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="right-column">
+
+    <div class="product-description">
+      {{#if product.isSold}}
+        <span class="sold">SOLD</span><br />
+      {{/if}}
+      <h1>{{title}}</h1>
+      <label for="favourite" class="custom-checkbox" id="favLabel">
+        <input type="checkbox" id="favourite" class="custom-checkbox" />
+        <i class="bi bi-star" id="favProdIcon"></i>
+      </label>
+      <h4>Price: <span>${{product.price}}</span></h4>
+      <p>{{product.description}}</p>
+      <span hidden id="prodID">{{product._id}}</span>
+    </div>
+
+    <div class="product-configuration">
+      <div class="product-details">
+        <span>Listed by:</span>
+        <span hidden id="sellerEmail">{{product.seller.email}}</span>
+        <p id="sellerName">{{product.seller.firstName}}
+          {{product.seller.lastName}}</p>
+        <button
+          type="button"
+          class="btn btn-primary btn-sm"
+          data-bs-toggle="modal"
+          data-bs-target="#emailModal"
+        ><i class="bi bi-envelope"></i></button>
+        <button
+          type="button"
+          class="btn btn-primary btn-sm"
+          data-bs-toggle="modal"
+          data-bs-target="#ratingModal"
+        ><i class="bi bi-hand-thumbs-up"></i><i
+            class="bi bi-hand-thumbs-down"
+          ></i></button>
+        {{#if update}}{{else}}
+          <button id="btn-chat" type="button" class="btn btn-primary btn-sm"><i
+              class="bi bi-chat-dots"
+            ></i></button>
+        {{/if}}
+        <br />
+        <span>Location:</span>
+        <p>{{product.location.streetAddress}},
+          {{product.location.city}},
+          {{product.location.state}},
+          {{product.location.zip}}</p><br />
+        <span>Condition:</span>
+        <p>{{product.condition}}</p>
+        <iframe
+          id="map"
+          width="270"
+          height="90"
+          style="border: 0"
+          loading="lazy"
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBgqgmmci-betNBsxNduESqCjxD3BQTTRE
+    &q={{product.location.streetAddress}},{{product.location.city}},{{product.location.state}}+{{product.location.zip}}"
+        >
+        </iframe><br />
+        <span>Date Listed:</span>
+        <p>{{product.dateListed}}</p>
+      </div>
+    </div>
+    <div class="product-comments">
+      <form
+        id="commentForm"
+        method="POST"
+        action="/comments/add/{{product._id}}"
+      >
+        <label for="commentBox">
+          <textarea
+            id="commentBox"
+            name="commentBox"
+            placeholder="Enter your comment"
+            cols="70"
+            rows="3"
+          ></textarea>
+        </label>
+        <br />
+        <div
+          class="alert alert-warning alert-dismissible fade show"
+          role="alert"
+          id="commentAlert"
+        >
+          <span id="commentMsgAlert"></span>
+          <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            id="closeCommentAlert"
+          ></button>
+        </div>
+        <button type="button" class="btn btn-success" id="submitComment">Post
+          Comment</button>
+      </form>
+      <div class="list-group" id="displayedComments">
+        {{#comments}}
+          <div
+            class="list-group-item list-group-item-action"
+            aria-current="true"
+          >
+            <span class="commId" hidden>{{_id}}</span>
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1 commentUserName">{{userName}}</h5>
+              <img
+                src={{profilePicture}}
+                alt={{userName}}
+                class="commentImgs"
+              />
+            </div>
+            <p class="mb-1">{{comment}}</p>
+            <small class="dateAdded">{{dateAdded}}</small>
+            <button class="btn btn-danger btn-sm" id={{_id}}>Delete</button>
+            {{! <small>And some small print.</small> }}
+          </div>
+        {{/comments}}
+      </div>
+    </div>
+  </div>
+</main>
+
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+  crossorigin="anonymous"
+></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="sweetalert2.all.min.js"></script>
+<script src="/public/js/clientside2.js"></script>

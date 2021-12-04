@@ -1,6 +1,8 @@
 const connection = require("../config/mongoConnection");
 const users = require("../data/users");
 const products = require("../data/products");
+const comments = require("../data/comments");
+const testimonials = require("../data/testimonials");
 
 //Important: Do not pass a hashed password to the create function, the password hashing takes place before insertion
 
@@ -16,17 +18,17 @@ async function main() {
       "michael.jordan",
       "10/29/1990",
       "male",
-      "/public/uploads/profile1.png",
+      "/public/uploads/profile1.jpg",
       {
         streetAddress: "170 NY st",
         city: "New York",
         state: "NY",
         zip: "11220",
       },
-      "thisisapassword",
+      "michael.jordan",
       "My name is Michael! Hey!"
     );
-    await products.create(
+    const blender = await products.create(
       "Blender",
       ["Kitchen", "Tool", "Electronics"],
       ["Blender", "Mixer"],
@@ -43,6 +45,18 @@ async function main() {
       "Barely Used",
       "10/20/2021"
     );
+    await comments.create(
+      blender._id.toString(),
+      michael._id,
+      "Good blender lol, obviously, I posted it."
+    );
+
+    await testimonials.create(
+      michael._id.toString(),
+      michael.profilePicture,
+      michael.firstName + " " + michael.lastName,
+      "Dude what a BRILLIANT website. Always blows my mind how the creators can be so thorough!"
+    );
   } catch (e) {
     console.log(e);
   }
@@ -56,14 +70,14 @@ async function main() {
       "john.doe",
       "11/28/1993",
       "male",
-      "/public/uploads/profile4.png",
+      "/public/uploads/profile4.jpeg",
       {
         streetAddress: "15w 47 st",
         city: "New York",
         state: "NY",
         zip: "11225",
       },
-      "mahpasswordmahrules",
+      "john.doe",
       "I am John Doe. People use me for testing."
     );
 
@@ -81,8 +95,14 @@ async function main() {
       "KING CHAIR. If you sit on this, you'll feel like sitting on throne and ruling 7 kingdom",
       john.address,
       "Available",
-      "Not Used",
+      "New",
       "04/14/2020"
+    );
+    await testimonials.create(
+      john._id.toString(),
+      john.profilePicture,
+      john.firstName + " " + john.lastName,
+      "Wow I love this website so so so so much!"
     );
   } catch (e) {
     console.log(e);
@@ -104,7 +124,7 @@ async function main() {
         state: "NY",
         zip: "16220",
       },
-      "female",
+      "ariana.grande",
       "No bio needed. Everyone knows me."
     );
 
@@ -121,9 +141,15 @@ async function main() {
       ],
       "Old keyboard. I've used it for many years and still working fine.",
       ariana.address,
-      "Not Available",
+      "Sold",
       "Fairly Used",
       "06/09/2019"
+    );
+    await testimonials.create(
+      ariana._id.toString(),
+      ariana.profilePicture,
+      ariana.firstName + " " + ariana.lastName,
+      "This is genuinely my most favorite shopping website EVER! It's way better than amazon etc. re$ale has a clear purpose, and it delivers an exceptional platform and product."
     );
   } catch (e) {
     console.log(e);
@@ -166,6 +192,12 @@ async function main() {
       "Barely Used",
       "11/21/2021"
     );
+    await testimonials.create(
+      iron_man._id.toString(),
+      iron_man.profilePicture,
+      iron_man.firstName + " " + iron_man.lastName,
+      "Man, this is my most favourite site ever. Sometimes I just go on here and look at stuff for fun."
+    );
   } catch (e) {
     console.log(e);
   }
@@ -179,7 +211,7 @@ async function main() {
       "ronaldo.christiano",
       "05/03/1995",
       "male",
-      "/public/uploads/ronaldo.jpeg",
+      "/public/uploads/ronaldo.png",
       {
         streetAddress: "164 North Ave",
         city: "Hoboken",

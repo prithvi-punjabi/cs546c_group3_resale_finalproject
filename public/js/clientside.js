@@ -14,6 +14,7 @@ function noProduct(parameter) {
       confirmButtonText: "Got it!",
     });
     clearAllFilters();
+    showAllCards();
   }
 }
 
@@ -24,13 +25,19 @@ function searchBar() {
   cards = document.getElementsByClassName("card");
   names = document.getElementsByClassName("card-header");
   for (i = 0; i < names.length; i++) {
-    txtValue = names[i].innerHTML;
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      cards[i].hidden = false;
-      cards[i].className = "card";
-    } else {
-      cards[i].hidden = true;
-      cards[i].className = "card hiddenBySearch";
+    if (
+      cards[i].className !== "card hiddenByPrice" &&
+      cards[i].className !== "card hiddenByLoc" &&
+      cards[i].className !== "card hiddenByCat"
+    ) {
+      txtValue = names[i].innerHTML;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        cards[i].hidden = false;
+        cards[i].className = "card";
+      } else {
+        cards[i].hidden = true;
+        cards[i].className = "card hiddenBySearch";
+      }
     }
   }
   noProduct("name");
@@ -68,16 +75,20 @@ function filterByPrice() {
 }
 function clearInput() {
   let input = document.getElementById("myInput");
+  let cards = document.getElementsByClassName("card");
   input.value = "";
-  searchBar();
+  for (var i = 0; i < cards.length; i++) {
+    if (cards[i].className === "card hiddenBySearch")
+      cards[i].className = "card";
+  }
 }
 
-function w3_open() {
-  document.getElementById("mySidebar").style.display = "block";
-}
-
-function w3_close() {
-  document.getElementById("mySidebar").style.display = "none";
+function showAllCards() {
+  let cards = document.getElementsByClassName("card");
+  for (var i = 0; i < cards.length; i++) {
+    cards[i].className = "card";
+    cards[i].hidden = false;
+  }
 }
 
 function filterLocation() {
@@ -155,4 +166,11 @@ function clearAllFilters() {
     aa[i].checked = true;
   }
   clearInput();
+  showAllCards();
 }
+
+(function ($) {
+  $("input[type=radio][name=sort_by]").change(function () {
+    window.location.href = "/?sort_by=" + this.value;
+  });
+})(window.jQuery);

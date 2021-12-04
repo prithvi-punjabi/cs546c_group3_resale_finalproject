@@ -2,9 +2,41 @@ const mongoCollections = require("../config/mongoCollections");
 const users = mongoCollections.users;
 let { ObjectId } = require("mongodb");
 const validate = require("../helper/validator");
-const sha256 = require("js-sha256");
+const bcrypt = require("bcryptjs");
+const saltRounds = 8;
 
 //Important: Do not pass a hashed password to the create function, the password hashing takes place before insertion
+
+async function loginUser(username, password) {
+  validate.checkNonNull(username);
+  validate.checkNonNull(password);
+
+  validate.checkString(username);
+  validate.checkString(password);
+
+  const usercol = await users();
+  const user = await usercol.findOne({ userName: username.toLowerCase() });
+  if (user == null) {
+    const error = new Error("Either username or password is invalid");
+    error.code = 403;
+    throw error;
+  }
+
+  let isAuthenticated = false;
+  try {
+    isAuthenticated = await bcrypt.compare(password, user.password);
+  } catch (e) {
+    throw new Error(e.message);
+  }
+
+  if (!isAuthenticated) {
+    const error = new Error("Either username or password is invalid");
+    error.code = 403;
+    throw error;
+  } else {
+    return user;
+  }
+}
 
 async function create(
   firstName,
@@ -48,20 +80,21 @@ async function create(
 
   const userCol = await users();
 
+  password = await bcrypt.hash(password, saltRounds);
+
   let newUser = {
     firstName: firstName,
     lastName: lastName,
     email: email,
     phoneNumber: phoneNumber,
-    userName: userName,
+    userName: userName.toLowerCase(),
     dob: dob,
     gender: gender,
     profilePicture: profilePicture,
     address: address,
-    //Using js-SHA256 to hash the password before insertion into db
-    hashedPassword: sha256(password),
+    password: password,
     biography: biography,
-    rating: 0,
+    rating: [],
     listedProducts: [],
     favouriteProducts: [],
   };
@@ -131,17 +164,20 @@ async function update(
   validate.checkDob(dob);
   validate.checkLocation(address);
   const userCol = await users();
+
+  password = await bcrypt.hash(password, saltRounds);
+
   const updated_users = {
     firstName: firstName,
     lastName: lastName,
     email: email,
     phoneNumber: phoneNumber,
-    userName: userName,
+    userName: userName.toLowerCase(),
     dob: dob,
     gender: gender,
     profilePicture: profilePicture,
     address: address,
-    hashedPassword: password,
+    password: password,
     biography: biography,
     rating: rating,
     listedProducts: listedProducts,
@@ -173,9 +209,129 @@ async function remove(id) {
   return { deleted: true };
 }
 
+async function getAll() {
+  const usercol = await users();
+  const allusers = await usercol.find({}).toArray();
+  let finalUsers = [];
+  let thisUser = {};
+  allusers.forEach((x) => {
+    thisUser["id"] = x._id.toString();
+    fname = x.firstName;
+    lname = x.lastName;
+    thisUser["name"] = fname + " " + lname;
+    thisUser["img"] = x.profilePicture;
+    finalUsers.push(thisUser);
+    thisUser = {};
+  });
+  if (!Array.isArray(finalUsers) || finalUsers.length == 0) {
+    const error = new Error(`No users found`);
+    error.code = errorCode.NOT_FOUND;
+    throw error;
+  }
+  return finalUsers;
+}
+
+async function addFavourite(userId, prodId) {
+  validate.checkNonNull(userId), validate.checkNonNull(prodId);
+  validate.isValidObjectID(userId), validate.isValidObjectID(prodId);
+  const usercol = await users();
+  const thisUser = await usercol.findOne({ _id: ObjectId(userId) });
+  let alreadyFav = 0;
+  thisUser.favouriteProducts.forEach((x) => {
+    if (x.toString() === prodId) alreadyFav += 1;
+  });
+  if (alreadyFav === 0) {
+    const addedFav = await usercol.updateOne(
+      { _id: ObjectId(userId) },
+      { $push: { favouriteProducts: ObjectId(prodId) } }
+    );
+    if (addedFav.modifiedCount === 0) {
+      throw "Could not add product into favourites";
+    }
+    return true;
+  } else return "Product already exists in favourites";
+}
+
+async function removeFavourite(userId, prodId) {
+  validate.checkNonNull(userId), validate.checkNonNull(prodId);
+  validate.isValidObjectID(userId), validate.isValidObjectID(prodId);
+  const usercol = await users();
+  const thisUser = await usercol.findOne({ _id: ObjectId(userId) });
+  let alreadyFav = 0;
+  thisUser.favouriteProducts.forEach((x) => {
+    if (x.toString() === prodId) alreadyFav += 1;
+  });
+  if (alreadyFav !== 0) {
+    const removedFav = await usercol.updateOne(
+      { _id: ObjectId(userId) },
+      { $pull: { favouriteProducts: ObjectId(prodId) } }
+    );
+    console.log("after remove");
+    if (removedFav.modifiedCount === 0) {
+      throw "Could not remove product from favourites";
+    }
+    return true;
+  } else return "Product does not exist in favourites";
+}
+
+async function rateUser(userId, currrating, thisUser) {
+  currrating = parseInt(currrating);
+  validate.checkNonNull(userId),
+    validate.checkNonNull(currrating),
+    validate.checkNonNull(thisUser);
+  validate.isValidObjectID(userId), validate.isValidObjectID(thisUser);
+  validate.checkNumber(currrating);
+  const usercol = await users();
+  const alreadyRated = await usercol.findOne({
+    _id: ObjectId(userId),
+    rating: { $elemMatch: { rater_id: thisUser } },
+  });
+  if (alreadyRated) {
+    return "Already rated";
+  } else {
+    let thisUsersRating = {};
+    thisUsersRating["rater_id"] = thisUser;
+    thisUsersRating["rating"] = currrating;
+    const userRating = await usercol.updateOne(
+      { _id: ObjectId(userId) },
+      { $push: { rating: thisUsersRating } }
+    );
+    if (userRating.modifiedCount === 0) {
+      throw "Could not add rating";
+    }
+    return currrating;
+  }
+}
+
+async function getRating(userId) {
+  validate.checkNonNull(userId);
+  validate.isValidObjectID(userId);
+  const usercol = await users();
+  const usersRating = await usercol.findOne(
+    { _id: ObjectId(userId) },
+    { projection: { rating: 1, _id: 0 } }
+  );
+  let count = 0;
+  let totalRating = 0;
+  if (usersRating.rating.length > 0) {
+    usersRating.rating.forEach((x) => {
+      totalRating += x.rating;
+      count += 1;
+    });
+    let finRating = totalRating / count;
+    return Math.round(finRating * 100) / 100;
+  } else return 0;
+}
+
 module.exports = {
   create,
   get,
   update,
   remove,
+  getAll,
+  loginUser,
+  addFavourite,
+  removeFavourite,
+  rateUser,
+  getRating,
 };
