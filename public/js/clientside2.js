@@ -81,6 +81,7 @@
         url: emailForm.attr("action"),
         data: emailForm.serialize(),
         complete: function (response) {
+          $("#message").val("");
           $("#emailButClose").trigger("click");
           Swal.fire({
             title: "Success!",
@@ -189,7 +190,7 @@
             "</small>" +
             "<button class='btn btn-danger btn-sm' id='" +
             response.responseJSON.commentId +
-            "'>Delete</button>"
+            "'>Delete</button> </div>"
         );
         $(`#${response.responseJSON.commentId}`).on("click", function (event) {
           $.ajax({

@@ -59,7 +59,7 @@
       <div class="card-header">Most Listings By Category</div>
       <div class="divimage2">
         <img
-          src="/public/uploads/category.png"
+          src="/public/images/category.png"
           class="card-img-top2"
           alt="{{highestListingCategory.category}}"
         />
@@ -75,7 +75,7 @@
       <div class="card-header">Most Listings By Month</div>
       <div class="divimage2">
         <img
-          src="/public/uploads/calendar.png"
+          src="/public/images/calendar.png"
           class="card-img-top2"
           alt="{{highestListingMonth.month}}"
         />
@@ -91,7 +91,7 @@
       <div class="card-header">Most Listings By City</div>
       <div class="divimage2">
         <img
-          src="/public/uploads/city.png"
+          src="/public/images/city.png"
           class="card-img-top2"
           alt="{{highestListingCity.city}}"
         />
@@ -119,7 +119,6 @@
     colors.push("#"+Math.floor(Math.random()*16777215).toString(16));
   {{/each}}
   const categoryCounts = [{{categoryCounts}}]; const myChart = new Chart(ctx, {
-  type: 'pie', data: { labels: categories, datasets: [{ label: 'Products listed
-  by categories', backgroundColor: colors, data: categoryCounts, }] }, options:
+  type: 'pie', data: { labels: categories, datasets: [{ label: 'Products listed by categories', backgroundColor: colors, data: categoryCounts, }] }, options:
   { scales: { yAxes: [{ ticks: { beginAtZero: true, } }] } }, });
 </script>
