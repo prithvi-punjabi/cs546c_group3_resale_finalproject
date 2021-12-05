@@ -223,11 +223,7 @@ router.post("/users/rate/:id", async (req, res) => {
     let rating = req.body.rating;
     let thisUser = req.session.user._id;
     const rated = await usersData.rateUser(userId, rating, thisUser);
-    if (typeof rated === "string") {
-      res.json(-1);
-    } else {
-      res.json(rated);
-    }
+    res.json(rated);
   } catch (e) {
     if (typeof e == "string") {
       e = new Error(e);

@@ -236,20 +236,14 @@ async function addFavourite(userId, prodId) {
   validate.isValidObjectID(userId), validate.isValidObjectID(prodId);
   const usercol = await users();
   const thisUser = await usercol.findOne({ _id: ObjectId(userId) });
-  let alreadyFav = 0;
-  thisUser.favouriteProducts.forEach((x) => {
-    if (x.toString() === prodId) alreadyFav += 1;
-  });
-  if (alreadyFav === 0) {
-    const addedFav = await usercol.updateOne(
-      { _id: ObjectId(userId) },
-      { $push: { favouriteProducts: ObjectId(prodId) } }
-    );
-    if (addedFav.modifiedCount === 0) {
-      throw "Could not add product into favourites";
-    }
-    return true;
-  } else return "Product already exists in favourites";
+  const addedFav = await usercol.updateOne(
+    { _id: ObjectId(userId) },
+    { $push: { favouriteProducts: ObjectId(prodId) } }
+  );
+  if (addedFav.modifiedCount === 0) {
+    throw "Could not add product into favourites";
+  }
+  return true;
 }
 
 async function removeFavourite(userId, prodId) {
@@ -266,7 +260,6 @@ async function removeFavourite(userId, prodId) {
       { _id: ObjectId(userId) },
       { $pull: { favouriteProducts: ObjectId(prodId) } }
     );
-    console.log("after remove");
     if (removedFav.modifiedCount === 0) {
       throw "Could not remove product from favourites";
     }
@@ -282,12 +275,22 @@ async function rateUser(userId, currrating, thisUser) {
   validate.isValidObjectID(userId), validate.isValidObjectID(thisUser);
   validate.checkNumber(currrating);
   const usercol = await users();
-  const alreadyRated = await usercol.findOne({
-    _id: ObjectId(userId),
-    rating: { $elemMatch: { rater_id: thisUser } },
-  });
+  const alreadyRated = await usercol.findOne(
+    {
+      _id: ObjectId(userId),
+      rating: { $elemMatch: { rater_id: thisUser } },
+    },
+    { projection: { rating: 1, _id: 0 } }
+  );
   if (alreadyRated) {
-    return "Already rated";
+    const updateRating = await usercol.updateOne(
+      {
+        _id: ObjectId(userId),
+        "rating.rater_id": thisUser,
+      },
+      { $set: { "rating.$.rating": currrating } }
+    );
+    return { alreadyRated: currrating };
   } else {
     let thisUsersRating = {};
     thisUsersRating["rater_id"] = thisUser;

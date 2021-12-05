@@ -157,11 +157,11 @@
         {{#each product.images}}
           {{#if @first}}
             <div class="carousel-item active">
-              <img src={{this}} class="d-block w-100" alt="..." />
+              <img src={{this}} class="d-block w-100" alt="{{product.name}}" />
             </div>
           {{else}}
             <div class="carousel-item">
-              <img src={{this}} class="d-block w-100" alt="..." />
+              <img src={{this}} class="d-block w-100" alt="{{product.name}}" />
             </div>
           {{/if}}
         {{/each}}
@@ -196,7 +196,11 @@
       <h1>{{title}}</h1>
       <label for="favourite" class="custom-checkbox" id="favLabel">
         <input type="checkbox" id="favourite" class="custom-checkbox" />
-        <i class="bi bi-star" id="favProdIcon"></i>
+        {{#if fav}}
+          <i class="bi bi-star-fill" id="favProdIcon"></i>
+        {{else}}
+          <i class="bi bi-star" id="favProdIcon"></i>
+        {{/if}}
       </label>
       <h4>Price: <span>${{product.price}}</span></h4>
       <p>{{product.description}}</p>

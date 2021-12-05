@@ -115,27 +115,30 @@
         data: ratingForm.serialize(),
         complete: function (response) {
           $("#ratingButClose").trigger("click");
-          const thisRate = parseInt(response.responseJSON);
-          if (thisRate >= 3) {
-            Swal.fire({
-              title: "Yay!",
-              text: `${seller} appreciates your ${thisRate} star rating!`,
-              icon: "success",
-              confirmButtonText: "That's great!",
-            });
-          } else if (thisRate > 0 && thisRate < 3) {
-            Swal.fire({
-              title: "Awww..",
-              text: `${seller} will take your ${thisRate} star rating into account, and improve!`,
-              icon: "success",
-              confirmButtonText: "Good to know!",
-            });
+          console.log(response.responseJSON);
+          if (typeof response.responseJSON === "string") {
+            const thisRate = parseInt(response.responseJSON);
+            if (thisRate >= 3) {
+              Swal.fire({
+                title: "Yay!",
+                text: `${seller} appreciates your ${thisRate} star rating!`,
+                icon: "success",
+                confirmButtonText: "That's great!",
+              });
+            } else if (thisRate > 0 && thisRate < 3) {
+              Swal.fire({
+                title: "Awww..",
+                text: `${seller} will take your ${thisRate} star rating into account, and improve!`,
+                icon: "success",
+                confirmButtonText: "Good to know!",
+              });
+            }
           } else {
             Swal.fire({
-              title: "Already rated!",
-              text: `You have already rated ${seller}!`,
-              icon: "info",
-              confirmButtonText: "Oh, oops! Got it!",
+              title: "Updated rating!",
+              text: `We have updated your rating for ${seller} to ${response.responseJSON.alreadyRated} stars!`,
+              icon: "success",
+              confirmButtonText: "That's great!",
             });
           }
         },

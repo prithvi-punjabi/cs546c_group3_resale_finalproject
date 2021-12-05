@@ -43,6 +43,7 @@ router.get("/get/:id", async (req, res) => {
     utils.parseObjectId(productId, "ProductId");
     const product = await productsData.getById(productId);
     const comments = await commentData.getAllComments(productId);
+    const thisUserFav = await userData.get(req.session.user._id.toString());
     const allusers = await userData.getAll();
     comments.forEach((x, index) => {
       comments[index].dateAdded = utils.formatDaysAgo(x.dateAdded);
@@ -56,6 +57,10 @@ router.get("/get/:id", async (req, res) => {
     });
     product.isSold = product.status.toLowerCase() == "sold";
     let update = {};
+    let alreadyFav = 0;
+    thisUserFav.favouriteProducts.forEach((x) => {
+      if (x.toString() === productId) alreadyFav += 1;
+    });
     if (req.session.user._id === product.seller._id.toString()) {
       update.updated = true;
 
@@ -64,12 +69,14 @@ router.get("/get/:id", async (req, res) => {
         title: product.name,
         comments: comments,
         update: update,
+        fav: alreadyFav,
       });
     } else {
       return res.render("thisproduct", {
         product: product,
         title: product.name,
         comments: comments,
+        fav: alreadyFav,
       });
     }
   } catch (e) {
