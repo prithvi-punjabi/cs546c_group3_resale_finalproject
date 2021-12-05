@@ -1,12 +1,5 @@
 const utils = require("./utils");
 
-function checkLogin(req, res, next) {
-  if (!utils.isUserLoggedIn(req)) {
-    return res.redirect("/login");
-  }
-  next();
-}
-
 module.exports = async (app) => {
   app.use((req, res, next) => {
     res.header("Cache-Control", "private, no-cache, no-store, must-revalidate");
@@ -156,6 +149,16 @@ module.exports = async (app) => {
       return res.redirect(
         "/login?error=" +
           encodeURIComponent("You need to be logged in to chat!")
+      );
+    }
+    next();
+  });
+
+  app.use("/statistics", (req, res, next) => {
+    if (!utils.isUserLoggedIn(req)) {
+      return res.redirect(
+        "/login?error=" +
+          encodeURIComponent("You need to be logged in to view statistics!")
       );
     }
     next();
