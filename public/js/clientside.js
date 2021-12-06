@@ -138,6 +138,14 @@ function filterCategory() {
   }
   noProduct("category");
 }
+//  darkmode
+function filterDarkmode() {
+  if ($("body").hasClass("dark")) {
+    $("body").removeClass("dark");
+  } else {
+    $("body").addClass("dark");
+  }
+}
 
 function clearAllFilters() {
   slider.value = 1000;

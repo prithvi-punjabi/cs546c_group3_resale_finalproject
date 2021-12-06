@@ -869,3 +869,12 @@ body {
 #allTestimonials {
   margin-left: 5px;
 }
+
+.userCard {
+  height: 29rem;
+}
+
+.dark {
+  background-color: #222;
+  color: #e6e6e6;
+}
