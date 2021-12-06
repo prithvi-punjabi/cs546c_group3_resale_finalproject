@@ -278,7 +278,7 @@ async function main() {
         "/public/uploads/table2.jpg",
         "/public/uploads/table3.jpg",
       ],
-      "Great printer, relatively new. Value for money! I'd buy it asap if I were you.",
+      "Very cute and aesthetic bedside table! Absolutely love it. Moving out next month so selling this!",
       john.address,
       "Available",
       "Fairly Used",

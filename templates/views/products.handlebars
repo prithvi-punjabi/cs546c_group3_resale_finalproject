@@ -6,9 +6,9 @@
     <div id="logo">
       <img src="/public/images/resale.png" alt="resale logo" class="logoimg" />
     </div>
-    <a class="active" href="#home">Home</a>
-    <a href="/about">About</a>
-    <a href="/statistics">Statistics</a>
+    <a class="active" href="/" aria-label= "re$ale home page">Home</a>
+    <a href="/about" aria-label= "More information about re$ale">About</a>
+    <a href="/statistics" aria-label= "View re$ale statistics">Statistics</a>
   </div>
   <div class="search-container">
     {{#if user}}
@@ -20,14 +20,16 @@
       <a id="a-login" href="/login">Login</a>
     {{/if}}
 
+    <label for="myInput" hidden>Search for a product</label>
     <input
       type="text"
       id="myInput"
       onkeyup="searchBar()"
       placeholder="Find products.."
+      aria-label= "Search for a product"
     />
     <button
-      class="btn btn-outline-secondary"
+      class="btn btn-dark"
       onClick="clearInput()"
       id="clearButton"
     ><span id="respClearText">Clear</span></button>
@@ -50,7 +52,7 @@
   aria-labelledby="filterSidebarLabel"
 >
   <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="filterSidebarLabel">Filter Products</h5>
+    <h1 class="offcanvas-title" id="filterSidebarLabel">Filter Products</h1>
     <button
       type="button"
       class="btn-close text-reset"
@@ -239,7 +241,7 @@
       <img src={{images}} class="card-img-top" alt="{{name}}" />
     </div>
     <div class="card-body">
-      <h5 class="card-title">${{price}}</h5>
+      <h2 class="card-title">${{price}}</h2>
       <p class="card-text">
         Condition:
         {{condition}}<br />
