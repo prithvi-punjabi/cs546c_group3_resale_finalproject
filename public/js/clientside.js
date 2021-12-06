@@ -145,6 +145,11 @@ function filterDarkmode() {
   } else {
     $("body").addClass("dark");
   }
+  if ($(".userCard").hasClass("dark")) {
+    $(".userCard").removeClass("dark");
+  } else {
+    $(".userCard").addClass("dark");
+  }
 }
 
 function clearAllFilters() {
