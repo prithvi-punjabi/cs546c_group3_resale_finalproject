@@ -279,11 +279,11 @@ input:checked + .slider:before {
     text-align: center;
     transition-duration: 0.4s;
   }
-  
+
   #respClearText {
     position: relative;
     line-height: 1px;
-    color: #e9e9e9; 
+    color: #e9e9e9;
     /* background-color: rgba(0, 0, 0, 0); */
   }
 
@@ -340,11 +340,11 @@ input:checked + .slider:before {
     text-align: center;
     transition-duration: 0.4s;
   }
-  
+
   #respClearText {
     position: relative;
     line-height: 1px;
-    color: #e9e9e9; 
+    color: #e9e9e9;
     /* background-color: rgba(0, 0, 0, 0); */
   }
 
@@ -364,19 +364,19 @@ input:checked + .slider:before {
     background-repeat: no-repeat;
     padding-left: 40px;
   }
-  
-  .card{
+
+  .card {
     display: table;
     margin-right: auto;
     margin-left: auto;
     float: none;
   }
 
-  #prodTitle{
+  #prodTitle {
     font-size: 40px;
   }
 
-  #map{
+  #map {
     width: 180px;
   }
 
@@ -388,7 +388,6 @@ input:checked + .slider:before {
     margin-left: 2%;
   } */
 }
-
 
 #myInput {
   border-radius: 25px;
@@ -905,7 +904,7 @@ body {
   margin: auto 0;
   border-radius: 8px;
   letter-spacing: 0.7px;
-  background-color: #5086bd;
+  background-color: #377bb6;
   color: #fff;
   font-size: 21px;
   font-family: "Lato", sans-serif;
@@ -1310,12 +1309,12 @@ body {
   top: 10;
 }
 
-#filterSidebarLabel{
+#filterSidebarLabel {
   color: black;
-  font-size: 22px;;
+  font-size: 22px;
 }
 
-.modal-title{
+.modal-title {
   color: black;
   font-size: 20px;
 }
@@ -1324,10 +1323,16 @@ body {
   font-size: 23px;
 }
 
-.justify-content-between > h3{
+.justify-content-between > h3 {
   font-size: 20px;
 }
 
-#prodPriceSpan{
+#prodPriceSpan {
   color: #0b8a00;
+}
+
+.abtCard > h2 {
+  font-size: 23px;
+  text-align: center;
+  font-weight: bold;
 }

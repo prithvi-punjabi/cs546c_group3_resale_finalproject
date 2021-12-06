@@ -8,8 +8,8 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="testModalLabel">Please tell us what you
-          think about re$ale</h5>
+        <h1 class="modal-title" id="testModalLabel">Please tell us what you
+          think about re$ale</h1>
         <button
           type="button"
           class="btn-close"
@@ -55,13 +55,13 @@
 </div>
 <div class="resaleimg">
   <h1 id="abouthead">About re$ale</h1>
-  <img src="/public/images/resale.png" id="abtImg" />
+  <img src="/public/images/resale.png" id="abtImg" alt="resale logo" />
 </div>
 <div class="container" id="abtUsCont">
   <div class="row">
     <div class="column" id="colu1">
       <div class="card abtCard">
-        <h4>Who are we?</h4>
+        <h2>Who are we?</h2>
         <p>Hello! Welcome to re$ale: the brainchild of 4 international MS CS
           students currently in the process of mastering Web Programming. We aim
           to please!</p>
@@ -70,7 +70,7 @@
 
     <div class="column" id="colu2">
       <div class="card abtCard">
-        <h4>What is re$ale?</h4>
+        <h2>What is re$ale?</h2>
         <p>re$ale is an intermediary. It is web application that connects buyers
           to sellers (and vice versa), promising great products and prices!</p>
       </div>
@@ -78,7 +78,7 @@
 
     <div class="column" id="colu3">
       <div class="card abtCard">
-        <h4>Our inspiration</h4>
+        <h2>Our inspiration</h2>
         <p>Being international students, we know how hard it is to find
           affordable, everyday items. We created re$ale so no one has to face
           that ever again!</p>
@@ -87,7 +87,7 @@
 
     <div class="column" id="colu4">
       <div class="card abtCard">
-        <h4>How to use re$ale?</h4>
+        <h2>How to use re$ale?</h2>
         <p>It couldn't be easier! Browse products, favourite them, comment on
           them, email owners, list your own products, and most importantly, have
           fun with it!</p>
@@ -100,13 +100,18 @@
     <span class="button__text">
       Visit re$ale!
     </span>
-    <svg class="button__svg" role="presentational" viewBox="0 0 600 600">
+    <svg
+      class="button__svg"
+      role="presentational"
+      viewBox="0 0 600 600"
+      aria-label="Visit re$ale!"
+    >
       <defs>
-        <clipPath id="myClip">
+        <clipPath id="myClip" aria-label="Visit re$ale!">
           <rect x="0" y="0" width="100%" height="50%"></rect>
         </clipPath>
       </defs>
-      <g clip-path="url(#myClip)">
+      <g clip-path="url(#myClip)" aria-label="Visit re$ale!">
         <g id="money">
           <path
             d="M441.9,116.54h-162c-4.66,0-8.49,4.34-8.62,9.83l.85,278.17,178.37,2V126.37C450.38,120.89,446.56,116.52,441.9,116.54Z"
@@ -123,7 +128,7 @@
             stroke-width="14"
           ></path>
         </g>
-        <g id="creditcard">
+        <g id="creditcard" aria-label="Visit re$ale!">
           <path
             d="M372.12,181.59H210.9c-4.64,0-8.45,4.34-8.58,9.83l.85,278.17,177.49,2V191.42C380.55,185.94,376.75,181.57,372.12,181.59Z"
             fill="#a76fe2"
@@ -138,7 +143,7 @@
           <path d="M249.73,183.76h28.85v274.8H249.73Z" fill="#323c44"></path>
         </g>
       </g>
-      <g id="wallet">
+      <g id="wallet" aria-label="Visit re$ale!">
         <path
           d="M478,288.23h-337A28.93,28.93,0,0,0,112,317.14V546.2a29,29,0,0,0,28.94,28.95H478a29,29,0,0,0,28.95-28.94h0v-229A29,29,0,0,0,478,288.23Z"
           fill="#a4bdc1"
