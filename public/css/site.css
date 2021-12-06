@@ -483,14 +483,14 @@ input:checked + .slider:before {
 .product-description p {
   font-size: 16px;
   font-weight: 300;
-  color: #86939e;
+  color: #677986;
   line-height: 24px;
 }
 
 .product-details span {
   font-size: 14px;
   font-weight: 400;
-  color: #86939e;
+  color: #677986;
   margin-bottom: 20px;
 }
 
@@ -1313,4 +1313,21 @@ body {
 #filterSidebarLabel{
   color: black;
   font-size: 22px;;
+}
+
+.modal-title{
+  color: black;
+  font-size: 20px;
+}
+
+.product-description > h2 {
+  font-size: 23px;
+}
+
+.justify-content-between > h3{
+  font-size: 20px;
+}
+
+#prodPriceSpan{
+  color: #0b8a00;
 }
