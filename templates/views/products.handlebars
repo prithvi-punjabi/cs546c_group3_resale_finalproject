@@ -1,6 +1,31 @@
-{{! <div id="logo">
-  <img src="/public/images/resale.png" alt="Resale Logo" />
-</div> }}
+<div
+  class="modal fade"
+  id="userModal"
+  tabindex="-1"
+  aria-labelledby="userModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="userModalLabel">Hello {{user.firstName}}</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          id="userButClose"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <a href="/user/{{user._id}}">Hello, {{user.firstName}}!</a>
+        <a href="/products/new">Sell Products</a>
+        <a href="/chat">Chat</a>
+        <a href="/logout">Logout</a>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="topnav">
   <div>
     <div id="logo">
@@ -10,16 +35,19 @@
     <a href="/about" aria-label= "More information about re$ale">About</a>
     <a href="/statistics" aria-label= "View re$ale statistics">Statistics</a>
   </div>
-  <div class="search-container">
+  <div id="userAccDiv"> 
     {{#if user}}
       {{! prettier-ignore }}
-      <a href="/user/{{user._id}}">Hello, {{user.firstName}}!</a>
+      <img src={{user.profilePicture}} alt="{{user.firstName}}" data-bs-toggle="modal" data-bs-target="#userModal" id="accessUser">
+      {{!-- <a type="button" data-bs-toggle="modal" data-bs-target="#userModal" id="accessUser"></a> --}}
+      {{!-- <a href="/user/{{user._id}}">Hello, {{user.firstName}}!</a>
       <a href="/products/new">Sell Products</a>
-      <a href="/chat">Chat</a>
+      <a href="/chat">Chat</a> --}}
     {{else}}
-      <a id="a-login" href="/login">Login/Signup</a>
+      <a id="a-login" href="/login" id="logSign">Login/Signup</a>
     {{/if}}
-
+  </div> 
+  <div class="search-container">
     <label for="myInput" hidden>Search for a product</label>
     <input
       type="text"

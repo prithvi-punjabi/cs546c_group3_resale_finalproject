@@ -1,5 +1,5 @@
 <form action="/" id="statBtnForm">
-  <button class="btn btn-dark" id="backBtn">Back to home</button>
+  <button class="btn btn-dark" id="backBtn" href="/">Back to home</button>
 </form>
 <main>
   <h1 class="statHead">re$ale Statistics</h1>
@@ -119,6 +119,7 @@
     colors.push("#"+Math.floor(Math.random()*16777215).toString(16));
   {{/each}}
   const categoryCounts = [{{categoryCounts}}]; const myChart = new Chart(ctx, {
-  type: 'pie', data: { labels: categories, datasets: [{ label: 'Products listed by categories', backgroundColor: colors, data: categoryCounts, }] }, options:
+  type: 'pie', data: { labels: categories, datasets: [{ label: 'Products listed
+  by categories', backgroundColor: colors, data: categoryCounts, }] }, options:
   { scales: { yAxes: [{ ticks: { beginAtZero: true, } }] } }, });
 </script>
