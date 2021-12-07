@@ -176,16 +176,16 @@ function removeErrorClass(element) {
         });
       }
       else{
-        const path = "";
+        const path = "/public/uploads/profile4.png";
         const newPost = {
-          firstName: firstName,
-          lastName: lastName,
-          userName: userName,
-          password: password,
+          firstName: firstName.value,
+          lastName: lastName.value,
+          userName: userName.value,
+          password: password.value,
           images: path,
-          email: email,
-          phoneNumber: phoneNumber,
-          dob: dob,
+          email: email.value,
+          phoneNumber: phoneNumber.value,
+          dob: dob.value,
           biography: event.target.biography.value,
           street: event.target.street.value,
           city: event.target.city.value,
