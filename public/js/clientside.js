@@ -1,3 +1,15 @@
+const urlParams = new URLSearchParams(window.location.search);
+const myParam = urlParams.get("error");
+console.log(myParam);
+if (myParam) {
+  Swal.fire({
+    title: "Error!",
+    text: myParam,
+    icon: "error",
+    confirmButtonText: "Got it!",
+  });
+}
+
 function noProduct(parameter) {
   let cards = document.getElementsByClassName("card");
   let count = 0;

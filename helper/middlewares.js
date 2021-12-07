@@ -8,6 +8,18 @@ module.exports = async (app) => {
     next();
   });
 
+  app.use("/user/:id", (req, res, next) => {
+    if (!utils.isUserLoggedIn(req)) {
+      return res.redirect(
+        "/login?error=" +
+          encodeURIComponent(
+            "You need to be logged in to view your User Profile!"
+          )
+      );
+    }
+    next();
+  });
+
   app.use("/products/get", (req, res, next) => {
     if (!utils.isUserLoggedIn(req)) {
       return res.redirect(

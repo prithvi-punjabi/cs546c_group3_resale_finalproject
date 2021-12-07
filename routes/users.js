@@ -85,7 +85,7 @@ router.post("/users/add", async (req, res) => {
     userData.address = address;
     validate.checkLocation(userData.address);
   } catch (e) {
-    return res.render("signup", {error: e});
+    return res.render("signup", { error: e });
   }
   try {
     const {
@@ -117,7 +117,7 @@ router.post("/users/add", async (req, res) => {
     req.session.user = newUser;
     res.redirect("/");
   } catch (e) {
-    return res.render("signup", {error: e});
+    return res.render("signup", { error: e });
   }
 });
 
@@ -138,6 +138,11 @@ router.delete("/users/delete/:id", async (req, res) => {
 // get user
 router.get("/user/:id", async (req, res) => {
   const id = req.params.id;
+  if (id !== req.session.user._id) {
+    return res.redirect(
+      "/?error=" + encodeURIComponent("You cannot view another user's profile.")
+    );
+  }
   try {
     validate.checkNonNull(id);
     validate.checkString(id);
@@ -251,44 +256,40 @@ router.post("/users/rate/:id", async (req, res) => {
 router.get("/users/add", async (req, res) => {
   if (!req.session.user) {
     return res.render("signup");
-  }
-  else {
-    res.redirect("/",);
+  } else {
+    res.redirect("/");
   }
 });
 
 //update
 router.get("/users/update", async (req, res) => {
   if (req.session.user) {
-    try{
+    try {
       let userId = req.session.user._id.toString();
       const userInfo = await usersData.get(userId);
-      if(userInfo.gender.toLowerCase() == "male"){
+      if (userInfo.gender.toLowerCase() == "male") {
         userInfo.isMale = true;
-      }
-      else if(userInfo.gender.toLowerCase() == "female"){
+      } else if (userInfo.gender.toLowerCase() == "female") {
         userInfo.isFemale = true;
-      }
-      else{
+      } else {
         userInfo.isOther = true;
       }
-      return res.render("updateuser",{
+      return res.render("updateuser", {
         title: "Update Profile",
         user: userInfo,
         nameOfUser: userInfo.firstName + " " + userInfo.lastName,
       });
-    }
-    catch (e) {
+    } catch (e) {
       if (typeof e == "string") {
         e = new Error(e);
         e.code = 400;
       }
-      if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
+      if (e.code != null)
+        return res.status(e.code).json(ErrorMessage(e.message));
       else return res.status(500).json(ErrorMessage(e.message));
-    }  
-  }
-  else {
-    return res.render("login",);
+    }
+  } else {
+    return res.render("login");
   }
 });
 
@@ -326,24 +327,22 @@ router.post("/users/update/", async (req, res) => {
     validate.checkEmail(userData.email);
     validate.checkPhoneNumber(userData.phoneNumber);
     validate.checkLocation(userData.address);
-    if(userData.images){
+    if (userData.images) {
       validate.checkString(userData.images);
     }
   } catch (e) {
-    if(req.session.user.gender.toLowerCase() == "male"){
+    if (req.session.user.gender.toLowerCase() == "male") {
       req.session.user.isMale = true;
-    }
-    else if(req.session.user.gender.toLowerCase() == "female"){
+    } else if (req.session.user.gender.toLowerCase() == "female") {
       req.session.user.isFemale = true;
-    }
-    else{
+    } else {
       req.session.user.isOther = true;
     }
     return res.render("updateuser", {
       title: "Update Profile",
       nameOfUser: req.session.user.firstName + " " + req.session.user.lastName,
       user: req.session.user,
-      error: e
+      error: e,
     });
   }
   try {
@@ -355,10 +354,9 @@ router.post("/users/update/", async (req, res) => {
     const address = userData.address;
     const biography = userData.biography;
     let profilePicture = "";
-    if(userData.images != ""){
+    if (userData.images != "") {
       profilePicture = userData.images;
-    }
-    else{
+    } else {
       profilePicture = req.session.user.profilePicture;
     }
     const newUser = await usersData.update(
@@ -376,20 +374,18 @@ router.post("/users/update/", async (req, res) => {
     //return res.json(newUser);
     res.redirect("/");
   } catch (e) {
-    if(req.session.user.gender.toLowerCase() == "male"){
+    if (req.session.user.gender.toLowerCase() == "male") {
       req.session.user.isMale = true;
-    }
-    else if(req.session.user.gender.toLowerCase() == "female"){
+    } else if (req.session.user.gender.toLowerCase() == "female") {
       req.session.user.isFemale = true;
-    }
-    else{
+    } else {
       req.session.user.isOther = true;
     }
     return res.render("updateuser", {
       title: "Update Profile",
       nameOfUser: req.session.user.firstName + " " + req.session.user.lastName,
       user: req.session.user,
-      error: e
+      error: e,
     });
     //res.status(500).json({ error: e });
   }
