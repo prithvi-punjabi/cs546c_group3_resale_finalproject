@@ -1,0 +1,247 @@
+<div class="sidenav">
+  <div class="login-main-text">
+    <div>
+        <div class="card-body">
+          <div class="d-flex flex-column align-items-center text-center">
+            <h1>{{title}}</h1>
+            <img src="../..{{user.profilePicture}}" alt="Admin" class="rounded-circle" width="150">
+            <div class="mt-3">
+              <h2>{{nameOfUser}}</h2>
+              <p class="text-muted font-size-sm">{{user.biography}}</p>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+<div class="main">
+  <div class="col-md-12 col-sm-12">
+    <div class="add-product-form">
+      <form
+        id="update-user"
+        class="form-horizontal needs-validation"
+        action="/users/update"
+        method="POST"
+        novalidate
+      >
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-name">First Name</span>
+          <input
+            type="text"
+            value = "{{user.firstName}}"
+            class="form-control"
+            placeholder="Enter first name"
+            id="firstName"
+            name="firstName"
+            aria-label="name"
+            aria-describedby="span-name"
+            required
+          />
+          <div class="invalid-feedback">
+            First name cannot be empty
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-name">Last Name</span>
+          <input
+            type="text"
+            value = "{{user.lastName}}"
+            class="form-control"
+            placeholder="Enter last name"
+            id="lastName"
+            name="lastName"
+            aria-label="name"
+            aria-describedby="span-name"
+            required
+          />
+          <div class="invalid-feedback">
+            Last name cannot be empty
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-image">Profile Image</span>
+          <input
+            id="imageUpload"
+            name="imageUpload"
+            accept="image/*"
+            class="form-control"
+            type="file"
+            id="formFileMultiple"
+            aria-label="imageUpload"
+            aria-describedby="span-image"
+          />
+          <div class="invalid-feedback">
+            Please select an image
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <span
+            class="input-group-text"
+            id="span-description"
+          >Biography</span>
+          <textarea
+            class="form-control"
+            id="biography"
+            name="biography"
+            aria-label="Description"
+            aria-describedby="span-description"
+            placeholder="Describe yourself"
+            required
+          >{{user.biography}}</textarea>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-name">Email Id</span>
+          <input
+            type="text"
+            value = "{{user.email}}"
+            class="form-control"
+            placeholder="Enter email address"
+            id="email"
+            name="email"
+            aria-label="name"
+            aria-describedby="span-name"
+            required
+          />
+          <div class="invalid-feedback">
+            Email Id cannot be empty
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-name">Phone Number</span>
+          <input
+            type="text"
+            value = "{{user.phoneNumber}}"
+            class="form-control"
+            placeholder="Enter phone number (xxx-xxx-xxxx)"
+            id="phoneNumber"
+            name="phoneNumber"
+            aria-label="name"
+            aria-describedby="span-name"
+            required
+          />
+          <div class="invalid-feedback">
+            Phone number cannot be empty
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-street">Address</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter street address"
+            value = "{{user.address.streetAddress}}"
+            id="street"
+            name="street"
+            aria-label="street"
+            aria-describedby="span-street"
+            required
+          />
+          <div class="invalid-feedback">
+            Please enter street details
+            <address></address>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-city">City</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter city"
+            value = "{{user.address.city}}"
+            id="city"
+            name="city"
+            aria-label="city"
+            aria-describedby="span-city"
+            required
+          />
+          <span class="input-group-text" id="span-state">State</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter state"
+            value = "{{user.address.state}}"
+            id="state"
+            name="state"
+            aria-label="state"
+            maxlength="2"
+            aria-describedby="span-state"
+            required
+          />
+          <span class="input-group-text" id="span-zip">Zip</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter Zip code"
+            value = "{{user.address.zip}}"
+            id="zip"
+            name="zip"
+            aria-label="zip"
+            pattern="[0-9]{5}"
+            aria-describedby="span-zip"
+            required
+          />
+          <div class="invalid-feedback">
+            Please enter valid address
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-gender">Gender</span>
+          <div class="form-control">
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="gender"
+                value="male"
+                id="gender_male"
+                aria-label="male"
+                {{#if user.isMale}}checked{{/if}}
+              />
+              <label class="form-check-label" for="status_available">
+                Male
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="gender"
+                value="female"
+                id="gender_female"
+                aria-label="female"
+                {{#if user.isFemale}}checked{{/if}}
+              />
+              <label class="form-check-label" for="status_sold">
+                Female
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="gender"
+                value="other"
+                id="gender_other"
+                aria-label="other"
+                {{#if user.isOther}}checked{{/if}}
+              />
+              <label class="form-check-label" for="status_sold">
+                Other
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="error">
+            <p style="color:red;font-size:30px;">{{error}}</p>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a class="btn btn-primary" target="__blank" href="/">Back</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="/public/js/updateuser.js"></script>

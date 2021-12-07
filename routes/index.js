@@ -37,7 +37,9 @@ module.exports = async (app) => {
       if (err) {
         return res.status(500).json("Failed to upload image");
       }
-      return res.json("/" + req.file.destination + "/" + req.file.filename);
+      let path = req.file.destination + "/" + req.file.filename;
+      path = path.substring(1);
+      return res.json(path);
     });
   });
 

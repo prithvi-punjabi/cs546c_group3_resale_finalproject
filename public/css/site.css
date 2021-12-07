@@ -1336,3 +1336,7 @@ body {
   text-align: center;
   font-weight: bold;
 }
+
+.userCard {
+  height: 29rem;
+}
