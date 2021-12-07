@@ -50,8 +50,11 @@ router.post("/users/add", async (req, res) => {
     validate.checkNonNull(userData.userName);
     validate.checkNonNull(userData.dob);
     validate.checkNonNull(userData.gender);
-    validate.checkNonNull(userData.profilePicture);
-    validate.checkNonNull(userData.address);
+    validate.checkNonNull(userData.images);
+    validate.checkNonNull(userData.street);
+    validate.checkNonNull(userData.city);
+    validate.checkNonNull(userData.state);
+    validate.checkNonNull(userData.zip);
     validate.checkNonNull(userData.password);
     validate.checkNonNull(userData.biography);
     validate.checkString(userData.firstName);
@@ -61,16 +64,25 @@ router.post("/users/add", async (req, res) => {
     validate.checkString(userData.userName);
     validate.checkString(userData.dob);
     validate.checkString(userData.gender);
-    validate.checkString(userData.profilePicture);
+    validate.checkString(userData.images);
     validate.checkString(userData.password);
     validate.checkString(userData.biography);
+    validate.checkString(userData.street);
+    validate.checkString(userData.city);
+    validate.checkString(userData.state);
+    validate.checkString(userData.zip);
     validate.checkEmail(userData.email);
     validate.checkPhoneNumber(userData.phoneNumber);
     validate.checkDob(userData.dob);
+    let address = {};
+    address.streetAddress = userData.street;
+    address.city = userData.city;
+    address.state = userData.state;
+    address.zip = userData.zip;
+    userData.address = address;
     validate.checkLocation(userData.address);
   } catch (e) {
-    res.status(400).json({ error: e });
-    return;
+    return res.render("signup", {error: e});
   }
   try {
     const {
@@ -81,11 +93,11 @@ router.post("/users/add", async (req, res) => {
       userName,
       dob,
       gender,
-      profilePicture,
+      images,
       address,
       password,
       biography,
-    } = req.body;
+    } = userData;
     const newUser = await usersData.create(
       firstName,
       lastName,
@@ -94,18 +106,18 @@ router.post("/users/add", async (req, res) => {
       userName,
       dob,
       gender,
-      profilePicture,
+      images,
       address,
       password,
       biography
     );
-    res.status(200).json({
-      success: `New user ${firstName} ${lastName} added successfully`,
-    });
+    req.session.user = newUser;
+    res.redirect("/");
   } catch (e) {
-    res.status(500).json({ error: e });
+    return res.render("signup", {error: e});
   }
 });
+
 //delete data
 router.delete("/users/delete/:id", async (req, res) => {
   const id = req.params.id;
@@ -124,7 +136,6 @@ router.delete("/users/delete/:id", async (req, res) => {
 router.get("/user/:id", async (req, res) => {
   const id = req.params.id;
   try {
-    console.log("here id");
     validate.checkNonNull(id);
     validate.checkString(id);
     utils.parseObjectId(id, "User ID");
@@ -140,7 +151,6 @@ router.get("/user/:id", async (req, res) => {
       obj.idno = listprod[i]._id.toString();
       arr.push(obj);
     }
-    console.log(arr);
     let listlike = await thisuser.favouriteProducts;
     // let prod = await productData;
     let arr1 = [];
@@ -150,7 +160,6 @@ router.get("/user/:id", async (req, res) => {
       let imgdis = getprod.images[0];
       let prodname = getprod.name;
       let pricep = getprod.price;
-      console.log(pricep);
       let obj1 = {};
       obj1.imageprod = imgdis;
       obj1.prodname = prodname;
@@ -158,7 +167,6 @@ router.get("/user/:id", async (req, res) => {
       obj1.prices = pricep;
       arr1.push(obj1);
     }
-    console.log(arr1);
     // return res.status(200).json(thisuser);
     return res.render("userprofile", {
       nameOfUser: thisuser.firstName + " " + thisuser.lastName,
@@ -240,8 +248,17 @@ router.post("/users/rate/:id", async (req, res) => {
   }
 });
 
-//update
+//signup
+router.get("/users/add", async (req, res) => {
+  if (!req.session.user) {
+    return res.render("signup");
+  }
+  else {
+    res.redirect("/",);
+  }
+});
 
+//update
 router.get("/users/update", async (req, res) => {
   if (req.session.user) {
     try{
@@ -310,14 +327,14 @@ router.post("/users/update/", async (req, res) => {
     validate.checkEmail(userData.email);
     validate.checkPhoneNumber(userData.phoneNumber);
     validate.checkLocation(userData.address);
-    if(userData.profilePicture){
-      validate.checkString(userData.profilePicture);
+    if(userData.images){
+      validate.checkString(userData.images);
     }
   } catch (e) {
     if(req.session.user.gender.toLowerCase() == "male"){
       req.session.user.isMale = true;
     }
-    else if(req.session.user.gender.toLowerCase() == "male"){
+    else if(req.session.user.gender.toLowerCase() == "female"){
       req.session.user.isFemale = true;
     }
     else{
@@ -339,8 +356,8 @@ router.post("/users/update/", async (req, res) => {
     const address = userData.address;
     const biography = userData.biography;
     let profilePicture = "";
-    if(userData.profilePicture != ""){
-      profilePicture = userData.profilePicture;
+    if(userData.images != ""){
+      profilePicture = userData.images;
     }
     else{
       profilePicture = req.session.user.profilePicture;
@@ -363,7 +380,7 @@ router.post("/users/update/", async (req, res) => {
     if(req.session.user.gender.toLowerCase() == "male"){
       req.session.user.isMale = true;
     }
-    else if(req.session.user.gender.toLowerCase() == "male"){
+    else if(req.session.user.gender.toLowerCase() == "female"){
       req.session.user.isFemale = true;
     }
     else{

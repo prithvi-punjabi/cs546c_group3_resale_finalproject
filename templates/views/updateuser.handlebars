@@ -15,12 +15,13 @@
   </div>
 </div>
 <div class="main">
-  <form action="/users/update" method="post">
   <div class="col-md-12 col-sm-12">
     <div class="add-product-form">
       <form
-        id="form-product"
+        id="update-user"
         class="form-horizontal needs-validation"
+        action="/users/update"
+        method="POST"
         novalidate
       >
         <div class="input-group mb-3">
@@ -60,15 +61,14 @@
         <div class="input-group mb-3">
           <span class="input-group-text" id="span-image">Profile Image</span>
           <input
-            id="profilePicture"
-            name="profilePicture"
+            id="imageUpload"
+            name="imageUpload"
             accept="image/*"
             class="form-control"
             type="file"
             id="formFileMultiple"
             aria-label="imageUpload"
             aria-describedby="span-image"
-            onchange="imageUploadChange()"
           />
           <div class="invalid-feedback">
             Please select an image
@@ -112,7 +112,7 @@
             type="text"
             value = "{{user.phoneNumber}}"
             class="form-control"
-            placeholder="Enter email address"
+            placeholder="Enter phone number (xxx-xxx-xxxx)"
             id="phoneNumber"
             name="phoneNumber"
             aria-label="name"
@@ -194,6 +194,7 @@
                 name="gender"
                 value="male"
                 id="gender_male"
+                aria-label="male"
                 {{#if user.isMale}}checked{{/if}}
               />
               <label class="form-check-label" for="status_available">
@@ -207,6 +208,7 @@
                 name="gender"
                 value="female"
                 id="gender_female"
+                aria-label="female"
                 {{#if user.isFemale}}checked{{/if}}
               />
               <label class="form-check-label" for="status_sold">
@@ -220,6 +222,7 @@
                 name="gender"
                 value="other"
                 id="gender_other"
+                aria-label="other"
                 {{#if user.isOther}}checked{{/if}}
               />
               <label class="form-check-label" for="status_sold">
@@ -240,6 +243,5 @@
       </form>
     </div>
   </div>
-  </form>
 </div>
-<script src="/public/js/products.js"></script>
+<script src="/public/js/updateuser.js"></script>
