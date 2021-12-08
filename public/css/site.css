@@ -220,8 +220,8 @@ input:checked + .slider:before {
 }
 
 #clearButton {
-  height: 38px;
-  margin-top: 14px;
+  height: 36px;
+  margin-top: 9px;
 }
 
 #clearButton:hover {
@@ -235,7 +235,8 @@ input:checked + .slider:before {
 
 #myInput {
   padding: 6px;
-  margin-top: 14px;
+  margin-top: 9px;
+  margin-bottom: 7px;
   font-size: 14px;
   background-color: white;
   background-image: url("/public/images/search.svg");
