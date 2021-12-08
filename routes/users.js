@@ -253,8 +253,18 @@ router.post("/users/rate/:id", async (req, res) => {
 });
 
 //signup
+
+router.get("/users/add", async (req, res) => {
+  if (!req.session.user) {
+    return res.render("signup");
+  } else {
+    return res.redirect("/");
+  }
+});
+
 router.post("/users/add", async (req, res) => {
   const userData = req.body;
+  console.log("ROUTE HIT");
   //User input validation on user route by calling validation.js
   try {
     validate.checkNonNull(userData.firstName);
