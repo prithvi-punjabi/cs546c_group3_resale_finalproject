@@ -16,6 +16,9 @@ const getAllChats = async (my_user_id) => {
   if (user == null || user.chat == null) {
     return [];
   }
+  user.chat.map((chat) => {
+    chat = addLastMessageToChat(chat);
+  });
   return user.chat;
 };
 
@@ -42,6 +45,7 @@ const getChatByUserId = async (my_user_id, user_id) => {
     await addEmptyChat(my_user_id.toString(), user_id.toString());
     return await getChatByUserId(my_user_id.toString(), user_id.toString());
   }
+  user.chat[0] = addLastMessageToChat(user.chat[0]);
   return user.chat[0];
 };
 
@@ -214,6 +218,13 @@ const addToChat = async (my_user_id, user_id, msg, isSent) => {
   }
   return "Message sent";
 };
+
+function addLastMessageToChat(chat) {
+  if (chat.message != null && chat.message.length > 0) {
+    chat.lastMsg = chat.message[chat.message.length - 1];
+  }
+  return chat;
+}
 
 module.exports = {
   getAllChats,
