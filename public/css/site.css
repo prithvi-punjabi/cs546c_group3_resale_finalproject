@@ -733,10 +733,13 @@ body {
   }
 }
 
-.row > .column > .abtcard {
+#abtCard1,
+#abtCard2,
+#abtCard3,
+#abtCard4 {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   /* height: 180px; */
-  width: 100%;
+  width: 100% !important;
   padding: 16px;
   height: inherit;
   text-align: justify;
