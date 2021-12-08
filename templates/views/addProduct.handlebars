@@ -67,18 +67,60 @@
         {{/if}}
         <div class="input-group mb-3">
           <span class="input-group-text" id="span-category">Category</span>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Enter categories (Comma seperated)"
-            id="category"
-            name="category"
-            aria-label="category"
-            aria-describedby="span-category"
-            value="{{product.category}}"
-            required
-          />
-          <div class="invalid-feedback">
+          <div class="form-control input-group-addon">
+            <input class="form-check-input" type="checkbox" value="" id="cate-book" {{#ifContains "Books" product.category}}checked{{/ifContains}}>
+            <label class="form-check-label" for="cate-book">
+              Books
+            </label>
+            <br/>
+            <input class="form-check-input" type="checkbox" value="" id="cate-clothing" {{#ifContains "Clothing" product.category}}checked{{/ifContains}}>
+            <label class="form-check-label" for="cate-clothing">
+              Clothing
+            </label>
+            <br/>
+            <input class="form-check-input" type="checkbox" value="" id="cate-electronics" {{#ifContains "Electronics" product.category}}checked{{/ifContains}}>
+            <label class="form-check-label" for="cate-electronics">
+              Electronics
+            </label>
+            <br/>
+            <input class="form-check-input" type="checkbox" value="" id="cate-other" {{#ifContains "Other" product.category}}checked{{/ifContains}}>
+            <label class="form-check-label" for="cate-other">
+              Other
+            </label>
+          </div>
+          <div class="form-control input-group-addon">
+            <input class="form-check-input" type="checkbox" value="" id="cate-footwear" {{#ifContains "Footwear" product.category}}checked{{/ifContains}}>
+            <label class="form-check-label" for="cate-footwear">
+              Footwear
+            </label>
+            <br/>
+            <input class="form-check-input" type="checkbox" value="" id="cate-furniture" {{#ifContains "Furniture" product.category}}checked{{/ifContains}}>
+            <label class="form-check-label" for="cate-furniture">
+              Furniture
+            </label>
+            <br/>
+            <input class="form-check-input" type="checkbox" value="" id="cate-household" {{#ifContains "Household" product.category}}checked{{/ifContains}}>
+            <label class="form-check-label" for="cate-household">
+              Household
+            </label>
+          </div>
+          <div class="form-control input-group-addon">
+            <input class="form-check-input" type="checkbox" value="" id="cate-kitchenware" {{#ifContains "Kitchenware" product.category}}checked{{/ifContains}}>
+            <label class="form-check-label" for="cate-kitchenware">
+              Kitchenware
+            </label>
+            <br/>
+            <input class="form-check-input" type="checkbox" value="" id="cate-office" {{#ifContains "Office" product.category}}checked{{/ifContains}}>
+            <label class="form-check-label" for="cate-office">
+              Office and Supplies
+            </label>
+            <br/>
+            <input class="form-check-input" type="checkbox" value="" id="cate-storage" {{#ifContains "Storage" product.category}}checked{{/ifContains}}>
+            <label class="form-check-label" for="cate-storage">
+              Storage
+            </label>
+          </div>
+          <div id="invalid-category" class="invalid-feedback">
             Please enter at least one category
           </div>
         </div>

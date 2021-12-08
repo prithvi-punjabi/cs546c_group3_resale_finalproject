@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const hbs = require("hbs");
 const exphbs = require("express-handlebars");
 const configRoutes = require("./routes");
 const configMiddlewares = require("./helper/middlewares");
@@ -30,14 +29,23 @@ app.use(
 );
 
 const templatePath = path.join(__dirname, "./templates/views");
-const partialsPath = path.join(__dirname, "./templates/partials");
 app.use(express.urlencoded({ extended: false }));
 
 app.set("views", templatePath);
-app.engine("handlebars", exphbs.create({ defaultLayout: "index" }).engine);
+
+var hbs = exphbs.create({ defaultLayout: "index" });
+hbs.handlebars.registerHelper(
+  "ifContains",
+  function (category, categories, options) {
+    return categories != null && categories.includes(category)
+      ? options.fn(this)
+      : options.inverse(this);
+  }
+);
+
+app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 app.use("/public", express.static(__dirname + "/public"));
-hbs.registerPartials(partialsPath);
 
 configMiddlewares(app);
 configRoutes(app);

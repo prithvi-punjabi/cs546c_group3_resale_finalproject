@@ -10,6 +10,7 @@ function imageUploadChange() {
   //replace the "Choose a file" label
   $("#image-upload-label").attr(innerHTML).val(fileName);
 }
+
 (function ($) {
   const product_id = $("#product_id").val();
   function isEdit() {
@@ -39,6 +40,7 @@ function imageUploadChange() {
   $("#form-product").submit(function (event) {
     event.preventDefault();
     $("#invalid-image").removeClass("d-block");
+    $("#invalid-category").removeClass("d-block");
 
     if (!$("#form-product")[0].checkValidity()) {
       event.stopPropagation();
@@ -48,8 +50,42 @@ function imageUploadChange() {
 
     $("#form-product").addClass("was-validated");
 
-    let category = $("#category").val();
-    category = category.replace(" ", "").split(",");
+    let category = [];
+    if ($("#cate-book").is(":checked")) {
+      category.push("Books");
+    }
+    if ($("#cate-clothing").is(":checked")) {
+      category.push("Clothing");
+    }
+    if ($("#cate-electronics").is(":checked")) {
+      category.push("Electronics");
+    }
+    if ($("#cate-other").is(":checked")) {
+      category.push("Other");
+    }
+    if ($("#cate-footwear").is(":checked")) {
+      category.push("Footwear");
+    }
+    if ($("#cate-furniture").is(":checked")) {
+      category.push("Furniture");
+    }
+    if ($("#cate-household").is(":checked")) {
+      category.push("Household");
+    }
+    if ($("#cate-kitchenware").is(":checked")) {
+      category.push("Kitchenware");
+    }
+    if ($("#cate-office").is(":checked")) {
+      category.push("Office");
+    }
+    if ($("#cate-storage").is(":checked")) {
+      category.push("Storage");
+    }
+
+    if (category.length == 0) {
+      $("#invalid-category").addClass("d-block");
+      return;
+    }
     let keywords = $("#keywords").val();
     keywords = keywords.replace(" ", "").split(",");
 
