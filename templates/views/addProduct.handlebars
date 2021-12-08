@@ -45,7 +45,6 @@
             accept="image/*"
             class="form-control"
             type="file"
-            id="formFileMultiple"
             aria-label="imageUpload"
             aria-describedby="span-image"
             onchange="imageUploadChange()"
@@ -60,7 +59,7 @@
             <div id="uploaded-imgs" class="row mb-3">
               {{#each product.images}}
                 <div class="card col-md-3 size-100">
-                    <img class="uploaded-img card-img-top" src="{{this}}">
+                    <img class="uploaded-img card-img-top" alt="{{this}}" src="{{this}}">
                     <span class="span-x hide">X</span>
                 </div>
               {{/each}}

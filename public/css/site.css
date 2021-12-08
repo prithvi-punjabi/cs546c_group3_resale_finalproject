@@ -47,7 +47,7 @@
 }
 
 h1 {
-  color: #32a852;
+  color: #008a00;
   /* margin-top: 30px; */
 }
 
@@ -1083,11 +1083,13 @@ body {
 .people-list .about {
   float: left;
   padding-left: 8px;
+  width: 75%;
 }
 
 .people-list .status {
-  color: #999;
+  color: #767676;
   font-size: 13px;
+  word-break: break-word;
 }
 
 .chat {
@@ -1102,7 +1104,7 @@ body {
 .chat .chat-header img {
   float: left;
   border-radius: 40px;
-  width: 40px;
+  width: 70px;
 }
 
 .chat .chat-header .chat-about {
