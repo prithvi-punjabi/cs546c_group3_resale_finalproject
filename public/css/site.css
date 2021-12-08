@@ -221,12 +221,21 @@ input:checked + .slider:before {
 
 #clearButton {
   height: 38px;
-  margin-top: 6px;
+  margin-top: 14px;
+}
+
+#clearButton:hover {
+  background-color: #ff9900;
+  color: white;
+}
+
+#searchBarForm {
+  margin-top: 10px;
 }
 
 #myInput {
   padding: 6px;
-  margin-top: 8px;
+  margin-top: 14px;
   font-size: 14px;
   background-color: white;
   background-image: url("/public/images/search.svg");
@@ -1258,4 +1267,8 @@ body {
 #logSign,
 #accessUser {
   float: right;
+}
+
+.navbar {
+  font-size: 18px;
 }

@@ -189,4 +189,8 @@ function clearAllFilters() {
   $(window).on("resize", function () {
     $(".card").css("width", "18rem");
   });
+  $("#clearButton").on("click", function (event) {
+    event.preventDefault();
+    clearInput();
+  });
 })(window.jQuery);
