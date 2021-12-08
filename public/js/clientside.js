@@ -90,8 +90,9 @@ function clearInput() {
   let cards = document.getElementsByClassName("card");
   input.value = "";
   for (var i = 0; i < cards.length; i++) {
-    if (cards[i].className === "card hiddenBySearch")
-      cards[i].className = "card";
+    if (cards[i].className === "card hiddenBySearch");
+    cards[i].className = "card";
+    cards[i].hidden = false;
   }
 }
 
@@ -184,5 +185,12 @@ function clearAllFilters() {
 (function ($) {
   $("input[type=radio][name=sort_by]").change(function () {
     window.location.href = "/?sort_by=" + this.value;
+  });
+  $(window).on("resize", function () {
+    $(".card").css("width", "18rem");
+  });
+  $("#clearButton").on("click", function (event) {
+    event.preventDefault();
+    clearInput();
   });
 })(window.jQuery);
