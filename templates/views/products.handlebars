@@ -8,7 +8,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title" id="userModalLabel">Hello {{user.firstName}}</h1>
+        <h1 class="modal-title" id="userModalLabel">Welcome to re$ale, {{user.firstName}}!</h1>
         <button
           type="button"
           class="btn-close"
@@ -18,51 +18,58 @@
         ></button>
       </div>
       <div class="modal-body">
-        <a href="/user/{{user._id}}">Hello, {{user.firstName}}!</a>
-        <a href="/products/new">Sell Products</a>
-        <a href="/chat">Chat</a>
-        <a href="/logout">Logout</a>
+          <a type="button" class="btn btn-outline-primary" href="/user/{{user._id}}">View Profile</a>
+          <a type="button" class="btn btn-outline-primary" href="/products/new">Sell Products</a>
+          <a type="button" class="btn btn-outline-primary" href="/chat">Chat</a>
+          <a type="button" class="btn btn-outline-primary" href="/logout">Logout</a>
       </div>
     </div>
   </div>
 </div>
-<div class="topnav">
-  <div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
     <div id="logo">
-      <img src="/public/images/resale.png" alt="resale logo" class="logoimg" />
+      <img src="/public/images/resale.png" alt="resale logo" class="logoimg" /> 
     </div>
-    <a class="active" href="/" aria-label= "re$ale home page">Home</a>
-    <a href="/about" aria-label= "More information about re$ale">About</a>
-    <a href="/statistics" aria-label= "View re$ale statistics">Statistics</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/statistics" tabindex="-1" >Statistics</a>
+        </li>
+        {{#if user}}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Hello, {{user.firstName}}!
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="/user/{{user._id}}">View Profile</a></li>
+              <li><a class="dropdown-item" href="/products/new">Sell Products</a></li>
+              <li><a class="dropdown-item" href="/chat">Chat</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/logout">Logout</a></li>
+            </ul>
+          </li>
+          {{else}}
+            <li class="nav-item"><a class="nav-link" href="/login">Login/Signup</a></li>
+        {{/if}}
+      </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="text" id="myInput" onkeyup="searchBar()" placeholder="Find products.." aria-label="Search for a product">
+          <button class="btn btn-dark" onClick="clearInput()" id="clearButton">Clear</button>
+        </form>
+    </div>
   </div>
-  <div id="userAccDiv"> 
-    {{#if user}}
-      {{! prettier-ignore }}
-      <img src={{user.profilePicture}} alt="{{user.firstName}}" data-bs-toggle="modal" data-bs-target="#userModal" id="accessUser">
-      {{!-- <a type="button" data-bs-toggle="modal" data-bs-target="#userModal" id="accessUser"></a> --}}
-      {{!-- <a href="/user/{{user._id}}">Hello, {{user.firstName}}!</a>
-      <a href="/products/new">Sell Products</a>
-      <a href="/chat">Chat</a> --}}
-    {{else}}
-      <a id="a-login" href="/login" id="logSign">Login/Signup</a>
-    {{/if}}
-  </div> 
-  <div class="search-container">
-    <label for="myInput" hidden>Search for a product</label>
-    <input
-      type="text"
-      id="myInput"
-      onkeyup="searchBar()"
-      placeholder="Find products.."
-      aria-label= "Search for a product"
-    />
-    <button
-      class="btn btn-dark"
-      onClick="clearInput()"
-      id="clearButton"
-    ><span id="respClearText">Clear</span></button>
-  </div>
-</div>
+</nav>
+
 <div id="filterDivButton">
   <button
     class="btn btn-primary"
@@ -89,7 +96,7 @@
       aria-label="Close"
     ></button>
   </div>
-
+  {{! prettier-ignore }}
   <div class="offcanvas-body">
     <div>
       Sort by:
