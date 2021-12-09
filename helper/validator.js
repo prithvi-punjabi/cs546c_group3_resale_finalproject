@@ -105,11 +105,14 @@ module.exports = {
     let currmonth = parseInt(today.split("/")[0]);
     let currday = parseInt(today.split("/")[1]);
     let curryear = parseInt(today.split("/")[2]);
-    let month = parseInt(input.split("/")[0]);
-    let day = parseInt(input.split("/")[1]);
-    let year = parseInt(input.split("/")[2]);
+    let month = parseInt(input.split("-")[1]);
+    let day = parseInt(input.split("-")[2]);
+    let year = parseInt(input.split("-")[0]);
     if (currmonth === month && currday === day && curryear === year)
       throw "Your birthday cannot be today";
+    if (year > 2007) {
+      throw "You need to be older than 13 to access re$ale";
+    }
     // Check if day in date supplied is out of range of month
     if (
       month === 1 ||

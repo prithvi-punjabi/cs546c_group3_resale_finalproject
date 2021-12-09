@@ -166,7 +166,10 @@ router.post("/users/rate/:id", async (req, res) => {
     let rating = req.body.rating;
     let thisUser = req.session.user._id;
     if (userId.toString() === thisUser.toString()) {
-      return res.render("error", {code: 403, error: "You cannot rate yourself."})
+      return res.render("error", {
+        code: 403,
+        error: "You cannot rate yourself.",
+      });
     }
     const rated = await usersData.rateUser(userId, rating, thisUser);
     return res.json(rated);
