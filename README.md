@@ -1,4 +1,3 @@
-
 # CS546_C_Team_3_Project
 <!-- re$ale -->
 <!-- ABOUT THE PROJECT -->
@@ -6,7 +5,19 @@
 
 re$ale is an intermediary between buyers and sellers. Users can either list items they want to sell or browse the items that are listed for sale. Users can rate sellers and favourite the products that they are interested in, like a wish-list. The listed products will have details like, used/new, category, price and address of the seller.
 
-Our inspiration for this project stems from the pressing need for international students to populate their houses with essential items, all the while ensuring not to go over budget. As a group of international students, we have faced this issue first hand and believe an application like this would greatly benefit not only international students but also people that live on rent or constantly relocate. 
+Our inspiration for this project stems from the pressing need for international students to populate their houses with essential items, all the while ensuring not to go over budget. As a group of international students, we have faced this issue first hand and believe an application like this would greatly benefit not only international students but also people that live on rent or constantly relocate.
+
+<!-- How to run re$ale -->
+## How to run re$ale
+
+Follow the steps to run re$ale.
+
+1. Fork the Project / Download the source code as a zip file
+2. Navigate to the project directory
+3. Install the dependencies (`npm install`)
+4. Seed the database (`npm run seed`)
+5. Start the server (`npm start`)
+6. Happy shopping!
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -20,4 +31,3 @@ If you have to add a feature, please fork the repo and create a pull request.
 5. Open a Pull Request
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
