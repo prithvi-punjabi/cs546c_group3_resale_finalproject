@@ -5,6 +5,7 @@
   </div>
 </div>
 <div class="main">
+  {{>navbar}}
   <div class="col-md-12 col-sm-12">
     <div class="add-product-form">
       <form
@@ -277,7 +278,7 @@
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" class="btn btn-primary">Sign-up</button>
-            <a class="btn btn-primary" target="__blank" href="/">Back</a>
+            {{!-- <a class="btn btn-primary" target="__blank" href="/">Back</a> --}}
           </div>
         </div>
       </form>
@@ -295,3 +296,8 @@
   crossorigin="anonymous"
 ></script>
 <script src="/public/js/signup.js"></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+  crossorigin="anonymous"
+></script>

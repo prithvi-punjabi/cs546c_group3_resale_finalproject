@@ -7,9 +7,15 @@ const testimonialsData = data.testimonials;
 const validator = require("../helper/validator");
 const { errorCode } = require("../helper/common");
 const { ErrorMessage } = require("../helper/message");
+const userData = require("../data/users");
 
 router.get("/", async (req, res) => {
   const allTestimonials = await testimonialsData.getAll();
+  for(let testimonial in allTestimonials){
+    const testimonialUser = await userData.get(allTestimonials[testimonial].user_id.toString());
+    allTestimonials[testimonial].profilePicture = testimonialUser.profilePicture;
+    allTestimonials[testimonial].usersName = testimonialUser.firstName + " " + testimonialUser.lastName;
+  }
   res.render("about", { test: allTestimonials, user: req.session.user });
 });
 
