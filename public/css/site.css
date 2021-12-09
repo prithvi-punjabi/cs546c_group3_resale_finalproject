@@ -1297,6 +1297,10 @@ body {
   animation: type 0.5s alternate infinite;
 }
 
+.login-form{
+  margin-top: 42%
+}
+
 @keyframes type {
   from {
     box-shadow: inset -3px 0px 0px #888;
