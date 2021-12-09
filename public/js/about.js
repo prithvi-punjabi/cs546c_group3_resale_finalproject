@@ -1,5 +1,7 @@
-$(function () {
-  $("#myToast").toast("show");
+(function ($) {
+  let myAlert = $('#myToast');
+  let bsAlert = new bootstrap.Toast(myAlert);
+  bsAlert.show();
   $("#testimAlert").hide();
   $("#buyresale").click(function (event) {
     $(location).attr("href", "/");

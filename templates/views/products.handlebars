@@ -1,31 +1,3 @@
-<div
-  class="modal fade"
-  id="userModal"
-  tabindex="-1"
-  aria-labelledby="userModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title" id="userModalLabel">Welcome to re$ale, {{user.firstName}}!</h1>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-          id="userButClose"
-        ></button>
-      </div>
-      <div class="modal-body">
-          <a type="button" class="btn btn-outline-primary" href="/user/{{user._id}}">View Profile</a>
-          <a type="button" class="btn btn-outline-primary" href="/products/new">Sell Products</a>
-          <a type="button" class="btn btn-outline-primary" href="/chat">Chat</a>
-          <a type="button" class="btn btn-outline-primary" href="/logout">Logout</a>
-      </div>
-    </div>
-  </div>
-</div>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <div id="logo">

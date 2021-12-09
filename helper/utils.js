@@ -51,4 +51,7 @@ module.exports = {
   getMonthInString(month) {
     return months[month];
   },
+  replaceSpaceInUrl(string) {
+    return string.replace(/ /g, "%20")
+  }
 };

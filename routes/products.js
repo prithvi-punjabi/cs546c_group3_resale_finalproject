@@ -55,6 +55,8 @@ router.get("/get/:id", async (req, res) => {
         }
       });
     });
+    product.streetUrl = utils.replaceSpaceInUrl(product.location.streetAddress);
+    product.cityUrl = utils.replaceSpaceInUrl(product.location.city);
     product.isSold = product.status.toLowerCase() == "sold";
     let update = {};
     let alreadyFav = 0;

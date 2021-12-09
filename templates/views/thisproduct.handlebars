@@ -256,8 +256,7 @@
           style="border: 0"
           loading="lazy"
           aria-label= "Map showing location of {{product.name}}"
-          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBgqgmmci-betNBsxNduESqCjxD3BQTTRE
-    &q={{product.location.streetAddress}},{{product.location.city}},{{product.location.state}}+{{product.location.zip}}"
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBgqgmmci-betNBsxNduESqCjxD3BQTTRE&q={{product.streetUrl}},{{product.cityUrl}},{{product.location.state}}+{{product.location.zip}}"
         >
         </iframe><br />
         <span>Date Listed:</span>
@@ -309,7 +308,7 @@
               <h3 class="mb-1 commentUserName">{{userName}}</h3>
               <img
                 src={{profilePicture}}
-                alt={{userName}}
+                alt="{{userName}}"
                 class="commentImgs"
               />
             </div>
