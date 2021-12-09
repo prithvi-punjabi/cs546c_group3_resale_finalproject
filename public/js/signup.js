@@ -24,6 +24,7 @@ function removeErrorClass(element) {
   form.addEventListener("submit", function addUser(event) {
     event.preventDefault();
 
+    $("#error-div").addClass("visually-hidden");
     let isValid = true;
 
     if (firstName.value.length == 0) {
@@ -160,17 +161,19 @@ function removeErrorClass(element) {
             data: JSON.stringify(newPost),
             dataType: "text",
             success: function (responseMessage) {
-              console.log(responseMessage);
               window.location.replace("/");
             },
             error: function (error) {
-              alert(JSON.parse(error.responseText).message);
+              const msg = JSON.parse(error.responseText).message;
+              $("#error-div").val(msg);
+              $("#error-div").removeClass("visually-hidden");
             },
           });
         },
         error: function (error) {
-          console.log(JSON.parse(error.responseText).message);
-          alert(JSON.parse(error.responseText).message);
+          const msg = JSON.parse(error.responseText).message;
+          $("#error-div").val(msg);
+          $("#error-div").removeClass("visually-hidden");
         },
       });
     } else {
@@ -201,7 +204,9 @@ function removeErrorClass(element) {
           window.location.replace("/");
         },
         error: function (error) {
-          alert(JSON.parse(error.responseText).message);
+          const msg = JSON.parse(error.responseText).message;
+          $("#error-div").text(msg);
+          $("#error-div").removeClass("visually-hidden");
         },
       });
     }

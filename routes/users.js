@@ -226,7 +226,7 @@ router.post("/users/add", async (req, res) => {
     userData.address = address;
     validate.checkLocation(userData.address);
   } catch (e) {
-    return res.render("signup", { error: e });
+    return res.status(400).json(ErrorMessage(e));
   }
   try {
     const {
@@ -258,7 +258,7 @@ router.post("/users/add", async (req, res) => {
     req.session.user = newUser;
     res.redirect("/");
   } catch (e) {
-    return res.render("signup", { error: e });
+    return res.status(400).json(ErrorMessage(e));
   }
 });
 
