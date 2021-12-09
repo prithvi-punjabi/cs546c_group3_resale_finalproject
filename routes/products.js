@@ -174,8 +174,12 @@ router.get("/edit/:id", async (req, res) => {
 router.post("/post/:id", async (req, res) => {
   let id = req.params.id;
   let from = req.session.user.email;
+  let seller_id = req.body.idOfSeller;
   let to = req.body.emailOfSeller;
   let msg = req.body.message;
+  if (seller_id.toString() === req.session.user._id.toString()) {
+    return res.render("error", { code: 403, error: "You cannot email yourself."})
+  }
   let mailOptions = {
     from: from,
     to: to,
