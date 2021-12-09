@@ -112,7 +112,7 @@ router.get("/user/:id", async (req, res) => {
       favouriteProducts: arr1,
     });
   } catch (e) {
-    console.log(e);
+    return res.render("error", { code: errorCode.NOT_FOUND, error: e });
   }
 });
 

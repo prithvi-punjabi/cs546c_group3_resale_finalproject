@@ -86,8 +86,9 @@ router.get("/get/:id", async (req, res) => {
       e = new Error(e);
       e.code = 400;
     }
-    if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
-    else return res.status(500).json(ErrorMessage(e.message));
+    if (e.code != null)
+      return res.render("error", { code: e.code, error: e.message });
+    else return res.render("error", { code: 500, error: e.message });
   }
 });
 
@@ -100,8 +101,9 @@ router.get("/new", async (req, res) => {
       e = new Error(e);
       e.code = 400;
     }
-    if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
-    else return res.status(500).json(ErrorMessage(e.message));
+    if (e.code != null)
+      return res.render("error", { code: e.code, error: e.message });
+    else return res.render("error", { code: 500, error: e.message });
   }
 });
 
@@ -113,9 +115,10 @@ router.get("/edit/:id", async (req, res) => {
     try {
       const product = await productsData.getById(req.params.id);
       if (product.seller_id.toString() != req.session.user._id.toString()) {
-        return res
-          .status(403)
-          .json({ message: "You're not authorized to edit others' products" });
+        return res.render("error", {
+          code: 403,
+          error: "You're not authorized to edit others' products",
+        });
       }
 
       let category = null,
@@ -148,7 +151,7 @@ router.get("/edit/:id", async (req, res) => {
         e = new Error(e);
         e.code = 500;
       }
-      res.status(e.code).json({ message: e.message });
+      return res.render("error", { code: e.code, error: e.message });
     }
   } catch (e) {
     console.log(e);
@@ -156,8 +159,9 @@ router.get("/edit/:id", async (req, res) => {
       e = new Error(e);
       e.code = 400;
     }
-    if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
-    else return res.status(500).json(ErrorMessage(e.message));
+    if (e.code != null)
+      return res.render("error", { code: e.code, error: e.message });
+    else return res.render("error", { code: 500, error: e.message });
   }
 });
 
@@ -219,9 +223,10 @@ router.post("/new", async (req, res) => {
     validator.checkString(condition, "Barely used");
 
     if (!utils.isUserLoggedIn(req)) {
-      return res
-        .status(403)
-        .json(ErrorMessage("Login to start listing products"));
+      return res.render("error", {
+        code: 403,
+        error: "Login to start listing products",
+      });
     }
 
     const seller_id = req.session.user._id.toString();
@@ -246,8 +251,9 @@ router.post("/new", async (req, res) => {
       e = new Error(e);
       e.code = 400;
     }
-    if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
-    else return res.status(500).json(ErrorMessage(e.message));
+    if (e.code != null)
+      return res.render("error", { code: e.code, error: e.message });
+    else return res.render("error", { code: 500, error: e.message });
   }
 });
 
@@ -290,12 +296,13 @@ router.post("/edit/:id", async (req, res) => {
     try {
       const product = await productsData.getById(req.params.id);
       if (product.seller_id.toString() != req.session.user._id.toString()) {
-        return res
-          .status(403)
-          .json({ message: "You're not authorized to edit others' products" });
+        return res.render("error", {
+          code: 403,
+          error: "You're not authorized to edit others' products",
+        });
       }
     } catch (e) {
-      return res.status(404).json({ message: "Product not found" });
+      return res.render("error", { code: 404, error: "Product not found" });
     }
 
     const product = await productsData.update(
@@ -316,8 +323,9 @@ router.post("/edit/:id", async (req, res) => {
       e = new Error(e);
       e.code = 400;
     }
-    if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
-    else return res.status(500).json(ErrorMessage(e.message));
+    if (e.code != null)
+      return res.render("error", { code: e.code, error: e.message });
+    else return res.render("error", { code: 500, error: e.message });
   }
 });
 
@@ -333,7 +341,7 @@ router.post("/remove/:id", async (req, res) => {
         });
       }
     } catch (e) {
-      return res.status(404).json({ message: "Product not found" });
+      return res.render("error", { code: 404, error: "Product not found" });
     }
     const product = await productsData.remove(productId);
     return res.json(product);
@@ -342,8 +350,9 @@ router.post("/remove/:id", async (req, res) => {
       e = new Error(e);
       e.code = 400;
     }
-    if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
-    else return res.status(500).json(ErrorMessage(e.message));
+    if (e.code != null)
+      return res.render("error", { code: e.code, error: e.message });
+    else return res.render("error", { code: 500, error: e.message });
   }
 });
 
