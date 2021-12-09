@@ -105,10 +105,11 @@ module.exports = {
     let currmonth = parseInt(today.split("/")[0]);
     let currday = parseInt(today.split("/")[1]);
     let curryear = parseInt(today.split("/")[2]);
-    if (input === today) throw "Your birthday cannot be today";
     let month = parseInt(input.split("/")[0]);
     let day = parseInt(input.split("/")[1]);
     let year = parseInt(input.split("/")[2]);
+    if (currmonth === month && currday === day && curryear === year)
+      throw "Your birthday cannot be today";
     // Check if day in date supplied is out of range of month
     if (
       month === 1 ||
@@ -134,8 +135,9 @@ module.exports = {
       (month > currmonth && year > curryear) ||
       (month > currmonth && year == curryear) ||
       year > curryear
-    )
+    ) {
       throw "Your birthday cannot be in the future";
+    }
   },
 
   isEmptyObject(obj) {
