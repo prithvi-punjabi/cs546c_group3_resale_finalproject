@@ -478,6 +478,11 @@ input:checked + .slider:before {
   opacity: 0.5;
 }
 
+.updateError {
+  color:red;
+  font-size:30px;
+}
+
 .emailLabel {
   font-size: 18px;
 }
