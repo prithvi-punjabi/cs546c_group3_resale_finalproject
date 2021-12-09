@@ -42,85 +42,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.post("/users/add", async (req, res) => {
-  const userData = req.body;
-  //User input validation on user route by calling validation.js
-  try {
-    validate.checkNonNull(userData.firstName);
-    validate.checkNonNull(userData.lastName);
-    validate.checkNonNull(userData.email);
-    validate.checkNonNull(userData.phoneNumber);
-    validate.checkNonNull(userData.userName);
-    validate.checkNonNull(userData.dob);
-    validate.checkNonNull(userData.gender);
-    validate.checkNonNull(userData.images);
-    validate.checkNonNull(userData.street);
-    validate.checkNonNull(userData.city);
-    validate.checkNonNull(userData.state);
-    validate.checkNonNull(userData.zip);
-    validate.checkNonNull(userData.password);
-    validate.checkNonNull(userData.biography);
-    validate.checkString(userData.firstName);
-    validate.checkString(userData.lastName);
-    validate.checkString(userData.email);
-    validate.checkString(userData.phoneNumber);
-    validate.checkString(userData.userName);
-    validate.checkString(userData.dob);
-    validate.checkString(userData.gender);
-    validate.checkString(userData.images);
-    validate.checkString(userData.password);
-    validate.checkString(userData.biography);
-    validate.checkString(userData.street);
-    validate.checkString(userData.city);
-    validate.checkString(userData.state);
-    validate.checkString(userData.zip);
-    validate.checkEmail(userData.email);
-    validate.checkPhoneNumber(userData.phoneNumber);
-    validate.checkDob(userData.dob);
-    let address = {};
-    address.streetAddress = userData.street;
-    address.city = userData.city;
-    address.state = userData.state;
-    address.zip = userData.zip;
-    userData.address = address;
-    validate.checkLocation(userData.address);
-  } catch (e) {
-    return res.render("signup", { error: e });
-  }
-  try {
-    const {
-      firstName,
-      lastName,
-      email,
-      phoneNumber,
-      userName,
-      dob,
-      gender,
-      images,
-      address,
-      password,
-      biography,
-    } = userData;
-    const newUser = await usersData.create(
-      firstName,
-      lastName,
-      email,
-      phoneNumber,
-      userName,
-      dob,
-      gender,
-      images,
-      address,
-      password,
-      biography
-    );
-    req.session.user = newUser;
-    res.redirect("/");
-  } catch (e) {
-    return res.render("signup", { error: e });
-  }
-});
-
 //delete data
 router.delete("/users/delete/:id", async (req, res) => {
   const id = req.params.id;
@@ -264,7 +185,6 @@ router.get("/users/add", async (req, res) => {
 
 router.post("/users/add", async (req, res) => {
   const userData = req.body;
-  console.log("ROUTE HIT");
   //User input validation on user route by calling validation.js
   try {
     validate.checkNonNull(userData.firstName);
@@ -452,7 +372,6 @@ router.post("/users/update/", async (req, res) => {
       biography
     );
     req.session.user = newUser;
-    //return res.json(newUser);
     res.redirect("/");
   } catch (e) {
     if (req.session.user.gender.toLowerCase() == "male") {

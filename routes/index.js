@@ -25,12 +25,12 @@ var uploadSingle = multer({ storage: storage }).single("image");
 var uploadArray = multer({ storage: storage }).array("image", 5);
 
 module.exports = async (app) => {
-  app.use("/", users);
   app.use("/products", products);
   app.use("/comments", comments);
   app.use("/about", about);
   app.use("/statistics", statistics);
   app.use("/chat", chats);
+  app.use("/", users);
 
   app.post("/uploadSingle", (req, res) => {
     uploadSingle(req, res, function (err) {
