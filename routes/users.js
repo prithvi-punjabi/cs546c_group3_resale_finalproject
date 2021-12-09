@@ -17,7 +17,7 @@ router.get("/login", (req, res) => {
   if (req.session.user) {
     return res.redirect("/");
   }
-  return res.render("login");
+  return res.render("login", { title: "Log into re$ale" });
 });
 
 router.get("/logout", (req, res) => {
@@ -113,6 +113,7 @@ router.get("/user/:id", async (req, res) => {
       listedProducts: arr,
       favouriteProducts: arr1,
       user: req.session.user,
+      title: thisuser.firstName + "'s Profile",
     });
   } catch (e) {
     return res.render("error", { code: errorCode.NOT_FOUND, error: e });
@@ -180,7 +181,7 @@ router.post("/users/rate/:id", async (req, res) => {
 
 router.get("/users/add", async (req, res) => {
   if (!req.session.user) {
-    return res.render("signup");
+    return res.render("signup", { title: "Sign Up for re$ale" });
   } else {
     return res.redirect("/");
   }

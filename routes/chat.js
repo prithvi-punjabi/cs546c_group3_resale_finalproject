@@ -14,7 +14,12 @@ router.get("/", async (req, res) => {
   try {
     const my_user_id = req.session.user._id;
     const chats = await chatData.getAllChats(my_user_id);
-    res.render("chat", { chats: chats, currChat: null, user: req.session.user });
+    res.render("chat", {
+      chats: chats,
+      currChat: null,
+      user: req.session.user,
+      title: "Chat",
+    });
   } catch (e) {
     if (typeof e == "string") {
       e = new Error(e);
@@ -37,7 +42,11 @@ router.get("/:id", async (req, res) => {
     }
     const chats = await chatData.getAllChats(my_user_id);
     let currChat = await chatData.getChatByUserId(my_user_id, user_id);
-    res.render("chat", { chats: chats, currChat: currChat, user: req.session.user });
+    res.render("chat", {
+      chats: chats,
+      currChat: currChat,
+      user: req.session.user,
+    });
   } catch (e) {
     if (typeof e == "string") {
       e = new Error(e);

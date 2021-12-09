@@ -480,8 +480,8 @@ input:checked + .slider:before {
 }
 
 .updateError {
-  color:red;
-  font-size:30px;
+  color: red;
+  font-size: 30px;
 }
 
 .emailLabel {

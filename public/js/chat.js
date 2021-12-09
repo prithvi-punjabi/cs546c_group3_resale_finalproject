@@ -5,6 +5,9 @@
       "<h3 class='text-center py-5'>Select user to start chatting</h3>"
     );
   }
+  $("#logo").on("click", function (event) {
+    $(location).attr("href", "/");
+  });
   $("#ul-chat li").each(function (inx, li) {
     $(li).click(function (event) {
       window.location.href = "/chat/" + $(li).attr("id");

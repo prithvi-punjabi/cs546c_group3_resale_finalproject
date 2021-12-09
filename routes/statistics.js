@@ -35,6 +35,7 @@ router.get("/", async (req, res) => {
         categories: categories,
         categoryCounts: categoryCounts,
         user: req.session.user,
+        title: "re$ale Statistics",
       });
     } else {
       res.render("statistics", {
@@ -46,6 +47,7 @@ router.get("/", async (req, res) => {
         categories: categories,
         categoryCounts: categoryCounts,
         user: req.session.user,
+        title: "re$ale Statistics",
       });
     }
   } catch (e) {

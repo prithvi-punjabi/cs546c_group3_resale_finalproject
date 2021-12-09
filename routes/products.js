@@ -94,7 +94,10 @@ router.get("/get/:id", async (req, res) => {
 
 router.get("/new", async (req, res) => {
   try {
-    return res.render("addProduct", {user: req.session.user});
+    return res.render("addProduct", {
+      user: req.session.user,
+      title: "List a product",
+    });
   } catch (e) {
     console.log(e);
     if (typeof e == "string") {
@@ -145,7 +148,10 @@ router.get("/edit/:id", async (req, res) => {
       product.isNew = product.condition.toLowerCase() == "new";
       product.isBarelyUsed = product.condition.toLowerCase() == "barely used";
       product.isFairlyUsed = product.condition.toLowerCase() == "fairly used";
-      return res.render("addProduct", { product: product });
+      return res.render("addProduct", {
+        product: product,
+        title: `Update ${product.name}`,
+      });
     } catch (e) {
       if (typeof e == "string") {
         e = new Error(e);

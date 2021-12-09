@@ -11,12 +11,20 @@ const userData = require("../data/users");
 
 router.get("/", async (req, res) => {
   const allTestimonials = await testimonialsData.getAll();
-  for(let testimonial in allTestimonials){
-    const testimonialUser = await userData.get(allTestimonials[testimonial].user_id.toString());
-    allTestimonials[testimonial].profilePicture = testimonialUser.profilePicture;
-    allTestimonials[testimonial].usersName = testimonialUser.firstName + " " + testimonialUser.lastName;
+  for (let testimonial in allTestimonials) {
+    const testimonialUser = await userData.get(
+      allTestimonials[testimonial].user_id.toString()
+    );
+    allTestimonials[testimonial].profilePicture =
+      testimonialUser.profilePicture;
+    allTestimonials[testimonial].usersName =
+      testimonialUser.firstName + " " + testimonialUser.lastName;
   }
-  res.render("about", { test: allTestimonials, user: req.session.user });
+  res.render("about", {
+    test: allTestimonials,
+    user: req.session.user,
+    title: "About re$ale",
+  });
 });
 
 router.post("/add/:id", async (req, res) => {
