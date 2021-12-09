@@ -1274,3 +1274,7 @@ body {
 .navbar {
   font-size: 18px;
 }
+.dark {
+  background-color: #212529;
+  color: #e6e6e6;
+}

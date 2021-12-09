@@ -170,6 +170,18 @@ function filterCategory() {
   }
   noProduct("category");
 }
+function filterDarkmode() {
+  if ($("body").hasClass("dark")) {
+    $("body").removeClass("dark");
+  } else {
+    $("body").addClass("dark");
+  }
+  if ($(".userCard").hasClass("dark")) {
+    $(".userCard").removeClass("dark");
+  } else {
+    $(".userCard").addClass("dark");
+  }
+}
 
 function clearAllFilters() {
   slider.value = 1000;
