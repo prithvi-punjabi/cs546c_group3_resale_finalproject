@@ -113,7 +113,7 @@ router.get("/user/:id", async (req, res) => {
       user: req.session.user
     });
   } catch (e) {
-    console.log(e);
+    return res.render("error", { code: errorCode.NOT_FOUND, error: e });
   }
 });
 

@@ -5,12 +5,13 @@ const utils = require("../helper/utils");
 const validator = require("../helper/validator");
 const errorCode = require("../helper/common").errorCode;
 const ErrorMessage = require("../helper/message").ErrorMessage;
+var xss = require("xss");
 
 router.post("/add/:id", async (req, res) => {
   try {
     const prodId = req.params.id;
     const userId = req.session.user._id.toString();
-    const thisComment = req.body.commentBox;
+    const thisComment = xss(req.body.commentBox);
     validator.checkNonNull(prodId),
       validator.checkNonNull(userId),
       validator.checkNonNull(thisComment);
@@ -44,21 +45,20 @@ router.get("/getall/:id", async (req, res) => {
         userComms.push(x._id.toString());
       }
     });
-
     res.json(userComms);
   } catch (e) {
     if (typeof e == "string") {
       e = new Error(e);
       e.code = errorCode.BAD_REQUEST;
     }
-    return res.status(e.code).json(ErrorMessage(e.message));
+    return res.render("error", { code: e.code, error: e.message });
   }
 });
 
 router.post("/delete/:id", async (req, res) => {
   try {
     const commId = req.params.id;
-    const prodId = req.body.prodId;
+    const prodId = xss(req.body.prodId);
     const delComment = await comments.deleteCommentById(commId, prodId);
     const allProdComments = await comments.getAllComments(prodId);
     if (allProdComments.length === 0) {
@@ -71,7 +71,7 @@ router.post("/delete/:id", async (req, res) => {
       e = new Error(e);
       e.code = errorCode.BAD_REQUEST;
     }
-    return res.status(e.code).json(ErrorMessage(e.message));
+    return res.render("error", { code: e.code, error: e.message });
   }
 });
 
