@@ -79,9 +79,9 @@ async function create(
   validate.checkLocation(address);
 
   const userCol = await users();
-  const existingUser = await userCol.findOne({userName: userName});
-  if(existingUser != null){
-    throw `Username not available!`
+  const existingUser = await userCol.findOne({ userName: userName });
+  if (existingUser != null) {
+    throw `Username not available!`;
   }
   password = await bcrypt.hash(password, saltRounds);
 
@@ -162,9 +162,9 @@ async function update(
     gender: gender,
     profilePicture: profilePicture,
     address: address,
-    biography: biography
+    biography: biography,
   };
-  
+
   const updatedone = await userCol.updateOne(
     { _id: ObjectId(id) },
     { $set: updated_users }

@@ -33,7 +33,10 @@ app.use(express.urlencoded({ extended: false }));
 
 app.set("views", templatePath);
 
-var hbs = exphbs.create({ defaultLayout: "index" });
+var hbs = exphbs.create({
+  defaultLayout: "index",
+  partialsDir: "templates/partials",
+});
 hbs.handlebars.registerHelper(
   "ifContains",
   function (category, categories, options) {
