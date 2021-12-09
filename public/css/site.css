@@ -464,7 +464,8 @@ input:checked + .slider:before {
   cursor: pointer;
 }
 
-.custom-checkbox .bi-star-fill {
+.custom-checkbox .bi-star-fill,
+.fa-star {
   color: gold;
   position: relative;
 }
@@ -486,14 +487,12 @@ input:checked + .slider:before {
   width: 100%;
 }
 
-#commentBox {
+#commentBox,
+#emailForm > #message {
   width: 100%;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  border-width: 0;
 }
 
 #submitComment {
@@ -524,7 +523,8 @@ body {
   background: #fff;
 }
 
-.sidenav {
+.sidenav,
+#profileSection {
   height: 100%;
   background-color: #212529;
   overflow-x: hidden;
@@ -1296,10 +1296,6 @@ body {
   animation: type 0.5s alternate infinite;
 }
 
-.login-form{
-  margin-top: 42%
-}
-
 @keyframes type {
   from {
     box-shadow: inset -3px 0px 0px #888;
@@ -1311,4 +1307,8 @@ body {
 
 #logo {
   cursor: pointer;
+}
+
+.tooltip {
+  font-size: 12px !important;
 }

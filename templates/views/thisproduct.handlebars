@@ -94,7 +94,7 @@
           id="emailForm"
         >
           <label for="message" class="emailLabel">Message:</label><br />
-          <textarea name="message" rows="5" cols="56" id="message"></textarea>
+          <textarea name="message" class="form-control" id="message"></textarea>
           <input
             type="text"
             id="nameOfSeller"
@@ -210,27 +210,28 @@
         <p id="sellerName">{{product.seller.firstName}}
           {{product.seller.lastName}}</p>
         {{#if update}}{{else}}
+        <span data-bs-toggle="modal" data-bs-target="#emailModal">
         <button
           type="button"
           class="btn btn-primary btn-sm"
-          data-bs-toggle="modal"
-          data-bs-target="#emailModal"
-          aria-label="Send an email to {{product.seller.firstName}}{{product.seller.lastName}}"
-        ><i class="bi bi-envelope"></i></button>
+          data-bs-toggle="tooltip" data-bs-placement="top" title="Send an email to {{product.seller.firstName}} {{product.seller.lastName}}"
+          aria-label="Send an email to {{product.seller.firstName}} {{product.seller.lastName}}"
+        ><i class="bi bi-envelope"></i></button></span>
+        <span data-bs-toggle="modal" data-bs-target="#ratingModal">
         <button
           type="button"
           class="btn btn-primary btn-sm"
-          data-bs-toggle="modal"
-          data-bs-target="#ratingModal"
-          aria-label="Rate {{product.seller.firstName}}{{product.seller.lastName}}"
+          data-bs-toggle="tooltip" data-bs-placement="top" title="Rate {{product.seller.firstName}} {{product.seller.lastName}}"
+          aria-label="Rate {{product.seller.firstName}} {{product.seller.lastName}}"
         ><i class="bi bi-hand-thumbs-up"></i><i
             class="bi bi-hand-thumbs-down"
-          ></i></button>
+          ></i></button></span>
           <button
             id="btn-chat"
             type="button"
             class="btn btn-primary btn-sm"
-            aria-label="Chat with {{product.seller.firstName}}{{product.seller.lastName}}"
+            data-bs-toggle="tooltip" data-bs-placement="top" title="Chat with {{product.seller.firstName}} {{product.seller.lastName}}"
+            aria-label="Chat with {{product.seller.firstName}} {{product.seller.lastName}}"
           ><i class="bi bi-chat-dots"></i></button>
         {{/if}}
         <br />
@@ -264,6 +265,7 @@
       >
         <label for="commentBox">
           <textarea
+            class="form-control"
             id="commentBox"
             name="commentBox"
             placeholder="Enter your comment"
