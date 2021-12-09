@@ -4,6 +4,7 @@ const chatData = require("../data/chat");
 const utils = require("../helper/utils");
 const validator = require("../helper/validator");
 const message = require("../helper/message");
+const xss = require("xss");
 
 router.get("/", async (req, res) => {
   if (!utils.isUserLoggedIn(req)) {
@@ -63,7 +64,11 @@ router.post("/add", async (req, res) => {
   }
   try {
     const my_user_id = req.session.user._id;
-    const { user_id, msg, isSent } = req.body;
+    let { user_id, msg, isSent } = req.body;
+    user_id = xss(user_id);
+    msg = xss(msg);
+    isSent = xss(isSent);
+    if (isSent === "true" || isSent === "false") isSent = Boolean(isSent);
     if (my_user_id == null) {
       return res
         .status(403)
