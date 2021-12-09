@@ -110,6 +110,7 @@ router.get("/user/:id", async (req, res) => {
       rating: finRating,
       listedProducts: arr,
       favouriteProducts: arr1,
+      user: req.session.user
     });
   } catch (e) {
     console.log(e);
