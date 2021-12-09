@@ -92,20 +92,20 @@
                     <div class="card-body">
               </div>
     <div class="row">
-    <div class="col-md-1">    Listed Products:</div>
-    <div class="col-md-11">{{#each listedProducts}}
+    <div class="col-md-1">    Favourite Products:</div>
+    <div class="col-md-11">{{#each favouriteProducts}}
 
     
                     <div class="card userCard">
-    <div class="card-header">{{this.names}}
+    <div class="card-header">{{this.prodname}}
     </div>
-    <a href="/products/get/{{this.idno}}">
+      <a href="/products/get/{{this.prodid}}">
     <div class="divimage">
 
-      <img src={{image}} class="card-img-top" alt={{this.names}}>
+      <img src={{this.imageprod}} class="card-img-top" alt={{this.prodname}}>
     </div>
     <div class="card-body">
-      <h4 class="card-title">${{this.price}}</h4>
+      <h4 class="card-title">${{this.prices}}</h4>
       <button class="btn btn-primary">View Item</button>
     </div>
     </a>
@@ -124,19 +124,19 @@
               </div>
         
                  <div class="row">
-    <div class="col-md-1"> Favourite Products:</div>
-    <div class="col-md-11">  {{#each favouriteProducts}}
+    <div class="col-md-1"> Listed Products:</div>
+    <div class="col-md-11">  {{#each listedProducts}}
 
 <div class="card userCard">
-    <div class="card-header">{{this.prodname}}
+    <div class="card-header">{{this.names}}
     </div>
-    <a href="/products/get/{{this.prodid}}">
+    <a href="/products/get/{{this.idno}}">
     <div class="divimage">
 
-      <img src={{this.imageprod}} class="card-img-top" alt="Chair">
+      <img src={{image}} class="card-img-top" alt={{this.names}}>
     </div>
     <div class="card-body">
-      <h4 class="card-title">${{this.prices}}</h4>
+      <h4 class="card-title">${{this.price}}</h4>
       <button class="btn btn-primary">View Item</button>
     </div>
     </a>
