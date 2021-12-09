@@ -1274,3 +1274,7 @@ body {
 .navbar {
   font-size: 18px;
 }
+.col-md-4 {
+  background-color: black;
+  color: white;
+}
