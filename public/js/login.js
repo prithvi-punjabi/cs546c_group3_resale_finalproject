@@ -4,6 +4,9 @@ function removeErrorClass(element) {
   document.getElementById("usernameHelp").classList.remove("visually-hidden");
 }
 (function ($) {
+  $("#logo").on("click", function (event) {
+    $(location).attr("href", "/");
+  });
   $("#loginAlert").hide();
   const urlParams = new URLSearchParams(window.location.search);
   const myParam = urlParams.get("error");

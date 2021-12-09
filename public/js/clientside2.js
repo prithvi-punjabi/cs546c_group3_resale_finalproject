@@ -4,7 +4,9 @@
   $("#emailAlert").hide();
   $("#commentAlert").hide();
   $("#ratingAlert").hide();
-
+  $("#logo").on("click", function (event) {
+    $(location).attr("href", "/");
+  });
   const prodId = $("#prodID").text();
   var comms = new Array();
   $(".commId").each(function () {

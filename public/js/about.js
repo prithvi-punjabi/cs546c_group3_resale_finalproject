@@ -7,6 +7,9 @@ $(function () {
   $("#closeTestimAlert").click(function (event) {
     $("#testimAlert").hide();
   });
+  $("#logo").on("click", function (event) {
+    $(location).attr("href", "/");
+  });
   $("#testFormSubmit").click(function (event) {
     event.preventDefault();
     const testDiv = $("#allTestimonials");
