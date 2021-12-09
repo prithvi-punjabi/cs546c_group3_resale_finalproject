@@ -94,7 +94,7 @@ router.get("/get/:id", async (req, res) => {
 
 router.get("/new", async (req, res) => {
   try {
-    return res.render("addProduct");
+    return res.render("addProduct", {user: req.session.user});
   } catch (e) {
     console.log(e);
     if (typeof e == "string") {

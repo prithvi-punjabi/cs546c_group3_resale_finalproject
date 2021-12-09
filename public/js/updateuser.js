@@ -65,7 +65,7 @@
                 data: JSON.stringify(newPost),
                 dataType: "text",
                 success: function (responseMessage) {
-                window.location.replace("/");
+                  window.location.href = "/user/" + $("#userID").val();
                 },
                 error: function (error) {
                 alert(JSON.parse(error.responseText).message);
@@ -100,7 +100,7 @@
             data: JSON.stringify(newPost),
             dataType: "text",
             success: function (responseMessage) {
-            window.location.replace("/");
+              window.location.href = "/user/" + $("#userID").val();
             },
             error: function (error) {
             alert(JSON.parse(error.responseText).message);
