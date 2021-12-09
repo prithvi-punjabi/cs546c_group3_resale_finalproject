@@ -61,7 +61,7 @@
   aria-labelledby="filterSidebarLabel"
 >
   <div class="offcanvas-header">
-    <h1 class="offcanvas-title" id="filterSidebarLabel">Filter Products</h1>
+    <h1 class="offcanvas-title" id="filterSidebarLabel">Filter and Sort Products</h1>
     <button
       type="button"
       class="btn-close text-reset"
@@ -72,7 +72,7 @@
   {{! prettier-ignore }}
   <div class="offcanvas-body">
     <div>
-      Sort by:
+      <span class="sideHead">Sort by:</span>
     <br />
     <input
       class="form-check-input"
@@ -122,8 +122,10 @@
       Price (High to Low)
     </label>
     </div>
+    <br>
     <div id="priceDiv">
-      By Price:
+      <span class="sideHead">Filter by:</span><br>
+      Price:
       <br />
       <label for="price">Price below: $<span id="priceVal"></span></label><br />
       <span class="sliderTextValue">0</span><input
@@ -138,7 +140,7 @@
       /><span class="sliderTextValue">1000</span><br />
     </div>
     <div id="locDiv">
-      By Location:<br />
+      Location:<br />
       <input type="checkbox" name="location" value="NY" id="NewYork" checked />
       <label for="NewYork">NY</label><br />
       <input
@@ -155,7 +157,7 @@
       >Set Location Filter</button>
     </div>
     <div id="categoryDiv">
-      By Category:<br />
+      Category:<br />
       <input type="checkbox" name="category" value="Books" id="Books" checked />
       <label for="Books">Books</label><br />
       <input
