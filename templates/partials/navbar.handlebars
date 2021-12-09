@@ -1,7 +1,12 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <div id="logo">
-      <img src="/public/images/resale.png" alt="resale logo" class="logoimg" />
+      <img
+        src="/public/images/resale.png"
+        alt="resale logo"
+        class="logoimg"
+        aria-label="Home Page"
+      />
     </div>
     <button
       class="navbar-toggler"
@@ -16,14 +21,6 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            aria-current="page"
-            href="/"
-            aria-label="resale homepage"
-          >Home</a>
-        </li>
         <li class="nav-item">
           <a class="nav-link" href="/about" aria-label="About resale">About</a>
         </li>
@@ -58,10 +55,11 @@
             </ul>
           </li>
         {{else}}
+          <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
           <li class="nav-item"><a
               class="nav-link"
-              href="/login"
-            >Login/Signup</a></li>
+              href="/users/add"
+            >Signup</a></li>
         {{/if}}
       </ul>
     </div>

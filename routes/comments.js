@@ -5,7 +5,7 @@ const utils = require("../helper/utils");
 const validator = require("../helper/validator");
 const errorCode = require("../helper/common").errorCode;
 const ErrorMessage = require("../helper/message").ErrorMessage;
-var xss = require("xss");
+const xss = require("xss");
 
 router.post("/add/:id", async (req, res) => {
   try {

@@ -9,6 +9,8 @@ const validator = require("../helper/validator");
 const { errorCode } = require("../helper/common");
 const { ErrorMessage } = require("../helper/message");
 const { getById } = require("../data/products");
+const xss = require("xss");
+
 //Important: Do not pass a hashed password to the create function, the password hashing takes place before insertion
 
 router.get("/login", (req, res) => {
@@ -110,7 +112,7 @@ router.get("/user/:id", async (req, res) => {
       rating: finRating,
       listedProducts: arr,
       favouriteProducts: arr1,
-      user: req.session.user
+      user: req.session.user,
     });
   } catch (e) {
     return res.render("error", { code: errorCode.NOT_FOUND, error: e });
@@ -186,6 +188,20 @@ router.get("/users/add", async (req, res) => {
 
 router.post("/users/add", async (req, res) => {
   const userData = req.body;
+  userData.firstName = xss(userData.firstName);
+  userData.lastName = xss(userData.lastName);
+  userData.email = xss(userData.email);
+  userData.phoneNumber = xss(userData.phoneNumber);
+  userData.userName = xss(userData.userName);
+  userData.dob = xss(userData.dob);
+  userData.gender = xss(userData.gender);
+  userData.images = xss(userData.images);
+  userData.street = xss(userData.street);
+  userData.city = xss(userData.city);
+  userData.state = xss(userData.state);
+  userData.zip = xss(userData.zip);
+  userData.password = xss(userData.password);
+  userData.biography = xss(userData.biography);
   //User input validation on user route by calling validation.js
   try {
     validate.checkNonNull(userData.firstName);
@@ -298,6 +314,20 @@ router.get("/users/update", async (req, res) => {
 router.post("/users/update/", async (req, res) => {
   const userData = req.body;
   const id = req.session.user._id.toString();
+  userData.firstName = xss(userData.firstName);
+  userData.lastName = xss(userData.lastName);
+  userData.email = xss(userData.email);
+  userData.phoneNumber = xss(userData.phoneNumber);
+  userData.userName = xss(userData.userName);
+  userData.dob = xss(userData.dob);
+  userData.gender = xss(userData.gender);
+  userData.images = xss(userData.images);
+  userData.street = xss(userData.street);
+  userData.city = xss(userData.city);
+  userData.state = xss(userData.state);
+  userData.zip = xss(userData.zip);
+  userData.password = xss(userData.password);
+  userData.biography = xss(userData.biography);
   // update validation in routes
   try {
     validate.checkNonNull(userData.firstName);

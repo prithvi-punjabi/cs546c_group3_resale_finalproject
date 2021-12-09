@@ -3,6 +3,9 @@ function removeErrorClass(element) {
   document.getElementById("error-div").classList.add("visually-hidden");
 }
 (function ($) {
+  $("#logo").on("click", function (event) {
+    $(location).attr("href", "/");
+  });
   const firstName = document.getElementById("firstName");
   const lastName = document.getElementById("lastName");
   const userName = document.getElementById("userName");

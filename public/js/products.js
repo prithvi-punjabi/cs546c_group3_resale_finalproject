@@ -12,6 +12,9 @@ function imageUploadChange() {
 }
 
 (function ($) {
+  $("#logo").on("click", function (event) {
+    $(location).attr("href", "/");
+  });
   const product_id = $("#product_id").val();
   function isEdit() {
     return product_id != null && product_id != "";
