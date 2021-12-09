@@ -1,6 +1,4 @@
-<form action="/" id="statBtnForm">
-  <button class="btn btn-dark" id="backBtn" href="/">Back to home</button>
-</form>
+{{>navbar}}
 <main>
   <h1 class="statHead">re$ale Statistics</h1>
   <div class="text-center">Here are some statistics from re$ale. We analyze the
@@ -109,6 +107,11 @@
     <canvas id="chart"></canvas>
   </div>
 </main>
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+  crossorigin="anonymous"
+></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js">
 </script>
 <script>

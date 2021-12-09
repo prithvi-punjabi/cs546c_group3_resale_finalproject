@@ -140,14 +140,7 @@
     </div>
   </div>
 </div>
-<form action="/">
-  <button class="btn btn-dark" id="backBtn">Back to home</button>
-</form>
-{{#if update}}
-  <form method="GET" action="/products/edit/{{product._id}}">
-    <button id="updateBtn" class="btn btn-dark" type="submit">Update</button>
-  </form>
-{{/if}}
+{{>navbar}}
 <main class="container productCont">
   <div class="left-column">
     {{! prettier-ignore }}
@@ -187,7 +180,11 @@
   </div>
 
   <div class="right-column">
-
+    {{#if update}}
+      <form method="GET" action="/products/edit/{{product._id}}" id="updForm">
+        <button id="updateBtn" class="btn btn-dark" type="submit">Update</button>
+      </form>
+    {{/if}}
     <div class="product-description">
       {{#if product.isSold}}
         <span class="sold">SOLD</span><br />
@@ -212,6 +209,7 @@
         <span hidden id="sellerEmail">{{product.seller.email}}</span>
         <p id="sellerName">{{product.seller.firstName}}
           {{product.seller.lastName}}</p>
+        {{#if update}}{{else}}
         <button
           type="button"
           class="btn btn-primary btn-sm"
@@ -228,7 +226,6 @@
         ><i class="bi bi-hand-thumbs-up"></i><i
             class="bi bi-hand-thumbs-down"
           ></i></button>
-        {{#if update}}{{else}}
           <button
             id="btn-chat"
             type="button"

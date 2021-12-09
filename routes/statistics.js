@@ -34,6 +34,7 @@ router.get("/", async (req, res) => {
         highestListingCategory,
         categories: categories,
         categoryCounts: categoryCounts,
+        user: req.session.user,
       });
     } else {
       res.render("statistics", {
@@ -44,6 +45,7 @@ router.get("/", async (req, res) => {
         highestListingCategory,
         categories: categories,
         categoryCounts: categoryCounts,
+        user: req.session.user,
       });
     }
   } catch (e) {

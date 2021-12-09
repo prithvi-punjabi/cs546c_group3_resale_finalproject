@@ -350,7 +350,7 @@ input:checked + .slider:before {
 
 .right-column {
   width: 35%;
-  margin-top: 60px;
+  margin-top: 40px;
 }
 
 .left-column #prodImageCarousel {
@@ -415,6 +415,10 @@ input:checked + .slider:before {
   display: block;
   /* display: flex; */
   align-items: center;
+}
+
+#displayedComments {
+  margin-top: 10px;
 }
 
 .product-comments span {
@@ -916,17 +920,8 @@ body {
 }
 
 #updateBtn {
-  position: fixed;
-  display: inline-block;
-  right: 10px;
-  top: 10px;
-}
-
-#backBtn {
   position: relative;
-  display: inline;
-  left: 10px;
-  top: 10px;
+  left: 80%;
 }
 
 .card-chat {

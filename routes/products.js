@@ -70,6 +70,7 @@ router.get("/get/:id", async (req, res) => {
         comments: comments,
         update: update,
         fav: alreadyFav,
+        user: req.session.user,
       });
     } else {
       return res.render("thisproduct", {
@@ -77,6 +78,7 @@ router.get("/get/:id", async (req, res) => {
         title: product.name,
         comments: comments,
         fav: alreadyFav,
+        user: req.session.user,
       });
     }
   } catch (e) {
