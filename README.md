@@ -17,7 +17,8 @@ Follow the steps to run re$ale.
 3. Install the dependencies (`npm install`)
 4. Seed the database (`npm run seed`)
 5. Start the server (`npm start`)
-6. Happy shopping!
+6. Navigate to `localhost: 3000`
+7. Happy shopping!
 
 <!-- CONTRIBUTING -->
 ## Contributing

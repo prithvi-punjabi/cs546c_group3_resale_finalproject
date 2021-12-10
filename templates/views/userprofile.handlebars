@@ -1,150 +1,128 @@
  {{>navbar}}
 <div class="panel panel-default">
-<div class="row">
-            <div class="col-md-4 " id="profileSection">
-              <div>
-                <div class="card-body">
-                  <div class="d-flex flex-column align-items-center text-center">
-                      <h1>Profile</h1>
-                    <img src="../..{{profilePicture}}" alt="Admin" class="rounded-circle" width="150">
-                    <div class="mt-3">
-                       <h1 style="color:white;">{{nameOfUser}}</h1>
-                      
-                      <p class="font-size-sm">{{biography}}</p>
-                      <h2>Rating: {{rating}} <span class = "fa fa-star checked"></span></h2>
-                    </div>
-                  </div>
-                </div>
-              </div>
-               </div>
-     <div class="col-md-8">
-              <div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h3 class="mb-0">Email:</h3>
-                    </div>
-                    <div class="col-sm-9 text-secondary" style="font-weight: 700;">
-                       {{email}}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h3 class="mb-0"> Phone Number:</h3>
-                    </div>
-                    <div class="col-sm-9 text-secondary" style="font-weight: 700;">
-                      {{phoneNumber}}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h3 class="mb-0">User Name :</h3>
-                    </div>
-                    <div class="col-sm-9 text-secondary" style="font-weight: 700;">
-                      {{userName}}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h3 class="mb-0">Date Of Birth</h3>
-                    </div>
-                                  
-                    <div class="col-sm-9 text-secondary" style="font-weight: 700;">
-                      {{dob}}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h3 class="mb-0">Gender:</h3>
-                    </div>
-                    <div class="col-sm-9 text-secondary" style="font-weight: 700;">
-                       {{gender}}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h3 class="mb-0"> Address:</h3>
-                    </div>
-                    <div class="col-sm-9 text-secondary" style="font-weight: 700;">
-                    {{address.streetAddress}}, {{address.city}}, {{address.state}}, {{address.zip}}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">                
-                    <div class="col-sm-9">
-                      <a class="btn btn-primary" href="/users/update">Edit</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-                
-              </div>
+  <div class="row">
+    <div class="col-md-4 " id="profileSection">
+      <div>
+        <div class="card-body">
+          <div class="d-flex flex-column align-items-center text-center">
+            <h1>Profile</h1>
+            <img src="../..{{profilePicture}}" alt="Admin" class="rounded-circle" width="150">
+            <div class="mt-3">
+              <h1 class="colorb">{{nameOfUser}}</h1>
+              <p class="font-size-sm">{{biography}}</p>
+              <h2>Rating: {{rating}} <span class = "fa fa-star checked"></span></h2>
             </div>
-                           <div class="row gutters-sm">
-                <div class="col-sm-12">
-                  <div class="">
-                    <div class="card-body">
-              </div>
-    <div class="row">
-    <div class="col-md-1">    Favourite Products:</div>
-    <div class="col-md-11">{{#each favouriteProducts}}
-
-    
-                    <div class="card userCard">
-    <div class="card-header">{{this.prodname}}
+          </div>
+        </div>
+      </div>
     </div>
-      <a href="/products/get/{{this.prodid}}">
-    <div class="divimage">
-
-      <img src={{this.imageprod}} class="card-img-top" alt={{this.prodname}}>
+    <div class="col-md-8">
+      <div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-3">
+              <h3 class="mb-0">Email:</h3>
+            </div>
+            <div class="col-sm-9 text-secondary font700" >{{email}}</div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h3 class="mb-0"> Phone Number:</h3>
+            </div>
+            <div class="col-sm-9 text-secondary font700">{{phoneNumber}}</div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h3 class="mb-0">User Name :</h3>
+            </div>
+            <div class="col-sm-9 text-secondary font700">{{userName}}</div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h3 class="mb-0">Date Of Birth</h3>
+            </div>
+            <div class="col-sm-9 text-secondary font700">{{dob}}</div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h3 class="mb-0">Gender:</h3>
+            </div>
+            <div class="col-sm-9 text-secondary font700"> {{gender}}</div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h3 class="mb-0"> Address:</h3>
+            <div class="col-sm-9 text-secondary font700">{{address.streetAddress}}, {{address.city}}, {{address.state}}, {{address.zip}}</div>
+          </div>
+          <hr>
+          <div class="row">                
+            <div class="col-sm-9">
+              <a class="btn btn-primary" href="/users/update">Edit</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="card-body">
-      <h4 class="card-title">${{this.prices}}</h4>
-      <button class="btn btn-primary">View Item</button>
-    </div>
-    </a>
-  </div>  
-             {{/each}}</div>
-                    </div> 
-
-                  </div>
-                </div>
- 
-</div>
- <div class="row gutters-sm">
-                <div class="col-sm-12">
-                  <div class="">
-                    <div class="card-body">
-              </div>
-        
-                 <div class="row">
-    <div class="col-md-1"> Listed Products:</div>
-    <div class="col-md-11">  {{#each listedProducts}}
-
-<div class="card userCard">
-    <div class="card-header">{{this.names}}
-    </div>
-    <a href="/products/get/{{this.idno}}">
-    <div class="divimage">
-
-      <img src={{image}} class="card-img-top" alt={{this.names}}>
-    </div>
-    <div class="card-body">
-      <h4 class="card-title">${{this.price}}</h4>
-      <button class="btn btn-primary">View Item</button>
-    </div>
-    </a>
-  </div>  
-       {{/each}}
-
   </div>
-   </div>
+  <div class="row gutters-sm">
+    <div class="col-sm-12">
+      <div class="">
+        <div class="card-body"></div>
+        <div class="row">
+          <div class="col-md-1">Favourite Products:</div>
+          <di
+          
+          
+           class="col-md-11 scrollmenu">{{#each favouriteProducts}}
+            <div class="card userCard">
+              <div class="card-header">{{this.prodname}}</div>
+              <a href="/products/get/{{this.prodid}}">
+                <div class="divimage">
+                  <img src={{this.imageprod}} class="card-img-top" alt={{this.prodname}}>
+                </div>
+                <div class="card-body">
+                  <h4 class="card-title">${{this.prices}}</h4>
+                  <button class="btn btn-primary">View Item</button>
+                </div>
+              </a>
+            </div>  
+           {{/each}}
+          </div>
+        </div> 
+      </div>
+    </div>
+ </div>
+ <div class="row gutters-sm">
+    <div class="col-sm-12">
+      <div class="">
+        <div class="card-body"></div>
+        <div class="row">
+          <div class="col-md-1"> Listed Products:</div>
+          <div class="col-md-11">  {{#each listedProducts}}
+            <div class="card userCard">
+              <div class="card-header">{{this.names}}</div>
+              <a href="/products/get/{{this.idno}}">
+                <div class="divimage">
+                  <img src={{image}} class="card-img-top" alt={{this.names}}>
+                </div>
+                <div class="card-body">
+                  <h4 class="card-title">${{this.price}}</h4>
+                  <button class="btn btn-primary">View Item</button>
+                </div>
+              </a>
+            </div>  
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <script
   src="https://code.jquery.com/jquery-2.2.4.min.js"
   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
