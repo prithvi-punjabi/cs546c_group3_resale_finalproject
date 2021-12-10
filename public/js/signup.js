@@ -24,26 +24,30 @@ function checkPassword(str) {
   }
 }
 
-function checkLocation(address) {
-  if (typeof address !== "object") return "Address is not an Object";
-  if (Object.keys(address).length === 0) return "Address cannot be empty";
-  if (
-    !address.hasOwnProperty("streetAddress") ||
-    !address.hasOwnProperty("city") ||
-    !address.hasOwnProperty("state") ||
-    !address.hasOwnProperty("zip")
-  )
-    return "Address requires all properties: streetAddress, city, state and zipcode";
-  if (
-    typeof address.streetAddress !== "string" ||
-    typeof address.city !== "string" ||
-    typeof address.state !== "string" ||
-    typeof address.zip !== "string"
-  )
-    return "Address values need to be strings";
-  // Validation for state (eg: NJ) and zip (eg: 07030)
-  if (address.state.length > 2) return "State can only be 2 character string";
-  if (address.zip.length > 5) return "Invalid zip code";
+function checkState(state) {
+  if (state.length > 2) {
+    return false;
+  } else {
+    const regex = /^[a-zA-Z]{2}$/g;
+    if(!state.match(regex)){
+      return false;
+    } else{
+      return true;
+    }
+  }
+}
+
+function checkZip(zip) {
+  if (zip.length > 5) {
+    return false;
+  } else {
+    const regex = /^[0-9]{5}$/g;
+    if (!zip.match(regex)){
+      return false;
+    } else{
+      return true;
+    }
+  }
 }
 
 (function ($) {
@@ -87,19 +91,21 @@ function checkLocation(address) {
 
     $("#error-div").addClass("visually-hidden");
     let isValid = true;
-
+    firstName.value = firstName.value.replace(/\s/g, '');
     if (firstName.value.length == 0) {
       firstName.classList.add("is-invalid");
       firstName.focus();
       isValid = false;
     }
 
+    lastName.value = lastName.value.replace(/\s/g, '');
     if (lastName.value.length == 0) {
       lastName.classList.add("is-invalid");
       lastName.focus();
       isValid = false;
     }
 
+    userName.value = userName.value.replace(/\s/g, '');
     if (userName.value.length == 0) {
       userName.classList.add("is-invalid");
       userName.focus();
@@ -112,6 +118,7 @@ function checkLocation(address) {
       isValid = false;
     }
 
+    password.value = password.value.replace(/\s/g, '');
     if (password.value.length == 0) {
       password.classList.add("is-invalid");
       password.focus();
@@ -131,18 +138,87 @@ function checkLocation(address) {
       isValid = false;
     }
 
+    biography.value = biography.value.replace(/\s/g, '');
     if (biography.value.length == 0) {
       biography.classList.add("is-invalid");
       biography.focus();
       isValid = false;
     }
 
+    dob.value = dob.value.replace(/\s/g, '');
     if (dob.value.length == 0) {
       dob.classList.add("is-invalid");
       dob.focus();
       isValid = false;
+    }else{
+      let today = new Date().toLocaleDateString();
+      let currmonth = parseInt(today.split("/")[0]);
+      let currday = parseInt(today.split("/")[1]);
+      let curryear = parseInt(today.split("/")[2]);
+      let month = parseInt(dob.value.split("-")[1]);
+      let day = parseInt(dob.value.split("-")[2]);
+      let year = parseInt(dob.value.split("-")[0]);
+      if (currmonth === month && currday === day && curryear === year){
+        dob.classList.add("is-invalid");
+        dob.focus();
+        document.getElementById("invalid-dob-label").innerHTML = `Your birthday cannot be today`;
+        isValid = false;
+      }
+      // Check if inputted date is in the future
+      else if (
+        (day > currday && month == currmonth && year == curryear) ||
+        (day > currday && month > currmonth && year > curryear) ||
+        (month > currmonth && year > curryear) ||
+        (month > currmonth && year == curryear) ||
+        year > curryear
+      ) {
+        dob.classList.add("is-invalid");
+        dob.focus();
+        document.getElementById("invalid-dob-label").innerHTML = `Your birthday cannot be in the future`;
+        isValid = false;
+      }
+      else if (year > 2007) {
+        dob.classList.add("is-invalid");
+        dob.focus();
+        document.getElementById("invalid-dob-label").innerHTML = `You need to be older than 13 to access re$ale`;
+        isValid = false;
+      }
+      // Check if day in date supplied is out of range of month
+      else if (
+        month === 1 ||
+        month === 3 ||
+        month === 5 ||
+        month === 7 ||
+        month === 8 ||
+        month === 10 ||
+        month === 12
+      ) {
+        if (day < 0 || day > 31){
+          dob.classList.add("is-invalid");
+          dob.focus();
+          document.getElementById("invalid-dob-label").innerHTML = `${day} does not exist in ${month}`;
+          isValid = false;
+        }
+      }
+      else if (month === 4 || month === 6 || month === 9 || month === 11) {
+        if (day < 0 || day > 30) {
+          dob.classList.add("is-invalid");
+          dob.focus();
+          document.getElementById("invalid-dob-label").innerHTML = `${day} does not exist in ${month}`;
+          isValid = false;
+        }
+      }
+      else if (month === 2) {
+        if (day < 0 || day > 28){
+          dob.classList.add("is-invalid");
+          dob.focus();
+          document.getElementById("invalid-dob-label").innerHTML = `${day} does not exist in ${month}`;
+          isValid = false;
+        }
+      }
     }
 
+    email.value = email.value.replace(/\s/g, '');
     if (email.value.length == 0) {
       email.classList.add("is-invalid");
       email.focus();
@@ -155,6 +231,7 @@ function checkLocation(address) {
       isValid = false;
     }
 
+    phoneNumber.value = phoneNumber.value.replace(/\s/g, '');
     if (phoneNumber.value.length == 0) {
       phoneNumber.classList.add("is-invalid");
       phoneNumber.focus();
@@ -163,7 +240,7 @@ function checkLocation(address) {
       phoneNumber.classList.add("is-invalid");
       phoneNumber.focus();
       document.getElementById("invalid-phoneNumber-label").innerHTML =
-        "Please enter a valid phone number";
+        "Please enter a valid phone number (xxx-xxx-xxxx)";
       isValid = false;
     }
 
@@ -176,25 +253,39 @@ function checkLocation(address) {
       gender = "other";
     }
 
+    street.value = street.value.replace(/\s/g, '');
     if (street.value.length == 0) {
       street.classList.add("is-invalid");
       street.focus();
       isValid = false;
     }
 
+    city.value = city.value.replace(/\s/g, '');
     if (city.value.length == 0) {
       city.classList.add("is-invalid");
       city.focus();
       isValid = false;
     }
 
+    state.value = state.value.replace(/\s/g, '');
     if (state.value.length == 0) {
       state.classList.add("is-invalid");
       state.focus();
       isValid = false;
+    } else if (!checkState(state.value))
+    {
+      state.classList.add("is-invalid");
+      state.focus();    
+      isValid = false;
     }
 
+    zip.value = zip.value.replace(/\s/g, '');
     if (zip.value.length == 0) {
+      zip.classList.add("is-invalid");
+      zip.focus();
+      isValid = false;
+    }else if (!checkZip(zip.value))
+    {
       zip.classList.add("is-invalid");
       zip.focus();
       isValid = false;

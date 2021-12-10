@@ -68,62 +68,18 @@
       </div>
     </div>
   </div>
-  <div class="row gutters-sm">
-    <div class="col-sm-12">
-      <div class="">
-        <div class="card-body"></div>
-        <div class="row">
-          <div class="row" id="favProd">
-            <div class="col">Favourite Products:</div>
-          </div>
-          {{!-- <div class="col-md-1">Favourite Products:</div> --}}
-          <div class="row">
-            <div class="col-md-11">{{#each favouriteProducts}}
-              <div class="card userCard">
-                <div class="card-header">{{this.prodname}}</div>
-                <a href="/products/get/{{this.prodid}}">
-                  <div class="divimage">
-                    <img src={{this.imageprod}} class="card-img-top" alt={{this.prodname}}>
-                  </div>
-                  <div class="card-body">
-                    <h4 class="card-title">${{this.prices}}</h4>
-                    <button class="btn btn-primary">View Item</button>
-                  </div>
-                </a>
-              </div>  
-            {{/each}}
-            </div>
-          </div>
-        </div> 
+<div class="userProdHead">Favourite Products</div>
+<div class="scrollmenu">
+  {{#if favouriteProducts}}
+  {{#each favouriteProducts}}
+  <div class="card userCard">
+    <div class="card-header">{{this.prodname}}</div>
+      <div class="divimage ">
+        <img src={{this.imageprod}} class="card-img-top" alt="{{this.prodname}}">
       </div>
-    </div>
- </div>
- <div class="row gutters-sm">
-    <div class="col-sm-12">
-      <div class="">
-        <div class="card-body"></div>
-        <div class="row">
-          <div class="row" id="lisProd">
-            <div class="col">Listed Products</div>
-          </div>
-          <div class="row">
-            <div class="col-md-11">  {{#each listedProducts}}
-              <div class="card userCard">
-                <div class="card-header">{{this.names}}</div>
-                <a href="/products/get/{{this.idno}}">
-                  <div class="divimage">
-                    <img src={{image}} class="card-img-top" alt={{this.names}}>
-                  </div>
-                  <div class="card-body">
-                    <h4 class="card-title">${{this.price}}</h4>
-                    <button class="btn btn-primary">View Item</button>
-                  </div>
-                </a>
-              </div>  
-              {{/each}}
-            </div>
-          </div>
-        </div>
+      <div class="card-body">
+        <h4 class="card-title">${{this.prices}}</h4>
+        <a href="/products/get/{{this.prodid}}" class="btn btn-primary">View Item</a>
       </div>
     </div>  
   {{/each}}

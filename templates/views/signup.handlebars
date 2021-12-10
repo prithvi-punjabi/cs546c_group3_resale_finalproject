@@ -154,7 +154,7 @@
           <input
             type="text"
             class="form-control"
-            placeholder="Enter phone number (no dashes)"
+            placeholder="Enter phone number"
             id="phoneNumber"
             name="phoneNumber"
             aria-label="name"
@@ -248,7 +248,7 @@
           <input
             type="text"
             class="form-control"
-            placeholder="Enter state"
+            placeholder="Enter state (Eg: NY, nj)"
             id="state"
             name="state"
             aria-label="state"
@@ -268,10 +268,11 @@
             pattern="[0-9]{5}"
             aria-describedby="span-zip"
             oninput="removeErrorClass(this)"
+            maxlength="5"
             required
           />
           <div class="invalid-feedback" id="invalid-address-label">
-            Address field(s) annot be empty
+            Address field(s) cannot be empty or invalid
           </div>
         </div>
         <div id="error-div" class="alert alert-danger" role="alert">
