@@ -256,7 +256,7 @@ input:checked + .slider:before {
   margin-top: 10px;
 }
 
-.sideHead{
+.sideHead {
   font-weight: bold;
 }
 
@@ -1250,7 +1250,7 @@ body {
 }
 
 .userCard {
-  height: 29rem;
+  height: 30rem;
 }
 
 #accessUser {
@@ -1318,4 +1318,26 @@ body {
 
 .tooltip {
   font-size: 12px !important;
+}
+div.scrollmenu {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+div.scrollmenu a {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+}
+div.scrollmenu a:hover {
+  background-color: #777;
+}
+
+.font700 {
+  font-weight: 700;
+}
+.colorb {
+  color: white;
 }
