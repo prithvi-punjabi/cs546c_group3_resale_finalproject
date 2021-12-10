@@ -188,11 +188,11 @@ function checkZip(zip) {
         processData: false,
         success: function (path) {
           const newPost = {
-            firstName: event.target.firstName.value,
-            lastName: event.target.lastName.value,
+            firstName: firstName.value,
+            lastName: lastName.value,
             images: path,
-            email: event.target.email.value,
-            phoneNumber: event.target.phoneNumber.value,
+            email: email.value,
+            phoneNumber: phoneNumber.value,
             biography: event.target.biography.value,
             street: event.target.street.value,
             city: event.target.city.value,
@@ -223,11 +223,11 @@ function checkZip(zip) {
     } else {
       const path = "";
       const newPost = {
-        firstName: event.target.firstName.value,
-        lastName: event.target.lastName.value,
+        firstName: firstName.value,
+        lastName: lastName.value,
         images: path,
-        email: event.target.email.value,
-        phoneNumber: event.target.phoneNumber.value,
+        email: email.value,
+        phoneNumber: phoneNumber.value,
         biography: event.target.biography.value,
         street: event.target.street.value,
         city: event.target.city.value,
