@@ -119,7 +119,7 @@
             </label>
           </div>
           <div id="invalid-category" class="invalid-feedback">
-            Please enter at least one category
+            Please select at least one category
           </div>
         </div>
         <div class="input-group mb-3">
@@ -148,8 +148,8 @@
             value="{{product.price}}"
             required
           />
-          <div class="invalid-feedback">
-            Please enter product price
+          <div id="invalid-price" class="invalid-feedback">
+            Please enter valid product price
           </div>
         </div>
         <div class="input-group mb-3">
@@ -310,7 +310,13 @@
             </div>
           </div>
         </div>
-        <div>{{error}}</div>
+        <div id="error-div" class="alert alert-danger" role="alert">
+          {{#if error}}
+            {{error}}
+          {{else}}
+            Invalid input
+          {{/if}}
+        </div>
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" class="btn btn-secondary">{{#if product}}Update{{else}}Add{{/if}}</button>

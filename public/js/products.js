@@ -15,7 +15,19 @@ function imageUploadChange() {
   $("#logo").on("click", function (event) {
     $(location).attr("href", "/");
   });
+  $("input[type='checkbox']").change(function () {
+    $("#invalid-category").removeClass("d-block");
+  });
+  $("#price").change(function () {
+    $("#invalid-price").removeClass("d-block");
+  });
   const product_id = $("#product_id").val();
+  function handleError(error) {
+    const msg = JSON.parse(error.responseText).message.preventXSS();
+    console.log(msg);
+    $("#error-div").show();
+    $("#error-div").html(msg);
+  }
   function isEdit() {
     return product_id != null && product_id != "";
   }
@@ -31,10 +43,13 @@ function imageUploadChange() {
         window.location.replace("/");
       },
       error: function (error) {
-        alert(JSON.parse(error.responseText).message.preventXSS());
+        handleError(error);
       },
     });
   }
+
+  $("#error-div").hide();
+  $("#error-div").html("");
 
   $(".uploaded-img").click(function (event) {
     $(this).parent().remove();
@@ -44,14 +59,7 @@ function imageUploadChange() {
     event.preventDefault();
     $("#invalid-image").removeClass("d-block");
     $("#invalid-category").removeClass("d-block");
-
-    if (!$("#form-product")[0].checkValidity()) {
-      event.stopPropagation();
-      $("#form-product").addClass("was-validated");
-      return;
-    }
-
-    $("#form-product").addClass("was-validated");
+    $("#invalid-price").removeClass("d-block");
 
     let category = [];
     if ($("#cate-book").is(":checked")) {
@@ -85,10 +93,29 @@ function imageUploadChange() {
       category.push("Storage");
     }
 
+    var isValid = true;
     if (category.length == 0) {
       $("#invalid-category").addClass("d-block");
+      isValid = false;
+    }
+
+    // if (isNaN($("#price").val())) {
+    //   $("#invalid-price").addClass("d-block");
+    //   isValid = false;
+    // }
+
+    if (!$("#form-product")[0].checkValidity()) {
+      event.stopPropagation();
+      $("#form-product").addClass("was-validated");
       return;
     }
+
+    if (!isValid) {
+      return;
+    }
+
+    $("#form-product").addClass("was-validated");
+
     let keywords = $("#keywords").val();
     keywords = keywords.replace(" ", "").split(",");
 
@@ -152,8 +179,7 @@ function imageUploadChange() {
           addPost(newPost);
         },
         error: function (error) {
-          console.log(JSON.parse(error.responseText).message);
-          alert(JSON.parse(error.responseText).message.preventXSS());
+          handleError(error);
         },
       });
     }
