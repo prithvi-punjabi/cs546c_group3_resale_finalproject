@@ -1249,9 +1249,6 @@ body {
   font-weight: bold;
 }
 
-.userCard {
-  height: 30rem;
-}
 
 #accessUser {
   float: right;
@@ -1329,4 +1326,36 @@ body {
 
 .floatRight {
   float: right;
+}
+
+div.scrollmenu {
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
+}
+
+div.scrollmenu .userCard{
+  flex: 0 0 auto;
+  height: 28rem;
+}
+
+.userProdHead{
+  text-align: center;
+  margin-top: 20px;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+div.scrollmenu > .nofav{
+  align-items: center;
+  text-align: center;
+  margin: auto;
+}
+
+div.col-sm-3 > h3{
+  font-size: 22px;
+}
+
+#updateProf{
+  display: inline-block;
 }
