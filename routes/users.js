@@ -122,7 +122,9 @@ router.get("/user/:id", async (req, res) => {
       title: thisuser.firstName + "'s Profile",
     });
   } catch (e) {
-    return res.render("error", { code: errorCode.NOT_FOUND, error: e });
+    return res
+      .status(errorCode.NOT_FOUND)
+      .render("error", { code: errorCode.NOT_FOUND, error: e });
   }
 });
 
@@ -172,7 +174,7 @@ router.post("/users/rate/:id", async (req, res) => {
     let rating = req.body.rating;
     let thisUser = req.session.user._id;
     if (userId.toString() === thisUser.toString()) {
-      return res.render("error", {
+      return res.status(403).render("error", {
         code: 403,
         error: "You cannot rate yourself.",
       });

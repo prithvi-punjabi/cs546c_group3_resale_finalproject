@@ -51,7 +51,9 @@ router.get("/getall/:id", async (req, res) => {
       e = new Error(e);
       e.code = errorCode.BAD_REQUEST;
     }
-    return res.render("error", { code: e.code, error: e.message });
+    return res
+      .status(e.code)
+      .render("error", { code: e.code, error: e.message });
   }
 });
 
@@ -71,7 +73,9 @@ router.post("/delete/:id", async (req, res) => {
       e = new Error(e);
       e.code = errorCode.BAD_REQUEST;
     }
-    return res.render("error", { code: e.code, error: e.message });
+    return res
+      .status(e.code)
+      .render("error", { code: e.code, error: e.message });
   }
 });
 
