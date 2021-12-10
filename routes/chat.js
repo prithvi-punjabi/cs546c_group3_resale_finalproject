@@ -15,12 +15,16 @@ router.get("/", async (req, res) => {
   try {
     const my_user_id = req.session.user._id;
     const chats = await chatData.getAllChats(my_user_id);
-    res.render("chat", {
-      chats: chats,
-      currChat: null,
-      user: req.session.user,
-      title: "Chat",
-    });
+    if (chats.length != 0) {
+      res.redirect("/chat/" + chats[0].user_id);
+    } else {
+      res.render("chat", {
+        chats: chats,
+        currChat: null,
+        user: req.session.user,
+        title: "Chat",
+      });
+    }
   } catch (e) {
     if (typeof e == "string") {
       e = new Error(e);
@@ -65,10 +69,6 @@ router.post("/add", async (req, res) => {
   try {
     const my_user_id = req.session.user._id;
     let { user_id, msg, isSent } = req.body;
-    user_id = xss(user_id);
-    msg = xss(msg);
-    isSent = xss(isSent);
-    if (isSent === "true" || isSent === "false") isSent = Boolean(isSent);
     if (my_user_id == null) {
       return res
         .status(403)

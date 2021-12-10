@@ -17,7 +17,13 @@ router.get("/login", (req, res) => {
   if (req.session.user) {
     return res.redirect("/");
   }
-  return res.render("login", { title: "Log into re$ale" });
+  const params = {
+    title: "Log into re$ale",
+  };
+  if (req.query != null && req.query.error != null) {
+    params.error = req.query.error;
+  }
+  return res.render("login", params);
 });
 
 router.get("/logout", (req, res) => {
@@ -116,7 +122,9 @@ router.get("/user/:id", async (req, res) => {
       title: thisuser.firstName + "'s Profile",
     });
   } catch (e) {
-    return res.render("error", { code: errorCode.NOT_FOUND, error: e });
+    return res
+      .status(errorCode.NOT_FOUND)
+      .render("error", { code: errorCode.NOT_FOUND, error: e });
   }
 });
 
@@ -166,7 +174,7 @@ router.post("/users/rate/:id", async (req, res) => {
     let rating = req.body.rating;
     let thisUser = req.session.user._id;
     if (userId.toString() === thisUser.toString()) {
-      return res.render("error", {
+      return res.status(403).render("error", {
         code: 403,
         error: "You cannot rate yourself.",
       });
@@ -195,20 +203,6 @@ router.get("/users/add", async (req, res) => {
 
 router.post("/users/add", async (req, res) => {
   const userData = req.body;
-  userData.firstName = xss(userData.firstName);
-  userData.lastName = xss(userData.lastName);
-  userData.email = xss(userData.email);
-  userData.phoneNumber = xss(userData.phoneNumber);
-  userData.userName = xss(userData.userName);
-  userData.dob = xss(userData.dob);
-  userData.gender = xss(userData.gender);
-  userData.images = xss(userData.images);
-  userData.street = xss(userData.street);
-  userData.city = xss(userData.city);
-  userData.state = xss(userData.state);
-  userData.zip = xss(userData.zip);
-  userData.password = xss(userData.password);
-  userData.biography = xss(userData.biography);
   //User input validation on user route by calling validation.js
   try {
     validate.checkNonNull(userData.firstName);
@@ -314,27 +308,13 @@ router.get("/users/update", async (req, res) => {
       else return res.status(500).json(ErrorMessage(e.message));
     }
   } else {
-    return res.render("login");
+    return res.redirect("/login");
   }
 });
 
 router.post("/users/update/", async (req, res) => {
   const userData = req.body;
   const id = req.session.user._id.toString();
-  userData.firstName = xss(userData.firstName);
-  userData.lastName = xss(userData.lastName);
-  userData.email = xss(userData.email);
-  userData.phoneNumber = xss(userData.phoneNumber);
-  userData.userName = xss(userData.userName);
-  userData.dob = xss(userData.dob);
-  userData.gender = xss(userData.gender);
-  userData.images = xss(userData.images);
-  userData.street = xss(userData.street);
-  userData.city = xss(userData.city);
-  userData.state = xss(userData.state);
-  userData.zip = xss(userData.zip);
-  userData.password = xss(userData.password);
-  userData.biography = xss(userData.biography);
   // update validation in routes
   try {
     validate.checkNonNull(userData.firstName);

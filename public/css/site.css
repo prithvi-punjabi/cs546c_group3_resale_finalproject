@@ -256,7 +256,7 @@ input:checked + .slider:before {
   margin-top: 10px;
 }
 
-.sideHead{
+.sideHead {
   font-weight: bold;
 }
 
@@ -1249,9 +1249,6 @@ body {
   font-weight: bold;
 }
 
-.userCard {
-  height: 29rem;
-}
 
 #accessUser {
   float: right;
@@ -1318,4 +1315,47 @@ body {
 
 .tooltip {
   font-size: 12px !important;
+}
+
+.font700 {
+  font-weight: 700;
+}
+.colorb {
+  color: white;
+}
+
+.floatRight {
+  float: right;
+}
+
+div.scrollmenu {
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
+}
+
+div.scrollmenu .userCard{
+  flex: 0 0 auto;
+  height: 28rem;
+}
+
+.userProdHead{
+  text-align: center;
+  margin-top: 20px;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+div.scrollmenu > .nofav{
+  align-items: center;
+  text-align: center;
+  margin: auto;
+}
+
+div.col-sm-3 > h3{
+  font-size: 22px;
+}
+
+#updateProf{
+  display: inline-block;
 }

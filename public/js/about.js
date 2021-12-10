@@ -1,5 +1,5 @@
 (function ($) {
-  let myAlert = $('#myToast');
+  let myAlert = $("#myToast");
   let bsAlert = new bootstrap.Toast(myAlert);
   bsAlert.show();
   $("#testimAlert").hide();
@@ -39,13 +39,13 @@
           $("#testButClose").trigger("click");
           testDiv.append(
             "<div class='card'><div class='card-header'>" +
-              thistest.usersName +
+              thistest.usersName.preventXSS() +
               "</div><div class='divimage2'><img src='" +
-              thistest.userImg +
+              thistest.userImg.preventXSS() +
               "' class='card-img-top2' alt='" +
-              thistest.usersName +
+              thistest.usersName.preventXSS() +
               "' /></div><div class='card-body'><p class='card-text'>" +
-              thistest.message +
+              thistest.message.preventXSS() +
               "</p></div></div>"
           );
           Swal.fire({

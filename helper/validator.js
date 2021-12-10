@@ -53,7 +53,9 @@ module.exports = {
   checkPhoneNumber(phone) {
     if (phone == null) throw `Must pass phone number`;
     const regEx = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/g;
-    if (!phone.match(regEx)) throw `Invalid phone number`;
+    const regExSimple = /^[0-9]{9}$/g;
+    if (!phone.match(regEx) && !phone.match(regExSimple))
+      throw `Invalid phone number`;
   },
 
   checkEmail(email) {

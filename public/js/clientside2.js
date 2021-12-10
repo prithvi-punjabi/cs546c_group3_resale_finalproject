@@ -97,7 +97,7 @@
   });
 
   $("#btn-chat").click(function () {
-    window.location.href = "/chat/" + $("#product_id").val();
+    window.location.href = "/chat/" + $("#product_id").val().preventXSS();
   });
 
   $("#ratingFormSubmit").click(function (event) {
@@ -176,22 +176,22 @@
         commentDiv.append(
           "<div class='list-group-item list-group-item-action' aria-current='true'>" +
             "<span class='commId' hidden>" +
-            response.responseJSON.commentId +
+            response.responseJSON.commentId.preventXSS() +
             "</span>" +
             "<div class='d-flex w-100 justify-content-between'>" +
             " <h5 class='mb-1 commentUserName'>" +
-            response.responseJSON.usersname +
+            response.responseJSON.usersname.preventXSS() +
             "</h5>" +
             "<img src='" +
-            response.responseJSON.userimg +
+            response.responseJSON.userimg.preventXSS() +
             "'class='commentImgs'/>" +
             "</div> <p class='mb-1'>" +
-            response.responseJSON.comment +
+            response.responseJSON.comment.preventXSS() +
             "</p> <small class='dateAdded'>" +
-            response.responseJSON.time +
+            response.responseJSON.time.preventXSS() +
             "</small>" +
             "<button class='btn btn-danger btn-sm' id='" +
-            response.responseJSON.commentId +
+            response.responseJSON.commentId.preventXSS() +
             "'>Delete</button> </div>"
         );
         $(`#${response.responseJSON.commentId}`).on("click", function (event) {
