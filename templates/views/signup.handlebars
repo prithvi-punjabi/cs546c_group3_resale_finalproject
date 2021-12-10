@@ -135,7 +135,7 @@
         <div class="input-group mb-3">
           <span class="input-group-text" id="span-name">Email Id</span>
           <input
-            type="text"
+            type="email"
             class="form-control"
             placeholder="Enter email address"
             id="email"
@@ -160,6 +160,8 @@
             aria-label="name"
             aria-describedby="span-name"
             oninput="removeErrorClass(this)"
+            maxlength="12"
+            minlength="12"
             required
           />
           <div class="invalid-feedback" id="invalid-phoneNumber-label">

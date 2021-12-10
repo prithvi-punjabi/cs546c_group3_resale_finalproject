@@ -2,6 +2,50 @@ function removeErrorClass(element) {
   element.classList.remove("is-invalid");
   document.getElementById("error-div").classList.add("visually-hidden");
 }
+
+function isEmail(email) {
+  var regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/g;
+  return regex.test(email);
+}
+
+function checkPhoneNumber(phone) {
+  const regEx = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/g;
+  if (phone.match(regEx)) return true;
+  else return false;
+}
+
+function checkPassword(str) {
+  const regEx = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/g;
+  if (str.match(regEx)){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
+function checkLocation(address) {
+  if (typeof address !== "object") return "Address is not an Object";
+  if (Object.keys(address).length === 0) return "Address cannot be empty";
+  if (
+    !address.hasOwnProperty("streetAddress") ||
+    !address.hasOwnProperty("city") ||
+    !address.hasOwnProperty("state") ||
+    !address.hasOwnProperty("zip")
+  )
+    return "Address requires all properties: streetAddress, city, state and zipcode";
+  if (
+    typeof address.streetAddress !== "string" ||
+    typeof address.city !== "string" ||
+    typeof address.state !== "string" ||
+    typeof address.zip !== "string"
+  )
+    return "Address values need to be strings";
+  // Validation for state (eg: NJ) and zip (eg: 07030)
+  if (address.state.length > 2) return "State can only be 2 character string";
+  if (address.zip.length > 5) return "Invalid zip code";
+}
+
 (function ($) {
   $("#logo").on("click", function (event) {
     $(location).attr("href", "/");
@@ -24,6 +68,20 @@ function removeErrorClass(element) {
   error.classList.add("visually-hidden");
 
   const form = document.getElementById("create-user");
+
+  // $( "#phoneNumber" ).change(function() {
+  //   alert( "Handler for .change() called." );
+  // });
+
+  $("input[name='phoneNumber']").keyup(function() {
+    console.log($(this).val().length);
+    if($(this).val().length>=8){
+      $(this).val($(this).val().replace(/^(\d{3})(-\d{3})(\d+)$/, "$1$2-$3"));
+    }else if($(this).val().length<=6 && $(this).val().length>3){
+      $(this).val($(this).val().replace(/^(\d{3})(\d+)$/, "$1-$2"));
+    }
+  });
+  
   form.addEventListener("submit", function addUser(event) {
     event.preventDefault();
 
@@ -64,6 +122,13 @@ function removeErrorClass(element) {
       document.getElementById("invalid-password-label").innerHTML =
         "Password must be at least 6 characters long";
       isValid = false;
+    } else if (!checkPassword(password.value))
+    {
+      password.classList.add("is-invalid");
+      password.focus();
+      document.getElementById("invalid-password-label").innerHTML =
+      `Password must contain at least one upper, one lower, one special character and one number`;
+      isValid = false;
     }
 
     if (biography.value.length == 0) {
@@ -82,11 +147,23 @@ function removeErrorClass(element) {
       email.classList.add("is-invalid");
       email.focus();
       isValid = false;
+    } else if (!isEmail(email.value)){
+      email.classList.add("is-invalid");
+      email.focus();
+      document.getElementById("invalid-email-label").innerHTML =
+        "Please enter a valid email id";
+      isValid = false;
     }
 
     if (phoneNumber.value.length == 0) {
       phoneNumber.classList.add("is-invalid");
       phoneNumber.focus();
+      isValid = false;
+    } else if (!checkPhoneNumber(phoneNumber.value)){
+      phoneNumber.classList.add("is-invalid");
+      phoneNumber.focus();
+      document.getElementById("invalid-phoneNumber-label").innerHTML =
+        "Please enter a valid phone number";
       isValid = false;
     }
 
