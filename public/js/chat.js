@@ -10,7 +10,7 @@
   });
   $("#ul-chat li").each(function (inx, li) {
     $(li).click(function (event) {
-      window.location.href = "/chat/" + $(li).attr("id");
+      window.location.href = "/chat/" + $(li).attr("id").preventXSS();
     });
   });
   if ($("#ul-chat li").length == 0) {
@@ -40,7 +40,7 @@
         window.location.reload();
       },
       error: function (error) {
-        alert(error.message);
+        alert(error.responseJSON.message.preventXSS());
       },
     });
     $("#input-msg").val("");

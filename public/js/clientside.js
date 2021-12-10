@@ -56,15 +56,15 @@ function searchBar() {
 
 let slider = document.getElementById("price");
 let output = document.getElementById("priceVal");
-output.innerHTML = slider.value;
+output.innerHTML = slider.value.preventXSS();
 slider.oninput = function () {
-  output.innerHTML = this.value;
+  output.innerHTML = this.value.preventXSS();
 };
 
 function filterByPrice() {
   let cards = document.getElementsByClassName("card");
   let prices = document.getElementsByClassName("card-title");
-  let checkPrice = parseInt(slider.value);
+  let checkPrice = parseInt(slider.value.preventXSS());
   for (i = 0; i < prices.length; i++) {
     if (
       cards[i].className !== "card hiddenBySearch" &&
@@ -172,7 +172,7 @@ function filterCategory() {
 
 function clearAllFilters() {
   slider.value = 1000;
-  output.innerHTML = slider.value;
+  output.innerHTML = slider.value.preventXSS();
   let aa = document.querySelectorAll("input[type=checkbox]");
   for (var i = 0; i < aa.length; i++) {
     aa[i].checked = true;
@@ -183,7 +183,7 @@ function clearAllFilters() {
 
 (function ($) {
   $("input[type=radio][name=sort_by]").change(function () {
-    window.location.href = "/?sort_by=" + this.value;
+    window.location.href = "/?sort_by=" + this.value.preventXSS();
   });
   $(window).on("resize", function () {
     $(".card").css("width", "18rem");

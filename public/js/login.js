@@ -7,13 +7,7 @@ function removeErrorClass(element) {
   $("#logo").on("click", function (event) {
     $(location).attr("href", "/");
   });
-  $("#loginAlert").hide();
-  const urlParams = new URLSearchParams(window.location.search);
-  const myParam = urlParams.get("error");
-  if (myParam) {
-    $("#loginAlert").html(myParam);
-    $("#loginAlert").show();
-  }
+  if ($("#loginAlert")[0].innerHTML == "") $("#loginAlert").hide();
   const username = document.getElementById("username");
   const password = document.getElementById("password");
   const error = document.getElementById("error-div");
@@ -72,7 +66,9 @@ function removeErrorClass(element) {
         window.location.replace("/");
       },
       error: function (responseError) {
-        error.innerHTML = JSON.parse(responseError.responseText).message;
+        error.innerHTML = JSON.parse(
+          responseError.responseText
+        ).message.preventXSS();
         error.classList.remove("visually-hidden");
       },
     });

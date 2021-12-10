@@ -67,16 +67,16 @@
             data: JSON.stringify(newPost),
             dataType: "text",
             success: function (responseMessage) {
-              window.location.href = "/user/" + $("#userID").val();
+              window.location.href = "/user/" + $("#userID").val().preventXSS();
             },
             error: function (error) {
-              alert(JSON.parse(error.responseText).message);
+              alert(JSON.parse(error.responseText).message.preventXSS());
             },
           });
         },
         error: function (error) {
           console.log(JSON.parse(error.responseText).message);
-          alert(JSON.parse(error.responseText).message);
+          alert(JSON.parse(error.responseText).message.preventXSS());
         },
       });
     } else {
@@ -101,10 +101,10 @@
         data: JSON.stringify(newPost),
         dataType: "text",
         success: function (responseMessage) {
-          window.location.href = "/user/" + $("#userID").val();
+          window.location.href = "/user/" + $("#userID").val().preventXSS();
         },
         error: function (error) {
-          alert(JSON.parse(error.responseText).message);
+          alert(JSON.parse(error.responseText).message.preventXSS());
         },
       });
     }

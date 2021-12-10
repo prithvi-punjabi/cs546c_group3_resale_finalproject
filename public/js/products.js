@@ -31,7 +31,7 @@ function imageUploadChange() {
         window.location.replace("/");
       },
       error: function (error) {
-        alert(JSON.parse(error.responseText).message);
+        alert(JSON.parse(error.responseText).message.preventXSS());
       },
     });
   }
@@ -153,7 +153,7 @@ function imageUploadChange() {
         },
         error: function (error) {
           console.log(JSON.parse(error.responseText).message);
-          alert(JSON.parse(error.responseText).message);
+          alert(JSON.parse(error.responseText).message.preventXSS());
         },
       });
     }

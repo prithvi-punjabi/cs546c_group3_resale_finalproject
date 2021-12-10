@@ -167,14 +167,14 @@ function removeErrorClass(element) {
               window.location.replace("/");
             },
             error: function (error) {
-              const msg = JSON.parse(error.responseText).message;
+              const msg = JSON.parse(error.responseText).message.preventXSS();
               $("#error-div").val(msg);
               $("#error-div").removeClass("visually-hidden");
             },
           });
         },
         error: function (error) {
-          const msg = JSON.parse(error.responseText).message;
+          const msg = JSON.parse(error.responseText).message.preventXSS();
           $("#error-div").val(msg);
           $("#error-div").removeClass("visually-hidden");
         },
