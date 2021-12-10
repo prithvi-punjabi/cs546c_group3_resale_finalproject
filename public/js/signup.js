@@ -168,14 +168,14 @@ function removeErrorClass(element) {
             },
             error: function (error) {
               const msg = JSON.parse(error.responseText).message.preventXSS();
-              $("#error-div").val(msg);
+              $("#error-div").text(msg);
               $("#error-div").removeClass("visually-hidden");
             },
           });
         },
         error: function (error) {
           const msg = JSON.parse(error.responseText).message.preventXSS();
-          $("#error-div").val(msg);
+          $("#error-div").text(msg);
           $("#error-div").removeClass("visually-hidden");
         },
       });
