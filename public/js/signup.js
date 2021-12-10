@@ -3,53 +3,6 @@ function removeErrorClass(element) {
   document.getElementById("error-div").classList.add("visually-hidden");
 }
 
-function isEmail(email) {
-  var regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/g;
-  return regex.test(email);
-}
-
-function checkPhoneNumber(phone) {
-  const regEx = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/g;
-  if (phone.match(regEx)) return true;
-  else return false;
-}
-
-function checkPassword(str) {
-  const regEx = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/g;
-  if (str.match(regEx)){
-    return true;
-  }
-  else{
-    return false;
-  }
-}
-
-function checkState(state) {
-  if (state.length > 2) {
-    return false;
-  } else {
-    const regex = /^[a-zA-Z]{2}$/g;
-    if(!state.match(regex)){
-      return false;
-    } else{
-      return true;
-    }
-  }
-}
-
-function checkZip(zip) {
-  if (zip.length > 5) {
-    return false;
-  } else {
-    const regex = /^[0-9]{5}$/g;
-    if (!zip.match(regex)){
-      return false;
-    } else{
-      return true;
-    }
-  }
-}
-
 (function ($) {
   $("#logo").on("click", function (event) {
     $(location).attr("href", "/");
@@ -77,35 +30,43 @@ function checkZip(zip) {
   //   alert( "Handler for .change() called." );
   // });
 
-  $("input[name='phoneNumber']").keyup(function() {
+  $("input[name='phoneNumber']").keyup(function () {
     console.log($(this).val().length);
-    if($(this).val().length>=8){
-      $(this).val($(this).val().replace(/^(\d{3})(-\d{3})(\d+)$/, "$1$2-$3"));
-    }else if($(this).val().length<=6 && $(this).val().length>3){
-      $(this).val($(this).val().replace(/^(\d{3})(\d+)$/, "$1-$2"));
+    if ($(this).val().length >= 8) {
+      $(this).val(
+        $(this)
+          .val()
+          .replace(/^(\d{3})(-\d{3})(\d+)$/, "$1$2-$3")
+      );
+    } else if ($(this).val().length <= 6 && $(this).val().length > 3) {
+      $(this).val(
+        $(this)
+          .val()
+          .replace(/^(\d{3})(\d+)$/, "$1-$2")
+      );
     }
   });
-  
+
   form.addEventListener("submit", function addUser(event) {
     event.preventDefault();
 
     $("#error-div").addClass("visually-hidden");
     let isValid = true;
-    firstName.value = firstName.value.replace(/\s/g, '');
+    firstName.value = firstName.value.replace(/\s/g, "");
     if (firstName.value.length == 0) {
       firstName.classList.add("is-invalid");
       firstName.focus();
       isValid = false;
     }
 
-    lastName.value = lastName.value.replace(/\s/g, '');
+    lastName.value = lastName.value.replace(/\s/g, "");
     if (lastName.value.length == 0) {
       lastName.classList.add("is-invalid");
       lastName.focus();
       isValid = false;
     }
 
-    userName.value = userName.value.replace(/\s/g, '');
+    userName.value = userName.value.replace(/\s/g, "");
     if (userName.value.length == 0) {
       userName.classList.add("is-invalid");
       userName.focus();
@@ -118,7 +79,7 @@ function checkZip(zip) {
       isValid = false;
     }
 
-    password.value = password.value.replace(/\s/g, '');
+    password.value = password.value.replace(/\s/g, "");
     if (password.value.length == 0) {
       password.classList.add("is-invalid");
       password.focus();
@@ -129,28 +90,28 @@ function checkZip(zip) {
       document.getElementById("invalid-password-label").innerHTML =
         "Password must be at least 6 characters long";
       isValid = false;
-    } else if (!checkPassword(password.value))
-    {
+    } else if (!isValidPassword(password.value)) {
       password.classList.add("is-invalid");
       password.focus();
-      document.getElementById("invalid-password-label").innerHTML =
-      `Password must contain at least one upper, one lower, one special character and one number`;
+      document.getElementById(
+        "invalid-password-label"
+      ).innerHTML = `Password must contain at least one upper, one lower, one special character and one number`;
       isValid = false;
     }
 
-    biography.value = biography.value.replace(/\s/g, '');
+    biography.value = biography.value.replace(/\s/g, "");
     if (biography.value.length == 0) {
       biography.classList.add("is-invalid");
       biography.focus();
       isValid = false;
     }
 
-    dob.value = dob.value.replace(/\s/g, '');
+    dob.value = dob.value.replace(/\s/g, "");
     if (dob.value.length == 0) {
       dob.classList.add("is-invalid");
       dob.focus();
       isValid = false;
-    }else{
+    } else {
       let today = new Date().toLocaleDateString();
       let currmonth = parseInt(today.split("/")[0]);
       let currday = parseInt(today.split("/")[1]);
@@ -158,10 +119,12 @@ function checkZip(zip) {
       let month = parseInt(dob.value.split("-")[1]);
       let day = parseInt(dob.value.split("-")[2]);
       let year = parseInt(dob.value.split("-")[0]);
-      if (currmonth === month && currday === day && curryear === year){
+      if (currmonth === month && currday === day && curryear === year) {
         dob.classList.add("is-invalid");
         dob.focus();
-        document.getElementById("invalid-dob-label").innerHTML = `Your birthday cannot be today`;
+        document.getElementById(
+          "invalid-dob-label"
+        ).innerHTML = `Your birthday cannot be today`;
         isValid = false;
       }
       // Check if inputted date is in the future
@@ -174,13 +137,16 @@ function checkZip(zip) {
       ) {
         dob.classList.add("is-invalid");
         dob.focus();
-        document.getElementById("invalid-dob-label").innerHTML = `Your birthday cannot be in the future`;
+        document.getElementById(
+          "invalid-dob-label"
+        ).innerHTML = `Your birthday cannot be in the future`;
         isValid = false;
-      }
-      else if (year > 2007) {
+      } else if (year > curryear - 13) {
         dob.classList.add("is-invalid");
         dob.focus();
-        document.getElementById("invalid-dob-label").innerHTML = `You need to be older than 13 to access re$ale`;
+        document.getElementById(
+          "invalid-dob-label"
+        ).innerHTML = `You need to be at least 13 years to access re$ale`;
         isValid = false;
       }
       // Check if day in date supplied is out of range of month
@@ -193,37 +159,41 @@ function checkZip(zip) {
         month === 10 ||
         month === 12
       ) {
-        if (day < 0 || day > 31){
+        if (day < 0 || day > 31) {
           dob.classList.add("is-invalid");
           dob.focus();
-          document.getElementById("invalid-dob-label").innerHTML = `${day} does not exist in ${month}`;
+          document.getElementById(
+            "invalid-dob-label"
+          ).innerHTML = `${day} does not exist in ${month}`;
           isValid = false;
         }
-      }
-      else if (month === 4 || month === 6 || month === 9 || month === 11) {
+      } else if (month === 4 || month === 6 || month === 9 || month === 11) {
         if (day < 0 || day > 30) {
           dob.classList.add("is-invalid");
           dob.focus();
-          document.getElementById("invalid-dob-label").innerHTML = `${day} does not exist in ${month}`;
+          document.getElementById(
+            "invalid-dob-label"
+          ).innerHTML = `${day} does not exist in ${month}`;
           isValid = false;
         }
-      }
-      else if (month === 2) {
-        if (day < 0 || day > 28){
+      } else if (month === 2) {
+        if (day < 0 || day > 28) {
           dob.classList.add("is-invalid");
           dob.focus();
-          document.getElementById("invalid-dob-label").innerHTML = `${day} does not exist in ${month}`;
+          document.getElementById(
+            "invalid-dob-label"
+          ).innerHTML = `${day} does not exist in ${month}`;
           isValid = false;
         }
       }
     }
 
-    email.value = email.value.replace(/\s/g, '');
+    email.value = email.value.replace(/\s/g, "");
     if (email.value.length == 0) {
       email.classList.add("is-invalid");
       email.focus();
       isValid = false;
-    } else if (!isEmail(email.value)){
+    } else if (!isEmail(email.value)) {
       email.classList.add("is-invalid");
       email.focus();
       document.getElementById("invalid-email-label").innerHTML =
@@ -231,12 +201,12 @@ function checkZip(zip) {
       isValid = false;
     }
 
-    phoneNumber.value = phoneNumber.value.replace(/\s/g, '');
+    phoneNumber.value = phoneNumber.value.replace(/\s/g, "");
     if (phoneNumber.value.length == 0) {
       phoneNumber.classList.add("is-invalid");
       phoneNumber.focus();
       isValid = false;
-    } else if (!checkPhoneNumber(phoneNumber.value)){
+    } else if (!checkPhoneNumber(phoneNumber.value)) {
       phoneNumber.classList.add("is-invalid");
       phoneNumber.focus();
       document.getElementById("invalid-phoneNumber-label").innerHTML =
@@ -253,39 +223,37 @@ function checkZip(zip) {
       gender = "other";
     }
 
-    street.value = street.value.replace(/\s/g, '');
+    street.value = street.value.replace(/\s/g, "");
     if (street.value.length == 0) {
       street.classList.add("is-invalid");
       street.focus();
       isValid = false;
     }
 
-    city.value = city.value.replace(/\s/g, '');
+    city.value = city.value.replace(/\s/g, "");
     if (city.value.length == 0) {
       city.classList.add("is-invalid");
       city.focus();
       isValid = false;
     }
 
-    state.value = state.value.replace(/\s/g, '');
+    state.value = state.value.replace(/\s/g, "");
     if (state.value.length == 0) {
       state.classList.add("is-invalid");
       state.focus();
       isValid = false;
-    } else if (!checkState(state.value))
-    {
+    } else if (!checkState(state.value)) {
       state.classList.add("is-invalid");
-      state.focus();    
+      state.focus();
       isValid = false;
     }
 
-    zip.value = zip.value.replace(/\s/g, '');
+    zip.value = zip.value.replace(/\s/g, "");
     if (zip.value.length == 0) {
       zip.classList.add("is-invalid");
       zip.focus();
       isValid = false;
-    }else if (!checkZip(zip.value))
-    {
+    } else if (!checkZip(zip.value)) {
       zip.classList.add("is-invalid");
       zip.focus();
       isValid = false;
