@@ -7,7 +7,7 @@
             <img src="../..{{user.profilePicture}}" alt="Admin" class="rounded-circle" width="150">
             <div class="mt-3">
               <h2>{{nameOfUser}}</h2>
-              <p class="font-size-sm"">{{user.biography}}</p>
+              <p class="font-size-sm">{{user.biography}}</p>
             </div>
           </div>
         </div>
@@ -36,6 +36,7 @@
             name="firstName"
             aria-label="name"
             aria-describedby="span-name"
+            oninput="removeErrorClass(this)"
             required
           />
           <div class="invalid-feedback">
@@ -53,6 +54,7 @@
             name="lastName"
             aria-label="name"
             aria-describedby="span-name"
+            oninput="removeErrorClass(this)"
             required
           />
           <div class="invalid-feedback">
@@ -70,6 +72,7 @@
             id="formFileMultiple"
             aria-label="imageUpload"
             aria-describedby="span-image"
+            oninput="removeErrorClass(this)"
           />
           <div class="invalid-feedback">
             Please select an image
@@ -87,8 +90,12 @@
             aria-label="Description"
             aria-describedby="span-description"
             placeholder="Describe yourself"
+            oninput="removeErrorClass(this)"
             required
           >{{user.biography}}</textarea>
+          <div class="invalid-feedback">
+            Biography cannot be empty
+          </div>
         </div>
         <div class="input-group mb-3">
           <span class="input-group-text" id="span-name">Email Id</span>
@@ -101,9 +108,10 @@
             name="email"
             aria-label="name"
             aria-describedby="span-name"
+            oninput="removeErrorClass(this)"
             required
           />
-          <div class="invalid-feedback">
+          <div id="invalid-email-label" class="invalid-feedback">
             Email Id cannot be empty
           </div>
         </div>
@@ -118,9 +126,10 @@
             name="phoneNumber"
             aria-label="name"
             aria-describedby="span-name"
+            oninput="removeErrorClass(this)"
             required
           />
-          <div class="invalid-feedback">
+          <div class="invalid-feedback" id="invalid-phoneNumber-label">
             Phone number cannot be empty
           </div>
         </div>
@@ -135,6 +144,7 @@
             name="street"
             aria-label="street"
             aria-describedby="span-street"
+            oninput="removeErrorClass(this)"
             required
           />
           <div class="invalid-feedback">
@@ -153,6 +163,7 @@
             name="city"
             aria-label="city"
             aria-describedby="span-city"
+            oninput="removeErrorClass(this)"
             required
           />
           <span class="input-group-text" id="span-state">State</span>
@@ -166,6 +177,7 @@
             aria-label="state"
             maxlength="2"
             aria-describedby="span-state"
+            oninput="removeErrorClass(this)"
             required
           />
           <span class="input-group-text" id="span-zip">Zip</span>
@@ -179,6 +191,8 @@
             aria-label="zip"
             pattern="[0-9]{5}"
             aria-describedby="span-zip"
+            maxlength="5"
+            oninput="removeErrorClass(this)"
             required
           />
           <div class="invalid-feedback">

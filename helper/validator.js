@@ -52,7 +52,6 @@ module.exports = {
 
   checkPhoneNumber(phone) {
     if (phone == null) throw `Must pass phone number`;
-    // phone = phone.slice(0, 3) + "-" + phone.slice(3, 6) + "-" + phone.slice(6, 15);
     const regEx = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/g;
     const regExSimple = /^[0-9]{10}$/g;
     if (!phone.match(regEx) && !phone.match(regExSimple))
