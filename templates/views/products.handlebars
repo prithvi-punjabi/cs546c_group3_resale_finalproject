@@ -1,0 +1,282 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <div id="logo">
+      <img src="/public/images/resale.png" alt="resale logo" class="logoimg" aria-label="Home Page"/> 
+    </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="/about" aria-label="About resale">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/statistics" tabindex="-1" aria-label="resale statistics">Statistics</a>
+        </li>
+        {{#if user}}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Hello, {{user.firstName}}!
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown" >
+              <li><a class="dropdown-item" href="/user/{{user._id}}">View Profile</a></li>
+              <li><a class="dropdown-item" href="/products/new">Sell Products</a></li>
+              <li><a class="dropdown-item" href="/chat">Chat</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/logout">Logout</a></li>
+            </ul>
+          </li>
+          {{else}}
+            <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+          <li class="nav-item"><a
+              class="nav-link"
+              href="/users/add"
+            >Signup</a></li>
+        {{/if}}
+      </ul>
+        <form class="d-flex searchBarForm">
+          <input class="form-control me-2" type="text" id="myInput" onkeyup="searchBar()" placeholder="Find products.." aria-label="Search for a product">
+          <button class="btn btn-light" id="clearButton">Clear</button>
+        </form>
+    </div>
+  </div>
+</nav>
+
+<div id="filterDivButton">
+  <button
+    class="btn btn-primary"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#filterSidebar"
+    aria-controls="filterSidebar"
+    aria-label= "Filter products"
+    type="button"
+  >☰</button>
+</div>
+
+<div
+  class="offcanvas offcanvas-start"
+  tabindex="-1"
+  id="filterSidebar"
+  aria-labelledby="filterSidebarLabel"
+>
+  <div class="offcanvas-header">
+    <h1 class="offcanvas-title" id="filterSidebarLabel">Filter and Sort Products</h1>
+    <button
+      type="button"
+      class="btn-close text-reset"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  {{! prettier-ignore }}
+  <div class="offcanvas-body">
+    <div>
+      <span class="sideHead">Sort by:</span>
+    <br />
+    <input
+      class="form-check-input"
+      type="radio"
+      id="sort_date"
+      name="sort_by"
+      value="date"
+      {{#if isSortByDate}}checked{{/if}}
+    />
+    <label class="form-check-label" for="sort_date">
+      Date Listed
+    </label>
+    <br />
+    <input
+      class="form-check-input"
+      type="radio"
+      id="sort_rating"
+      name="sort_by"
+      value="user_rating"
+      {{#if isSortByUserRating}}checked{{/if}}
+    />
+    <label class="form-check-label" for="sort_rating">
+      User Rating
+    </label>
+    <br />
+    <input
+      class="form-check-input"
+      type="radio"
+      id="sort_price"
+      name="sort_by"
+      value="price"
+      {{#if isSortByPrice}}checked{{/if}}
+    />
+    <label class="form-check-label" for="sort_price">
+      Price (Low to High)
+    </label>
+    <br />
+    <input
+      class="form-check-input"
+      type="radio"
+      id="sort_price_high_to_low"
+      name="sort_by"
+      value="price_high_to_low"
+      {{#if isSortByPriceHighToLow}}checked{{/if}}
+    />
+    <label class="form-check-label" for="sort_price_high_to_low">
+      Price (High to Low)
+    </label>
+    </div>
+    <br>
+    <div id="priceDiv">
+      <span class="sideHead">Filter by:</span><br>
+      Price:
+      <br />
+      <label for="price">Price below: $<span id="priceVal"></span></label><br />
+      <span class="sliderTextValue">0</span><input
+        name="price"
+        type="range"
+        min="10"
+        max="1000"
+        value="1000"
+        class=""
+        id="price"
+        onchange="filterByPrice()"
+      /><span class="sliderTextValue">1000</span><br />
+    </div>
+    <div id="locDiv">
+      Location:<br />
+      <input type="checkbox" name="location" value="NY" id="NewYork" checked />
+      <label for="NewYork">NY</label><br />
+      <input
+        type="checkbox"
+        id="NewJersey"
+        name="location"
+        value="NJ"
+        checked
+      />
+      <label for="NewJersey">NJ</label><br />
+      <button
+        onclick="filterLocation()"
+        class="sidebarButton btn btn-primary"
+      >Set Location Filter</button>
+    </div>
+    <div id="categoryDiv">
+      Category:<br />
+      <input type="checkbox" name="category" value="Books" id="Books" checked />
+      <label for="Books">Books</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Clothing"
+        id="Clothing"
+        checked
+      />
+      <label for="Clothing">Clothing</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Electronics"
+        id="Electronics"
+        checked
+      />
+      <label for="Electronics">Electronics</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Footwear"
+        id="Footwear"
+        checked
+      />
+      <label for="Footwear">Footwear</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Furniture"
+        id="Furniture"
+        checked
+      />
+      <label for="Furniture">Furniture</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Household"
+        id="Household"
+        checked
+      />
+      <label for="Household">Household</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Kitchenware"
+        id="Kitchenware"
+        checked
+      />
+      <label for="Kitchenware">Kitchenware</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Office"
+        id="Office"
+        checked
+      />
+      <label for="Office">Office and Supplies</label><br />
+      <input
+        type="checkbox"
+        name="category"
+        value="Storage"
+        id="Storage"
+        checked
+      />
+      <label for="Storage">Storage</label><br />
+      <input type="checkbox" name="category" value="Other" id="Other" checked />
+      <label for="Other">Other</label><br />
+      <button
+        onclick="filterCategory()"
+        class="sidebarButton btn btn-primary"
+      >Set Category Filter</button>
+    </div>
+    <div id="clearAllDiv">
+      <button
+        id="clearAll"
+        onclick="clearAllFilters()"
+        class="sidebarButton btn btn-danger"
+      >Clear All Filters</button>
+    </div>
+  </div>
+</div>
+
+{{#each products}}
+  <div class="card prodCard">
+    <div class="card-header">{{name}}
+      {{! <button type="button" class="btn btn-outline-danger">
+        <i class="bi bi-heart"></i>
+      </button>  }}
+    </div>
+    <div class="divimage">
+      <img src={{images}} class="card-img-top" alt="{{name}}" />
+    </div>
+    <div class="card-body">
+      <h2 class="card-title">${{price}}</h2>
+      <p class="card-text">
+        Condition:
+        {{condition}}<br />
+        Location:
+        {{location.city}},
+        <span class="locationState">{{location.state}}</span><br />
+        Listed:
+        {{daysAgo}}
+      </p>
+      <p class="card-category" hidden>{{category}}</p>
+      <a href="/products/get/{{_id}}" class="btn btn-primary">View item</a>
+    </div>
+  </div>
+{{/each}}
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"
+></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="sweetalert2.all.min.js"></script>
+<script src="/public/js/clientside.js"></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+  crossorigin="anonymous"
+></script>

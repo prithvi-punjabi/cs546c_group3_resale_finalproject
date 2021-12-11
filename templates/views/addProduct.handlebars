@@ -1,0 +1,335 @@
+<div class="sidenav">
+  <div class="login-main-text">
+    {{#if product}}
+    <h1>Update product</h1>
+    {{else}}
+    <h1>Add product</h1>
+    {{/if}}
+    <p>Describe your product correctly</p>
+  </div>
+</div>
+<input type="hidden" id="product_id" value="{{product._id}}">
+<div class="main">
+  {{>navbar}}
+  <div class="col-md-12 col-sm-12">
+    <div class="add-product-form">
+      <form
+        id="form-product"
+        class="form-horizontal needs-validation"
+        novalidate
+      >
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-name">Name</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter name"
+            id="name"
+            name="name"
+            aria-label="name"
+            aria-describedby="span-name"
+            value="{{product.name}}"
+            required
+          />
+          <div class="invalid-feedback">
+            Please enter a product name
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-image">Images</span>
+          <input
+            id="imageUpload"
+            name="imageUpload"
+            accept="image/*"
+            class="form-control"
+            type="file"
+            aria-label="imageUpload"
+            aria-describedby="span-image"
+            onchange="imageUploadChange()"
+            {{#if product}}{{else}}required{{/if}}
+            multiple
+          />
+          <div id="invalid-image" class="invalid-feedback">
+            Please select at least one image
+          </div>
+        </div>
+        {{#if product}}
+            <div id="uploaded-imgs" class="row mb-3">
+              {{#each product.images}}
+                <div class="card col-md-3 size-100">
+                    <img class="uploaded-img card-img-top" alt="{{this}}" src="{{this}}">
+                    <span class="span-x hide">X</span>
+                </div>
+              {{/each}}
+            </div>
+        {{/if}}
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-category">Category</span>
+          <div class="form-control input-group-addon">
+            <input class="form-check-input" type="checkbox" value="" id="cate-book" {{#ifContains "Books" product.category}}checked{{/ifContains}}>
+            <label class="form-check-label" for="cate-book">
+              Books
+            </label>
+            <br/>
+            <input class="form-check-input" type="checkbox" value="" id="cate-clothing" {{#ifContains "Clothing" product.category}}checked{{/ifContains}}>
+            <label class="form-check-label" for="cate-clothing">
+              Clothing
+            </label>
+            <br/>
+            <input class="form-check-input" type="checkbox" value="" id="cate-electronics" {{#ifContains "Electronics" product.category}}checked{{/ifContains}}>
+            <label class="form-check-label" for="cate-electronics">
+              Electronics
+            </label>
+            <br/>
+            <input class="form-check-input" type="checkbox" value="" id="cate-other" {{#ifContains "Other" product.category}}checked{{/ifContains}}>
+            <label class="form-check-label" for="cate-other">
+              Other
+            </label>
+          </div>
+          <div class="form-control input-group-addon">
+            <input class="form-check-input" type="checkbox" value="" id="cate-footwear" {{#ifContains "Footwear" product.category}}checked{{/ifContains}}>
+            <label class="form-check-label" for="cate-footwear">
+              Footwear
+            </label>
+            <br/>
+            <input class="form-check-input" type="checkbox" value="" id="cate-furniture" {{#ifContains "Furniture" product.category}}checked{{/ifContains}}>
+            <label class="form-check-label" for="cate-furniture">
+              Furniture
+            </label>
+            <br/>
+            <input class="form-check-input" type="checkbox" value="" id="cate-household" {{#ifContains "Household" product.category}}checked{{/ifContains}}>
+            <label class="form-check-label" for="cate-household">
+              Household
+            </label>
+          </div>
+          <div class="form-control input-group-addon">
+            <input class="form-check-input" type="checkbox" value="" id="cate-kitchenware" {{#ifContains "Kitchenware" product.category}}checked{{/ifContains}}>
+            <label class="form-check-label" for="cate-kitchenware">
+              Kitchenware
+            </label>
+            <br/>
+            <input class="form-check-input" type="checkbox" value="" id="cate-office" {{#ifContains "Office" product.category}}checked{{/ifContains}}>
+            <label class="form-check-label" for="cate-office">
+              Office and Supplies
+            </label>
+            <br/>
+            <input class="form-check-input" type="checkbox" value="" id="cate-storage" {{#ifContains "Storage" product.category}}checked{{/ifContains}}>
+            <label class="form-check-label" for="cate-storage">
+              Storage
+            </label>
+          </div>
+          <div id="invalid-category" class="invalid-feedback">
+            Please select at least one category
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-keywords">Keywords</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter keywords (Comma seperated)"
+            id="keywords"
+            name="keywords"
+            aria-label="keywords"
+            aria-describedby="span-keywords"
+            value="{{product.keywords}}"
+          />
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-price">Price</span>
+          <input
+            type="number"
+            class="form-control"
+            placeholder="Enter price ($)"
+            id="price"
+            name="price"
+            onkeypress="return event.charCode >= 48" 
+            aria-label="price"
+            aria-describedby="span-price"
+            value="{{product.price}}"
+            required
+          />
+          <div id="invalid-price" class="invalid-feedback">
+            Please enter valid product price
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <span
+            class="input-group-text"
+            id="span-description"
+          >Description</span>
+          <textarea
+            class="form-control"
+            id="description"
+            name="description"
+            aria-label="Description"
+            aria-describedby="span-description"
+            placeholder="Describe your product here"
+            required
+          >{{product.description}}</textarea>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-street">Address</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter street address"
+            id="street"
+            name="street"
+            aria-label="street"
+            aria-describedby="span-street"
+            value="{{product.location.streetAddress}}"
+            required
+          />
+          <div class="invalid-feedback">
+            Please enter street
+            <address></address>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-city">City</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter city"
+            id="city"
+            name="city"
+            aria-label="city"
+            aria-describedby="span-city"
+            value="{{product.location.city}}"
+            required
+          />
+          <span class="input-group-text" id="span-state">State</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter state"
+            id="state"
+            name="state"
+            aria-label="state"
+            maxlength="2"
+            aria-describedby="span-state"
+            value="{{product.location.state}}"
+            required
+          />
+          <span class="input-group-text" id="span-zip">Zip</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter Zip code"
+            id="zip"
+            name="zip"
+            aria-label="zip"
+            pattern="[0-9]{5}"
+            aria-describedby="span-zip"
+            value="{{product.location.zip}}"
+            required
+          />
+          <div class="invalid-feedback">
+            Please enter valid address
+          </div>
+        </div>
+        {{#if product}}
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-status">Status</span>
+          <div class="form-control">
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="status"
+                id="status_available"
+                {{#if product.isAvailable}}checked{{/if}}
+              />
+              <label class="form-check-label" for="status_available">
+                Available
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="status"
+                id="status_sold"
+                {{#if product.isAvailable}}{{else}}checked{{/if}}
+              />
+              <label class="form-check-label" for="status_sold">
+                Sold
+              </label>
+            </div>
+          </div>
+        </div>
+        {{/if}}
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="span-condition">Condition</span>
+          <div class="form-control">
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="condition"
+                id="condition_new"
+                {{#if product.isNew}}checked{{/if}}
+              />
+              <label class="form-check-label" for="condition_new">
+                New
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              {{#if product}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="condition"
+                  id="condition_barely_used"
+                  {{#if product.isBarelyUsed}}checked{{/if}}
+                />
+              {{else}}
+              <input
+                class="form-check-input"
+                type="radio"
+                name="condition"
+                id="condition_barely_used"
+                checked
+              />
+              {{/if}}
+              <label class="form-check-label" for="condition_barely_used">
+                Barely Used
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="condition"
+                id="condition_fairly_used"
+                {{#if product.isFairlyUsed}}checked{{/if}}
+              />
+              <label class="form-check-label" for="condition_fairly_used">
+                Fairly Used
+              </label>
+            </div>
+          </div>
+        </div>
+        <div id="error-div" class="alert alert-danger" role="alert">
+          {{#if error}}
+            {{error}}
+          {{else}}
+            Invalid input
+          {{/if}}
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-secondary">{{#if product}}Update{{else}}Add{{/if}}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="/public/js/products.js"></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+  crossorigin="anonymous"
+></script>
