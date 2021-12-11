@@ -19,33 +19,27 @@ function removeErrorClass(element) {
     event.preventDefault();
 
     let isValid = true;
-    if (username.value.length == 0) {
-      username.classList.add("is-invalid");
-      username.focus();
-      document.getElementById("usernameHelp").classList.add("visually-hidden");
-      isValid = false;
-    } else if (username.value.length < 5) {
-      username.classList.add("is-invalid");
-      username.focus();
-      document.getElementById("invalid-username-label").innerHTML =
-        "Username must be at least 5 characters long";
-      document.getElementById("usernameHelp").classList.add("visually-hidden");
-      isValid = false;
-    } else {
+    try {
+      checkUsername(username.value);
       document
         .getElementById("usernameHelp")
         .classList.remove("visually-hidden");
+    } catch (error) {
+      username.classList.add("is-invalid");
+      username.focus();
+      document.getElementById("invalid-username-label").innerHTML =
+        error.preventXSS();
+      document.getElementById("usernameHelp").classList.add("visually-hidden");
+      isValid = false;
     }
 
-    if (password.value.length == 0) {
-      password.classList.add("is-invalid");
-      password.focus();
-      isValid = false;
-    } else if (password.value.length < 6) {
+    try {
+      checkPassword(password.value);
+    } catch (error) {
       password.classList.add("is-invalid");
       password.focus();
       document.getElementById("invalid-password-label").innerHTML =
-        "Password must be at least 6 characters long";
+        error.preventXSS();
       isValid = false;
     }
 
