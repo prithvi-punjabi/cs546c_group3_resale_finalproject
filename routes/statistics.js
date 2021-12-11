@@ -54,11 +54,12 @@ router.get("/", async (req, res) => {
       e = new Error(e);
       e.code = 400;
     }
-    if (e.code != null)
-      return res
-        .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
-        .json(ErrorMessage(e.message));
-    else return res.status(500).json(ErrorMessage(e.message));
+    return res
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+      .render("error", {
+        code: validator.isValidResponseStatusCode(e.code) ? e.code : 500,
+        error: e.message,
+      });
   }
 });
 

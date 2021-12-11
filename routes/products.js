@@ -34,11 +34,12 @@ router.get("/", async (req, res, next) => {
       e = new Error(e);
       e.code = 400;
     }
-    if (e.code != null)
-      return res
-        .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
-        .json(ErrorMessage(e.message));
-    else return res.status(500).json(ErrorMessage(e.message));
+    return res
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+      .render("error", {
+        code: validator.isValidResponseStatusCode(e.code) ? e.code : 500,
+        error: e.message,
+      });
   }
 });
 
@@ -98,12 +99,12 @@ router.get("/get/:id", async (req, res) => {
       e = new Error(e);
       e.code = 400;
     }
-    if (e.code != null)
-      return res
-        .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
-        .render("error", { code: e.code, error: e.message });
-    else
-      return res.status(500).render("error", { code: 500, error: e.message });
+    return res
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+      .render("error", {
+        code: validator.isValidResponseStatusCode(e.code) ? e.code : 500,
+        error: e.message,
+      });
   }
 });
 
@@ -119,12 +120,12 @@ router.get("/new", async (req, res) => {
       e = new Error(e);
       e.code = 400;
     }
-    if (e.code != null)
-      return res
-        .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
-        .render("error", { code: e.code, error: e.message });
-    else
-      return res.status(500).render("error", { code: 500, error: e.message });
+    return res
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+      .render("error", {
+        code: validator.isValidResponseStatusCode(e.code) ? e.code : 500,
+        error: e.message,
+      });
   }
 });
 
@@ -185,12 +186,9 @@ router.get("/edit/:id", async (req, res) => {
       e = new Error(e);
       e.code = 400;
     }
-    if (e.code != null)
-      return res
-        .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
-        .render("error", { code: e.code, error: e.message });
-    else
-      return res.status(500).render("error", { code: 500, error: e.message });
+    return res
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+      .render("error", { code: e.code, error: e.message });
   }
 });
 
@@ -259,9 +257,12 @@ router.post("/new", async (req, res) => {
     validator.checkString(condition, "Barely used");
 
     if (!utils.isUserLoggedIn(req)) {
-      return res
-        .status(403)
-        .json(ErrorMessage("Login to start listing products"));
+      return res.redirect(
+        "/login?error=" +
+          encodeURIComponent(
+            "You need to be logged in to start listing products!"
+          )
+      );
     }
 
     const seller_id = req.session.user._id.toString();
@@ -286,11 +287,9 @@ router.post("/new", async (req, res) => {
       e = new Error(e);
       e.code = 400;
     }
-    if (e.code != null)
-      return res
-        .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
-        .json(ErrorMessage(e.message));
-    else return res.status(500).json(ErrorMessage(e.message));
+    return res
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+      .json(ErrorMessage(e.message));
   }
 });
 

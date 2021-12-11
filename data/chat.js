@@ -96,19 +96,16 @@ const addEmptyChat = async (my_user_id, user_id) => {
   }
 };
 
-const addToChat = async (my_user_id, user_id, msg, isSent) => {
+const addToChat = async (my_user_id, user_id, msg) => {
   if (my_user_id == user_id) {
     const error = new Error("Cannot chat with yourself");
     error.code = errorCode.BAD_REQUEST;
     throw error;
   }
-  validator.checkNonNull(my_user_id, user_id, msg, isSent);
+  validator.checkNonNull(my_user_id, user_id, msg);
   validator.checkString(msg, "msg");
   validator.checkString(my_user_id, "my_user_id");
   validator.checkString(user_id, "user_id");
-  if (typeof isSent != "boolean") {
-    throw "isSent must be boolean";
-  }
 
   try {
     const myChat = await getChatByUserId(my_user_id, user_id);
@@ -120,7 +117,7 @@ const addToChat = async (my_user_id, user_id, msg, isSent) => {
     const myNewMessage = {
       _id: ObjectId(),
       msg: msg,
-      isSent: isSent,
+      isSent: true,
       time: time,
     };
     if (myChat.message == null && !Array.isArray(myChat.message)) {
@@ -141,7 +138,7 @@ const addToChat = async (my_user_id, user_id, msg, isSent) => {
     const newMessage = {
       _id: ObjectId(),
       msg: msg,
-      isSent: !isSent,
+      isSent: false,
       time: time,
     };
     if (chat.message == null && !Array.isArray(chat.message)) {

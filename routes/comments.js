@@ -10,12 +10,10 @@ router.post("/add/:id", async (req, res) => {
     const prodId = req.params.id;
     const userId = req.session.user._id.toString();
     const thisComment = req.body.commentBox;
-    validator.checkNonNull(prodId),
-      validator.checkNonNull(userId),
-      validator.checkNonNull(thisComment);
-    validator.isValidObjectID(prodId),
-      validator.isValidObjectID(userId),
-      validator.checkString(thisComment);
+    validator.checkNonNull(prodId, userId, thisComment);
+    validator.isValidObjectID(prodId);
+    validator.isValidObjectID(userId);
+    validator.checkString(thisComment, "Comment");
     const addedComment = await comments.create(prodId, userId, thisComment);
     res.json({
       commentId: addedComment.toString(),
@@ -26,7 +24,13 @@ router.post("/add/:id", async (req, res) => {
       time: "Right now",
     });
   } catch (e) {
-    console.log(e);
+    if (typeof e == "string") {
+      e = new Error(e);
+      e.code = 400;
+    }
+    return res
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+      .json(ErrorMessage(e.message));
   }
 });
 
@@ -51,7 +55,7 @@ router.get("/getall/:id", async (req, res) => {
     }
     return res
       .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
-      .render("error", { code: e.code, error: e.message });
+      .json(ErrorMessage(e.message));
   }
 });
 
@@ -64,7 +68,7 @@ router.post("/delete/:id", async (req, res) => {
     if (allProdComments.length === 0) {
       await comments.deleteAllComments(prodId);
     }
-    if (delComment) res.json(true);
+    res.json(delComment != null);
   } catch (e) {
     if (typeof e == "string") {
       e = new Error(e);
