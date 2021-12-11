@@ -69,7 +69,7 @@ router.post("/accept/:id", async (req, res) => {
         error: "You cannot email yourself.",
       });
     }
-    let msg = `${sellerName} has accepted your $${getBid.bids.price} for his product: ${getBid.name}. Please get in touch with the seller at: ${from}, for further details.`;
+    let msg = `${sellerName} has accepted your $${getBid.bids.price} bid for his product: ${getBid.name}. Please get in touch with the seller at: ${from}, for further details.`;
     let mailOptions = {
       from: from,
       to: to,

@@ -25,7 +25,7 @@ async function main() {
         state: "NY",
         zip: "11220",
       },
-      "michael.jordan",
+      "Michael123!",
       "My name is Michael! Hey!"
     );
     const iron_man = await users.create(
@@ -43,7 +43,7 @@ async function main() {
         state: "NJ",
         zip: "07307",
       },
-      "iron.man",
+      "Iron123!",
       "Hell yeah it's me! Captain America sucks, re$ale rules! PS. I am iron man."
     );
 
@@ -62,7 +62,7 @@ async function main() {
         state: "NY",
         zip: "11225",
       },
-      "john.doe",
+      "John123!",
       "I am John Doe. People use me for testing."
     );
 
@@ -81,7 +81,7 @@ async function main() {
         state: "NJ",
         zip: "08901",
       },
-      "ariana.grande",
+      "Ariana123!",
       "No bio needed. Everyone knows me. Obviously, I'm the best!"
     );
 
@@ -100,7 +100,7 @@ async function main() {
         state: "NJ",
         zip: "07307",
       },
-      "cristiano.ronaldo",
+      "Cristiano123!",
       "Manchester United -> Real Madrid -> Juventus -> re$ale"
     );
 
@@ -119,7 +119,7 @@ async function main() {
         state: "NJ",
         zip: "07030",
       },
-      "alexandra.daddario",
+      "Alexandra123!",
       "Actress, activist, baywatcher."
     );
 
@@ -138,7 +138,7 @@ async function main() {
         state: "NJ",
         zip: "07307",
       },
-      "william.shatner",
+      "William123!",
       "Actor, I was on star wars guys. Also, Boston Legal, I loved that show."
     );
 
@@ -157,7 +157,7 @@ async function main() {
         state: "NJ",
         zip: "07030",
       },
-      "patrick.hill",
+      "Patrick123!",
       "I love coffee, prettier.formatting and js. I hate css. I also love re$ale, here's a 100"
     );
 
@@ -185,10 +185,7 @@ async function main() {
       ["Keyboard", "Computer Accessories"],
       50,
       michael._id,
-      [
-        "/public/uploads/keyboard.jpg",
-        "/public/uploads/keyboard2.jpeg",
-      ],
+      ["/public/uploads/keyboard.jpg", "/public/uploads/keyboard2.jpeg"],
       "Old keyboard. I've used it for many years and still working fine.",
       michael.address,
       "Available",
@@ -220,10 +217,7 @@ async function main() {
       ["Extended Monitor", "Desktop"],
       70,
       iron_man._id,
-      [
-        "/public/uploads/monitor.jpg",
-        "/public/uploads/monitor2.jpeg",
-      ],
+      ["/public/uploads/monitor.jpg", "/public/uploads/monitor2.jpeg"],
       "Dell 19 inch Monitor. Model No - 39487595439",
       iron_man.address,
       "Available",
@@ -284,17 +278,14 @@ async function main() {
       "Fairly Used",
       "06/20/2021"
     );
-    
+
     const shoes = await products.create(
       "Air Jordans",
       ["Footwear"],
       ["Shoes", "Nike", "Jordans"],
       160,
       ronaldo._id,
-      [
-        "/public/uploads/jordan1.jpeg",
-        "/public/uploads/jordan2.jpeg",
-      ],
+      ["/public/uploads/jordan1.jpeg", "/public/uploads/jordan2.jpeg"],
       "Man I love these shoes! Just upgraded to the chicago's though, so selling the university blues at a great price.",
       ronaldo.address,
       "Available",
@@ -308,10 +299,7 @@ async function main() {
       ["Supreme", "Tshirt", "Luxury"],
       300,
       ariana._id,
-      [
-        "/public/uploads/supreme1.jpeg",
-        "/public/uploads/supreme2.jpeg",
-      ],
+      ["/public/uploads/supreme1.jpeg", "/public/uploads/supreme2.jpeg"],
       "Great tshirt, in good shape. I've worn it quite it a bit though, hehe.",
       ariana.address,
       "Available",
@@ -325,10 +313,7 @@ async function main() {
       ["Knives", "Metal", "Wood"],
       199,
       alexandra._id,
-      [
-        "/public/uploads/knives1.jpg",
-        "/public/uploads/knives2.jpg",
-      ],
+      ["/public/uploads/knives1.jpg", "/public/uploads/knives2.jpg"],
       "Great set of knives, just got them as a gift. Already have nice ones, so selling these.",
       alexandra.address,
       "Available",
@@ -342,10 +327,7 @@ async function main() {
       ["Javscript", "Web", "Programming"],
       25,
       patrick._id,
-      [
-        "/public/uploads/js1.jpeg",
-        "/public/uploads/js2.jpeg",
-      ],
+      ["/public/uploads/js1.jpeg", "/public/uploads/js2.jpeg"],
       "Great book! It's where I learned from. And now I teach, so it is a great book.",
       patrick.address,
       "Available",
@@ -359,10 +341,7 @@ async function main() {
       ["HDMI", "Wire", "Connector"],
       19,
       patrick._id,
-      [
-        "/public/uploads/hdmi1.jpg",
-        "/public/uploads/hdmi2.jpg",
-      ],
+      ["/public/uploads/hdmi1.jpg", "/public/uploads/hdmi2.jpg"],
       "Great HDMI wire, just got a new one so selling this. Very low latency.",
       patrick.address,
       "Available",
@@ -394,10 +373,7 @@ async function main() {
       ["Bowls", "Cups", "Plates"],
       500,
       ariana._id,
-      [
-        "/public/uploads/china1.jpg",
-        "/public/uploads/china2.jpg",
-      ],
+      ["/public/uploads/china1.jpg", "/public/uploads/china2.jpg"],
       "Beautiful china set, looks great and royal. It's quite old, but in perfect condition.",
       ariana.address,
       "Available",
@@ -411,10 +387,7 @@ async function main() {
       ["Star Trek", "Funko Pop", "Fun"],
       50,
       william._id,
-      [
-        "/public/uploads/funko3.jpg",
-        "/public/uploads/funko1.jpg",
-      ],
+      ["/public/uploads/funko3.jpg", "/public/uploads/funko1.jpg"],
       "Amazing star-trek funko pop. It's from my personal collection. Limited edition, great price.",
       william.address,
       "Available",
@@ -605,7 +578,6 @@ async function main() {
     await users.rateUser(ariana._id, 3, patrick._id);
     await users.rateUser(ronaldo._id, 5, alexandra._id);
     await users.rateUser(ariana._id, 4, michael._id);
-
   } catch (e) {
     console.log(e);
   }
