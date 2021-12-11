@@ -47,9 +47,8 @@ function removeErrorClass(element) {
     }
 
     let biography = event.target.biography;
-    let tempBioVal = biography.value;
-    tempBioVal = tempBioVal.replace(/\s/g, "");
-    if (tempBioVal.length == 0) {
+    biography.value = biography.value.trim();
+    if (biography.value.length == 0) {
       biography.classList.add("is-invalid");
       biography.focus();
       isValid = false;
@@ -84,7 +83,7 @@ function removeErrorClass(element) {
     }
 
     let street = event.target.street;
-    street.value = street.value.replace(/\s/g, "");
+    street.value = street.value.trim();
     if (street.value.length == 0) {
       street.classList.add("is-invalid");
       street.focus();
@@ -92,7 +91,7 @@ function removeErrorClass(element) {
     }
 
     let city = event.target.city;
-    city.value = city.value.replace(/\s/g, "");
+    city.value = city.value.trim();
     if (city.value.length == 0) {
       city.classList.add("is-invalid");
       city.focus();
@@ -161,11 +160,11 @@ function removeErrorClass(element) {
             images: path,
             email: email.value,
             phoneNumber: phoneNumber.value,
-            biography: event.target.biography.value,
-            street: event.target.street.value,
-            city: event.target.city.value,
-            state: event.target.state.value,
-            zip: event.target.zip.value,
+            biography: biography.value,
+            street: street.value,
+            city: city.value,
+            state: state.value,
+            zip: zip.value,
             gender: gender,
           };
 
@@ -196,11 +195,11 @@ function removeErrorClass(element) {
         images: path,
         email: email.value,
         phoneNumber: phoneNumber.value,
-        biography: event.target.biography.value,
-        street: event.target.street.value,
-        city: event.target.city.value,
-        state: event.target.state.value,
-        zip: event.target.zip.value,
+        biography: biography.value,
+        street: street.value,
+        city: city.value,
+        state: state.value,
+        zip: zip.value,
         gender: gender,
       };
       $.ajax({
