@@ -11,7 +11,7 @@ router.post("/add/:id", async (req, res) => {
   try {
     const prodId = req.params.id;
     const userId = req.session.user._id.toString();
-    const thisComment = req.body.commentBox;
+    const thisComment = xss(req.body.commentBox);
     validator.checkNonNull(prodId),
       validator.checkNonNull(userId),
       validator.checkNonNull(thisComment);
