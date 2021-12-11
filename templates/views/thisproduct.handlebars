@@ -300,6 +300,26 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
       </button>
     </div>
+    {{#if rec}}
+    <div id="recProdDiv">
+      <h3>Recommended Products</h3>
+      <p>These recommendations are based on the category of this product.</p>
+    <div class="scrollmenu menu2">
+      {{#each rec}}
+      <div class="card userCard card2">
+        <div class="card-header">{{this.name}}</div>
+          <div class="divimage divimg2">
+            <img src={{this.images}} class="card-img-top" alt="{{this.name}}">
+          </div>
+        <div class="card-body">
+          <h4 class="card-title">${{this.price}}</h4>
+        <a href="/products/get/{{this._id}}" class="btn btn-primary">View Item</a>
+      </div>
+    </div>  
+  {{/each}}
+  {{/if}}
+    </div>
+    </div>
   </div>
 
   <div class="right-column">

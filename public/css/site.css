@@ -265,6 +265,19 @@ input:checked + .slider:before {
     width: 18rem;
   }
 
+  div.menu2 > .userCard {
+    height: 20rem;
+    width: 12rem;
+  }
+
+  .divimage2 > img {
+    float: none;
+  }
+
+  div.menu2 > .divimg2 {
+    align-items: center;
+    height: 14rem;
+  }
   .topnav a,
   #mySidebar,
   #logo,
@@ -284,6 +297,22 @@ input:checked + .slider:before {
     margin-left: auto;
     float: none;
     width: 18rem;
+  }
+
+  div.menu2 > .userCard {
+    height: 20rem;
+    width: 12rem;
+  }
+
+  .divimage2 > img {
+    float: none;
+    margin-top: 5px;
+  }
+
+  div.menu2 > .divimg2 {
+    align-items: center;
+    height: 14rem;
+    margin-top: 5px;
   }
 
   #prodTitle {
@@ -723,6 +752,19 @@ body {
     width: 100%;
     display: block;
     margin-bottom: 20px;
+  }
+  div.menu2 > .userCard {
+    height: 20rem;
+    width: 12rem;
+  }
+
+  .divimage2 > img {
+    float: none;
+  }
+
+  div.menu2 > .divimg2 {
+    align-items: center;
+    height: 14rem;
   }
 
   .abtcard {
@@ -1384,4 +1426,23 @@ table > th {
   float: right;
   margin-top: 11px;
   display: block;
+}
+
+div.menu2 {
+  margin-right: 20px;
+  height: 40%;
+  width: 97%;
+}
+
+div.menu2 > .userCard {
+  height: 20rem;
+}
+
+#recProdDiv {
+  margin-top: 10px;
+}
+
+#recProdDiv > h3,
+#recProdDiv > p {
+  text-align: center;
 }
