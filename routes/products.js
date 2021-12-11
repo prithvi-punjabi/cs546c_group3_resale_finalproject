@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const productsData = require("../data").products;
 const userData = require("../data/users");
+const bidData = require("../data/bids");
 const commentData = require("../data/comments");
 const utils = require("../helper/utils");
 const validator = require("../helper/validator");
@@ -44,6 +45,7 @@ router.get("/get/:id", async (req, res) => {
     const product = await productsData.getById(productId);
     const comments = await commentData.getAllComments(productId);
     const thisUserFav = await userData.get(req.session.user._id.toString());
+    const allBids = await bidData.getAll(productId);
     const allusers = await userData.getAll();
     comments.forEach((x, index) => {
       comments[index].dateAdded = utils.formatDaysAgo(x.dateAdded);
@@ -73,6 +75,7 @@ router.get("/get/:id", async (req, res) => {
         update: update,
         fav: alreadyFav,
         user: req.session.user,
+        bids: allBids,
       });
     } else {
       return res.render("thisproduct", {

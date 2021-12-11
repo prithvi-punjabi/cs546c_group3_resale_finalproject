@@ -147,6 +147,122 @@
     </div>
   </div>
 </div>
+
+<div
+  class="modal fade"
+  id="bidModal"
+  tabindex="-1"
+  aria-labelledby="bidModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="bidModalLabel">Bid on {{product.name}}</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          id="bidButClose"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form
+          method="POST"
+          action="/bids/add/{{product._id}}"
+          name="bidForm"
+          id="bidForm"
+        >
+          <label for="bidPrice" class="bidLabel">Enter bid amount:</label>
+          <input type="text" class="form-control" id="bidPrice" name="bidPrice">
+          <div
+            class="alert alert-warning alert-dismissible fade show"
+            role="alert"
+            id="bidAlert"
+          >
+          <input type="text" id="sellerId" name = "sellerId" value="{{product.seller_id}}" hidden>
+          <span id="bidMsgAlert"></span>
+            <button
+              type="button"
+              class="btn-close"
+              aria-label="Close"
+              id="closeBidAlert"
+            ></button>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >Discard</button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          form="bidForm"
+          id="bidFormSubmit"
+        >Place Bid</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="viewBidModal"
+  tabindex="-1"
+  aria-labelledby="viewBidModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="viewBidModalLabel">View bids for {{product.name}}</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          id="viewBidButClose"
+        ></button>
+      </div>
+      <div class="modal-body">
+    {{#if update}}
+    {{#if bids}}
+    <table>
+      <tr class="text-center">
+        <th>Name of User</th>
+        <th>Email</th>
+        <th>Bid Amount</th>
+        <th>Accept</th>
+      </tr>
+      {{#each bids}}
+      <tr>
+        <td>{{this.name}}</td>
+        <td>{{this.email}}</td>
+        <td>{{this.price}}</td>
+        <td><a class="btn btn-success bidAcc" href="/bids/accept/{{this._id}}">Accept</a></td>
+      </tr>
+      {{/each}}
+    </table>
+    {{else}}
+    <p>There are no bids for {{product.name}} yet.</p>
+    {{/if}}
+    {{/if}}
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >Discard</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 {{>navbar}}
 <main class="container productCont">
   <div class="left-column">
@@ -188,9 +304,12 @@
 
   <div class="right-column">
     {{#if update}}
-      <form method="GET" action="/products/edit/{{product._id}}" id="updForm">
-        <button id="updateBtn" class="btn btn-dark" type="submit">Update</button>
-      </form>
+      <div class="btn-group" role="group" aria-label="UpdateViewBids">
+        <a href="/products/edit/{{product._id}}" class="btn btn-dark">Update</a>
+        {{#if product.isSold}}{{else}}
+        <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewBidModal">View Bids</a>
+        {{/if}}
+      </div>
     {{/if}}
     <div class="product-description">
       {{#if product.isSold}}
@@ -240,6 +359,14 @@
             data-bs-toggle="tooltip" data-bs-placement="bottom" title="Chat with {{product.seller.firstName}} {{product.seller.lastName}}"
             aria-label="Chat with {{product.seller.firstName}} {{product.seller.lastName}}"
           ><i class="bi bi-chat-dots"></i></button>
+          <span data-bs-toggle="modal" data-bs-target="#bidModal">
+          <button 
+            id="btn-bid"
+            data-bs-toggle="tooltip" 
+            data-bs-placement="bottom" 
+            class="btn btn-primary btn-sm"
+            title="Bid on {{product.name}}"
+           ><i class="bi bi-credit-card"></i></button></span>
         {{/if}}
         <br />
         <span>Location:</span>

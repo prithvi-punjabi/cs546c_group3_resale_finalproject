@@ -905,13 +905,15 @@ body {
   text-align: center;
 }
 
-#emailAlert {
+#emailAlert,
+#bidAlert {
   text-align: center;
   margin-top: 4px;
   margin-bottom: 4px;
 }
 
-#commentMsgAlert {
+#commentMsgAlert,
+#bidMsgAlert {
   text-align: center;
   font-size: 15px;
 }
@@ -926,6 +928,7 @@ body {
 }
 
 #updateBtn {
+  display: inline-block;
   position: relative;
   left: 80%;
 }
@@ -1249,7 +1252,6 @@ body {
   font-weight: bold;
 }
 
-
 #accessUser {
   float: right;
   width: 50px;
@@ -1334,28 +1336,52 @@ div.scrollmenu {
   overflow-x: auto;
 }
 
-div.scrollmenu .userCard{
+div.scrollmenu .userCard {
   flex: 0 0 auto;
   height: 28rem;
 }
 
-.userProdHead{
+.userProdHead {
   text-align: center;
   margin-top: 20px;
   font-size: 25px;
   font-weight: bold;
 }
 
-div.scrollmenu > .nofav{
+div.scrollmenu > .nofav {
   align-items: center;
   text-align: center;
   margin: auto;
 }
 
-div.col-sm-3 > h3{
+div.col-sm-3 > h3 {
   font-size: 22px;
 }
 
-#updateProf{
+#updateProf {
   display: inline-block;
+}
+
+#viewBids {
+  display: inline;
+  position: relative;
+  left: 80%;
+}
+
+td {
+  text-align: center;
+}
+
+table {
+  width: 100%;
+}
+
+table > th {
+  text-align: center;
+}
+
+.btn-group {
+  float: right;
+  margin-top: 11px;
+  display: block;
 }

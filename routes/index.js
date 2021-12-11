@@ -4,6 +4,7 @@ const comments = require("./comments");
 const statistics = require("./statistics");
 const about = require("./about");
 const chats = require("./chat");
+const bids = require("./bids");
 const multer = require("multer");
 const { ErrorMessage } = require("../helper/message");
 const productsData = require("../data").products;
@@ -30,6 +31,7 @@ module.exports = async (app) => {
   app.use("/about", about);
   app.use("/statistics", statistics);
   app.use("/chat", chats);
+  app.use("/bids", bids);
   app.use("/", users);
 
   app.post("/uploadSingle", (req, res) => {
