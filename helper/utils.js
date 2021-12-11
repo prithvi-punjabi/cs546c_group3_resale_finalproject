@@ -38,9 +38,18 @@ module.exports = {
   },
   formatDaysAgo(value, locale) {
     const date = new Date(value);
-    const deltaDays = (date.getTime() - Date.now()) / (1000 * 3600 * 24);
+    let delta = (date.getTime() - Date.now()) / (1000 * 3600 * 24);
     const formatter = new Intl.RelativeTimeFormat(locale);
-    return formatter.format(Math.round(deltaDays), "days");
+    delta = Math.round(delta);
+    if (delta == 0) {
+      return "Today";
+    } else if (delta <= -365) {
+      delta /= 365;
+      delta = Math.round(delta);
+      return formatter.format(delta, "years");
+    } else {
+      return formatter.format(delta, "days");
+    }
   },
   isUserLoggedIn(req) {
     return req.session.user != null;
@@ -52,6 +61,6 @@ module.exports = {
     return months[month];
   },
   replaceSpaceInUrl(string) {
-    return string.replace(/ /g, "%20")
-  }
+    return string.replace(/ /g, "%20");
+  },
 };
