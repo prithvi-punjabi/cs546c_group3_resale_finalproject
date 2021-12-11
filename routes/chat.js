@@ -110,7 +110,6 @@ router.post("/add", async (req, res) => {
     if (typeof e == "string") {
       e = new Error(e);
     }
-    console.log(e);
     return res.status(500).json(message.ErrorMessage(e.message));
   }
 });

@@ -32,7 +32,10 @@ router.get("/", async (req, res, next) => {
       e = new Error(e);
       e.code = 400;
     }
-    if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
+    if (e.code != null)
+      return res
+        .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+        .json(ErrorMessage(e.message));
     else return res.status(500).json(ErrorMessage(e.message));
   }
 });
@@ -90,7 +93,7 @@ router.get("/get/:id", async (req, res) => {
     }
     if (e.code != null)
       return res
-        .status(e.code)
+        .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
         .render("error", { code: e.code, error: e.message });
     else
       return res.status(500).render("error", { code: 500, error: e.message });
@@ -111,7 +114,7 @@ router.get("/new", async (req, res) => {
     }
     if (e.code != null)
       return res
-        .status(e.code)
+        .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
         .render("error", { code: e.code, error: e.message });
     else
       return res.status(500).render("error", { code: 500, error: e.message });
@@ -126,7 +129,7 @@ router.get("/edit/:id", async (req, res) => {
     try {
       const product = await productsData.getById(req.params.id);
       if (product.seller_id.toString() != req.session.user._id.toString()) {
-        return res.status(e.code).render("error", {
+        return res.status(403).render("error", {
           code: 403,
           error: "You're not authorized to edit others' products",
         });
@@ -166,7 +169,7 @@ router.get("/edit/:id", async (req, res) => {
         e.code = 500;
       }
       return res
-        .status(e.code)
+        .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
         .render("error", { code: e.code, error: e.message });
     }
   } catch (e) {
@@ -177,7 +180,7 @@ router.get("/edit/:id", async (req, res) => {
     }
     if (e.code != null)
       return res
-        .status(e.code)
+        .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
         .render("error", { code: e.code, error: e.message });
     else
       return res.status(500).render("error", { code: 500, error: e.message });
@@ -276,7 +279,10 @@ router.post("/new", async (req, res) => {
       e = new Error(e);
       e.code = 400;
     }
-    if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
+    if (e.code != null)
+      return res
+        .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+        .json(ErrorMessage(e.message));
     else return res.status(500).json(ErrorMessage(e.message));
   }
 });
@@ -346,7 +352,10 @@ router.post("/edit/:id", async (req, res) => {
       e = new Error(e);
       e.code = 400;
     }
-    if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
+    if (e.code != null)
+      return res
+        .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+        .json(ErrorMessage(e.message));
     else return res.status(500).json(ErrorMessage(e.message));
   }
 });
@@ -374,7 +383,10 @@ router.post("/remove/:id", async (req, res) => {
       e = new Error(e);
       e.code = 400;
     }
-    if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
+    if (e.code != null)
+      return res
+        .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+        .json(ErrorMessage(e.message));
     else return res.status(500).json(ErrorMessage(e.message));
   }
 });

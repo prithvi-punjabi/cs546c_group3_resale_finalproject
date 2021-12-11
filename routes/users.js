@@ -9,7 +9,6 @@ const validator = require("../helper/validator");
 const { errorCode } = require("../helper/common");
 const { ErrorMessage } = require("../helper/message");
 const { getById } = require("../data/products");
-const xss = require("xss");
 
 //Important: Do not pass a hashed password to the create function, the password hashing takes place before insertion
 
@@ -46,7 +45,9 @@ router.post("/login", async (req, res) => {
       e = new Error(e);
       e.code = errorCode.BAD_REQUEST;
     }
-    return res.status(e.code).json(ErrorMessage(e.message));
+    return res
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+      .json(ErrorMessage(e.message));
   }
 });
 
@@ -143,7 +144,10 @@ router.post("/users/favourite/:id", async (req, res) => {
       e = new Error(e);
       e.code = 400;
     }
-    if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
+    if (e.code != null)
+      return res
+        .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+        .json(ErrorMessage(e.message));
     else return res.status(500).json(ErrorMessage(e.message));
   }
 });
@@ -163,7 +167,10 @@ router.post("/users/removefavourite/:id", async (req, res) => {
       e = new Error(e);
       e.code = 400;
     }
-    if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
+    if (e.code != null)
+      return res
+        .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+        .json(ErrorMessage(e.message));
     else return res.status(500).json(ErrorMessage(e.message));
   }
 });
@@ -186,7 +193,10 @@ router.post("/users/rate/:id", async (req, res) => {
       e = new Error(e);
       e.code = 400;
     }
-    if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
+    if (e.code != null)
+      return res
+        .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+        .json(ErrorMessage(e.message));
     else return res.status(500).json(ErrorMessage(e.message));
   }
 });
@@ -304,7 +314,9 @@ router.get("/users/update", async (req, res) => {
         e.code = 400;
       }
       if (e.code != null)
-        return res.status(e.code).json(ErrorMessage(e.message));
+        return res
+          .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+          .json(ErrorMessage(e.message));
       else return res.status(500).json(ErrorMessage(e.message));
     }
   } else {

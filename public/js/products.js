@@ -24,7 +24,6 @@ function imageUploadChange() {
   const product_id = $("#product_id").val();
   function handleError(error) {
     const msg = JSON.parse(error.responseText).message.preventXSS();
-    console.log(msg);
     $("#error-div").show();
     $("#error-div").html(msg);
   }
@@ -99,10 +98,10 @@ function imageUploadChange() {
       isValid = false;
     }
 
-    // if (isNaN($("#price").val())) {
-    //   $("#invalid-price").addClass("d-block");
-    //   isValid = false;
-    // }
+    if (isNaN($("#price").val()) || Number($("#price").val()) < 0) {
+      $("#invalid-price").addClass("d-block");
+      isValid = false;
+    }
 
     if (!$("#form-product")[0].checkValidity()) {
       event.stopPropagation();

@@ -158,4 +158,10 @@ module.exports = {
     }
     return ObjectId(id);
   },
+
+  isValidResponseStatusCode(code) {
+    if (code == null || isNaN(code)) return false;
+    code = Number(code);
+    return code >= 100 && code < 600;
+  },
 };

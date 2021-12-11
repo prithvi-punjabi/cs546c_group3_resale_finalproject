@@ -55,7 +55,9 @@ router.post("/add/:id", async (req, res) => {
       e = new Error(e);
       e.code = errorCode.BAD_REQUEST;
     }
-    return res.status(e.code).json(ErrorMessage(e.message));
+    return res
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+      .json(ErrorMessage(e.message));
   }
 });
 

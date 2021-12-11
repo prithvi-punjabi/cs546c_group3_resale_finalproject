@@ -4,8 +4,6 @@ const comments = require("../data/comments");
 const utils = require("../helper/utils");
 const validator = require("../helper/validator");
 const errorCode = require("../helper/common").errorCode;
-const ErrorMessage = require("../helper/message").ErrorMessage;
-const xss = require("xss");
 
 router.post("/add/:id", async (req, res) => {
   try {
@@ -52,7 +50,7 @@ router.get("/getall/:id", async (req, res) => {
       e.code = errorCode.BAD_REQUEST;
     }
     return res
-      .status(e.code)
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
       .render("error", { code: e.code, error: e.message });
   }
 });
@@ -68,13 +66,12 @@ router.post("/delete/:id", async (req, res) => {
     }
     if (delComment) res.json(true);
   } catch (e) {
-    console.log(e);
     if (typeof e == "string") {
       e = new Error(e);
       e.code = errorCode.BAD_REQUEST;
     }
     return res
-      .status(e.code)
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
       .render("error", { code: e.code, error: e.message });
   }
 });
