@@ -195,7 +195,7 @@
         complete: function (response) {
           $("#ratingButClose").trigger("click");
           console.log(response.responseJSON);
-          if (typeof response.responseJSON === "string") {
+          if (typeof response.responseJSON === "number") {
             const thisRate = parseInt(response.responseJSON);
             if (thisRate >= 3) {
               Swal.fire({
