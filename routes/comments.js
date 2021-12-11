@@ -4,20 +4,16 @@ const comments = require("../data/comments");
 const utils = require("../helper/utils");
 const validator = require("../helper/validator");
 const errorCode = require("../helper/common").errorCode;
-const ErrorMessage = require("../helper/message").ErrorMessage;
-const xss = require("xss");
 
 router.post("/add/:id", async (req, res) => {
   try {
     const prodId = req.params.id;
     const userId = req.session.user._id.toString();
-    const thisComment = xss(req.body.commentBox);
-    validator.checkNonNull(prodId),
-      validator.checkNonNull(userId),
-      validator.checkNonNull(thisComment);
-    validator.isValidObjectID(prodId),
-      validator.isValidObjectID(userId),
-      validator.checkString(thisComment);
+    const thisComment = req.body.commentBox;
+    validator.checkNonNull(prodId, userId, thisComment);
+    validator.isValidObjectID(prodId);
+    validator.isValidObjectID(userId);
+    validator.checkString(thisComment, "Comment");
     const addedComment = await comments.create(prodId, userId, thisComment);
     res.json({
       commentId: addedComment.toString(),
@@ -28,7 +24,13 @@ router.post("/add/:id", async (req, res) => {
       time: "Right now",
     });
   } catch (e) {
-    console.log(e);
+    if (typeof e == "string") {
+      e = new Error(e);
+      e.code = 400;
+    }
+    return res
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+      .json(ErrorMessage(e.message));
   }
 });
 
@@ -52,8 +54,8 @@ router.get("/getall/:id", async (req, res) => {
       e.code = errorCode.BAD_REQUEST;
     }
     return res
-      .status(e.code)
-      .render("error", { code: e.code, error: e.message });
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+      .json(ErrorMessage(e.message));
   }
 });
 
@@ -66,15 +68,14 @@ router.post("/delete/:id", async (req, res) => {
     if (allProdComments.length === 0) {
       await comments.deleteAllComments(prodId);
     }
-    if (delComment) res.json(true);
+    res.json(delComment != null);
   } catch (e) {
-    console.log(e);
     if (typeof e == "string") {
       e = new Error(e);
       e.code = errorCode.BAD_REQUEST;
     }
     return res
-      .status(e.code)
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
       .render("error", { code: e.code, error: e.message });
   }
 });

@@ -26,6 +26,9 @@
     }
   });
   $("#btn-send").on("click", function (event) {
+    if ($("#input-msg").val() == "") {
+      return;
+    }
     $.ajax({
       type: "POST",
       url: "/chat/add",
@@ -36,7 +39,6 @@
       }),
       contentType: "application/json",
       success: function (responseMessage) {
-        console.log(responseMessage.message);
         window.location.reload();
       },
       error: function (error) {

@@ -9,7 +9,6 @@ const validator = require("../helper/validator");
 const { errorCode } = require("../helper/common");
 const { ErrorMessage } = require("../helper/message");
 const { getById } = require("../data/products");
-const xss = require("xss");
 
 //Important: Do not pass a hashed password to the create function, the password hashing takes place before insertion
 
@@ -46,7 +45,9 @@ router.post("/login", async (req, res) => {
       e = new Error(e);
       e.code = errorCode.BAD_REQUEST;
     }
-    return res.status(e.code).json(ErrorMessage(e.message));
+    return res
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+      .json(ErrorMessage(e.message));
   }
 });
 
@@ -60,7 +61,13 @@ router.delete("/users/delete/:id", async (req, res) => {
     const deluser = await data.users.remove(id);
     res.json("The ${id} is deleted");
   } catch (e) {
-    res.status(500).json("No id");
+    if (typeof e == "string") {
+      e = new Error(e);
+      e.code = 400;
+    }
+    return res
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+      .json(ErrorMessage(e.message));
   }
 });
 
@@ -134,17 +141,18 @@ router.post("/users/favourite/:id", async (req, res) => {
     let userId = req.session.user._id.toString();
     const favourited = await usersData.addFavourite(userId, prodId);
     if (favourited === true) {
-      res.json(true);
+      return res.json(true);
     } else if (typeof favourited == "string") {
-      res.json(false);
+      return res.json(false);
     }
   } catch (e) {
     if (typeof e == "string") {
       e = new Error(e);
       e.code = 400;
     }
-    if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
-    else return res.status(500).json(ErrorMessage(e.message));
+    return res
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+      .json(ErrorMessage(e.message));
   }
 });
 
@@ -153,18 +161,15 @@ router.post("/users/removefavourite/:id", async (req, res) => {
     let prodId = req.params.id;
     let userId = req.session.user._id.toString();
     const removed = await usersData.removeFavourite(userId, prodId);
-    if (removed === true) {
-      res.json(true);
-    } else if (typeof removed == "string") {
-      res.json(false);
-    }
+    return res.json(removed);
   } catch (e) {
     if (typeof e == "string") {
       e = new Error(e);
       e.code = 400;
     }
-    if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
-    else return res.status(500).json(ErrorMessage(e.message));
+    return res
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+      .json(ErrorMessage(e.message));
   }
 });
 
@@ -174,10 +179,10 @@ router.post("/users/rate/:id", async (req, res) => {
     let rating = req.body.rating;
     let thisUser = req.session.user._id;
     if (userId.toString() === thisUser.toString()) {
-      return res.status(403).render("error", {
-        code: 403,
-        error: "You cannot rate yourself.",
-      });
+      const error = new Error();
+      error.code = 403;
+      error.message = "You cannot rate yourself.";
+      throw error;
     }
     const rated = await usersData.rateUser(userId, rating, thisUser);
     return res.json(rated);
@@ -186,8 +191,9 @@ router.post("/users/rate/:id", async (req, res) => {
       e = new Error(e);
       e.code = 400;
     }
-    if (e.code != null) return res.status(e.code).json(ErrorMessage(e.message));
-    else return res.status(500).json(ErrorMessage(e.message));
+    return res
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+      .json(ErrorMessage(e.message));
   }
 });
 
@@ -303,9 +309,12 @@ router.get("/users/update", async (req, res) => {
         e = new Error(e);
         e.code = 400;
       }
-      if (e.code != null)
-        return res.status(e.code).json(ErrorMessage(e.message));
-      else return res.status(500).json(ErrorMessage(e.message));
+      return res
+        .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+        .render("error", {
+          code: validator.isValidResponseStatusCode(e.code) ? e.code : 500,
+          error: e.message,
+        });
     }
   } else {
     return res.redirect("/login");

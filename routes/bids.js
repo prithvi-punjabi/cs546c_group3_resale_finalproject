@@ -5,7 +5,6 @@ const utils = require("../helper/utils");
 const validator = require("../helper/validator");
 const errorCode = require("../helper/common").errorCode;
 const ErrorMessage = require("../helper/message").ErrorMessage;
-const xss = require("xss");
 let nodemailer = require("nodemailer");
 
 let transporter = nodemailer.createTransport({
@@ -21,17 +20,16 @@ router.post("/add/:id", async (req, res) => {
     const prodId = req.params.id;
     validator.checkNonNull(prodId);
     validator.isValidObjectID(prodId);
-    let sellerId = xss(req.body.sellerId);
+    let sellerId = req.body.sellerId;
     let bidAmt = req.body.bidPrice;
-    bidAmt = parseInt(xss(bidAmt));
     validator.checkNonNull(bidAmt);
     validator.checkNumber(bidAmt);
+    bidAmt = parseInt(bidAmt);
     const userId = req.session.user._id;
     if (sellerId === userId) {
-      return res.render("error", {
-        code: 403,
-        error: "You cannot bid on your own products",
-      });
+      return res
+        .status(403)
+        .json(ErrorMessage("You cannot bid on your own products"));
     }
     const usersName =
       req.session.user.firstName + " " + req.session.user.lastName;
@@ -44,12 +42,20 @@ router.post("/add/:id", async (req, res) => {
       userEmail
     );
     if (addBid == true) {
-      res.json(true);
+      return res.json(true);
     } else if (Array.isArray(addBid)) {
-      res.json({ oldBid: addBid[0], newBid: addBid[1] });
+      return res.json({ oldBid: addBid[0], newBid: addBid[1] });
+    } else {
+      throw "Something went wrong";
     }
   } catch (e) {
-    console.log(e);
+    if (typeof e == "string") {
+      e = new Error(e);
+      e.code = 400;
+    }
+    return res
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+      .json(ErrorMessage(e.message));
   }
 });
 
@@ -64,10 +70,7 @@ router.post("/accept/:id", async (req, res) => {
     const getBid = await bids.getById(bidId);
     let to = getBid.bids.email;
     if (from === to) {
-      return res.status(403).render("error", {
-        code: 403,
-        error: "You cannot email yourself.",
-      });
+      return res.status(403).json(ErrorMessage("You cannot email yourself"));
     }
     let msg = `${sellerName} has accepted your $${getBid.bids.price} bid for his product: ${getBid.name}. Please get in touch with the seller at: ${from}, for further details.`;
     let mailOptions = {
@@ -89,7 +92,13 @@ router.post("/accept/:id", async (req, res) => {
       amount: getBid.bids.price,
     });
   } catch (e) {
-    console.log(e);
+    if (typeof e == "string") {
+      e = new Error(e);
+      e.code = 400;
+    }
+    return res
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+      .json(ErrorMessage(e.message));
   }
 });
 

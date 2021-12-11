@@ -967,6 +967,8 @@ body {
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   background-color: black;
+  padding: 20%;
+  border-radius: 8px;
 }
 
 #updateBtn {

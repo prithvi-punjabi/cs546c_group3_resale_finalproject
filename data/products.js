@@ -18,7 +18,7 @@ const getById = async (id) => {
     error.code = errorCode.NOT_FOUND;
     throw error;
   }
-  product = addUserToProduct(product);
+  product = manipulateProduct(product);
   return product;
 };
 
@@ -160,7 +160,7 @@ const getByQuery = async (query) => {
     error.code = errorCode.NOT_FOUND;
     throw error;
   }
-  products = await addUserToProducts(products);
+  products = await manipulateProducts(products);
   if (sort_by.toLowerCase() == "date") {
     products.sort((a, b) => {
       const d1 = utils.getDateObject(a.dateListed);
@@ -215,7 +215,7 @@ const getAll = async (includeSold) => {
     error.code = errorCode.NOT_FOUND;
     throw error;
   }
-  products = await addUserToProducts(products);
+  products = await manipulateProducts(products);
   return products;
 };
 
@@ -392,7 +392,8 @@ const remove = async (id) => {
   return `${oldProduct.name}( id: ${oldProduct._id}) has been successfully deleted!`;
 };
 
-async function addUserToProduct(product) {
+async function manipulateProduct(product) {
+  product.daysAgo = utils.formatDaysAgo(product.dateListed);
   try {
     const user = await userData.get(product.seller_id.toString());
     product.seller = {
@@ -411,9 +412,9 @@ async function addUserToProduct(product) {
   return product;
 }
 
-async function addUserToProducts(products) {
+async function manipulateProducts(products) {
   for (let i = 0; i < products.length; i++) {
-    products[i] = await addUserToProduct(products[i]);
+    products[i] = await manipulateProduct(products[i]);
   }
   return products;
 }

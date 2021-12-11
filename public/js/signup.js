@@ -99,7 +99,7 @@ function removeErrorClass(element) {
       isValid = false;
     }
 
-    biography.value = biography.value.replace(/\s/g, "");
+    biography.value = biography.value.trim();
     if (biography.value.length == 0) {
       biography.classList.add("is-invalid");
       biography.focus();
@@ -146,7 +146,7 @@ function removeErrorClass(element) {
         dob.focus();
         document.getElementById(
           "invalid-dob-label"
-        ).innerHTML = `You need to be at least 13 years to access re$ale`;
+        ).innerHTML = `You need to be at least 13 years old to access re$ale`;
         isValid = false;
       }
       // Check if day in date supplied is out of range of month
@@ -223,14 +223,14 @@ function removeErrorClass(element) {
       gender = "other";
     }
 
-    street.value = street.value.replace(/\s/g, "");
+    street.value = street.value.trim();
     if (street.value.length == 0) {
       street.classList.add("is-invalid");
       street.focus();
       isValid = false;
     }
 
-    city.value = city.value.replace(/\s/g, "");
+    city.value = city.value.trim();
     if (city.value.length == 0) {
       city.classList.add("is-invalid");
       city.focus();
@@ -285,11 +285,11 @@ function removeErrorClass(element) {
             email: email.value,
             phoneNumber: phoneNumber.value,
             dob: dob.value,
-            biography: event.target.biography.value,
-            street: event.target.street.value,
-            city: event.target.city.value,
-            state: event.target.state.value,
-            zip: event.target.zip.value,
+            biography: biography.value,
+            street: street.value,
+            city: city.value,
+            state: state.value,
+            zip: zip.value,
             gender: gender,
           };
 
@@ -326,11 +326,11 @@ function removeErrorClass(element) {
         email: email.value,
         phoneNumber: phoneNumber.value,
         dob: dob.value,
-        biography: event.target.biography.value,
-        street: event.target.street.value,
-        city: event.target.city.value,
-        state: event.target.state.value,
-        zip: event.target.zip.value,
+        biography: biography.value,
+        street: street.value,
+        city: city.value,
+        state: state.value,
+        zip: zip.value,
         gender: gender,
       };
       $.ajax({

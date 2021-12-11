@@ -35,7 +35,8 @@ router.post("/add/:id", async (req, res) => {
     let usersName =
       req.session.user.firstName + " " + req.session.user.lastName;
     let message = req.body.message;
-    validator.checkNonNull(message), validator.checkString(message);
+    validator.checkNonNull(message);
+    validator.checkString(message);
     const addedTest = await testimonialsData.create(
       userId,
       userImg,
@@ -55,7 +56,9 @@ router.post("/add/:id", async (req, res) => {
       e = new Error(e);
       e.code = errorCode.BAD_REQUEST;
     }
-    return res.status(e.code).json(ErrorMessage(e.message));
+    return res
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+      .json(ErrorMessage(e.message));
   }
 });
 

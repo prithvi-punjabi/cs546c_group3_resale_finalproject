@@ -143,6 +143,7 @@
             placeholder="Enter price ($)"
             id="price"
             name="price"
+            onkeypress="return event.charCode >= 48" 
             aria-label="price"
             aria-describedby="span-price"
             value="{{product.price}}"

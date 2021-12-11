@@ -8,9 +8,9 @@ const xss = require("xss");
 
 router.get("/", async (req, res) => {
   if (!utils.isUserLoggedIn(req)) {
-    return res
-      .status(403)
-      .json(message.ErrorMessage("Please login to send message"));
+    return res.redirect(
+      "/login?error=" + encodeURIComponent("You need to be logged in to chat!")
+    );
   }
   try {
     const my_user_id = req.session.user._id;
@@ -35,15 +35,15 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   if (!utils.isUserLoggedIn(req)) {
-    return res
-      .status(403)
-      .json(message.ErrorMessage("Please login to send message"));
+    return res.redirect(
+      "/login?error=" + encodeURIComponent("You need to be logged in to chat!")
+    );
   }
   try {
     const my_user_id = req.session.user._id;
     const user_id = req.params.id;
     if (my_user_id == user_id) {
-      return res.redirect(req.get("referer"));
+      return res.redirect(req.get("referer")); //reload previous page
     }
     const chats = await chatData.getAllChats(my_user_id);
     let currChat = await chatData.getChatByUserId(my_user_id, user_id);
@@ -68,7 +68,7 @@ router.post("/add", async (req, res) => {
   }
   try {
     const my_user_id = req.session.user._id;
-    let { user_id, msg, isSent } = req.body;
+    let { user_id, msg } = req.body;
     if (my_user_id == null) {
       return res
         .status(403)
@@ -86,32 +86,17 @@ router.post("/add", async (req, res) => {
         .status(400)
         .json(message.ErrorMessage("Message must not be empty"));
     }
-    if (isSent == null) {
-      return res
-        .status(400)
-        .json(message.ErrorMessage("isSent must not be empty"));
-    }
-    if (typeof isSent != "boolean") {
-      return res
-        .status(400)
-        .json(
-          message.ErrorMessage("Type mismatch - isSent (Must be a boolean)")
-        );
-    }
     validator.checkString(msg, "Message");
-    const updateMsg = await chatData.addToChat(
-      my_user_id,
-      user_id,
-      msg,
-      isSent
-    );
+    const updateMsg = await chatData.addToChat(my_user_id, user_id, msg);
     return res.json(message.SuccessMessage(updateMsg));
   } catch (e) {
     if (typeof e == "string") {
       e = new Error(e);
+      e.code = 400;
     }
-    console.log(e);
-    return res.status(500).json(message.ErrorMessage(e.message));
+    return res
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+      .json(ErrorMessage(e.message));
   }
 });
 

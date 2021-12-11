@@ -40,7 +40,7 @@ async function placeBid(userId, bidAmt, prodId, userName, userEmail) {
   } else {
     let thisBid = {
       _id: new ObjectId(),
-      user_id: ObjectId(userId),
+      user_id: ObjectId(userId.trim()),
       name: userName,
       email: userEmail,
       price: bidAmt,

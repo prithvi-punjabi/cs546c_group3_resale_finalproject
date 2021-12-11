@@ -13,19 +13,19 @@ module.exports = async (app) => {
     for (const key in req.body) {
       if (Object.hasOwnProperty.call(req.body, key)) {
         if (typeof req.body[key] == "string")
-          req.body[key] = xss(req.body[key]);
+          req.body[key] = xss(req.body[key].trim());
       }
     }
     for (const key in req.query) {
       if (Object.hasOwnProperty.call(req.query, key)) {
         if (typeof req.body[key] == "string")
-          req.query[key] = xss(req.query[key]);
+          req.query[key] = xss(req.query[key].trim());
       }
     }
     for (const key in req.params) {
       if (Object.hasOwnProperty.call(req.params, key)) {
         if (typeof req.body[key] == "string")
-          req.params[key] = xss(req.params[key]);
+          req.params[key] = xss(req.params[key].trim());
       }
     }
     next();
@@ -194,6 +194,16 @@ module.exports = async (app) => {
       return res.redirect(
         "/login?error=" +
           encodeURIComponent("You need to be logged in to view statistics!")
+      );
+    }
+    next();
+  });
+
+  app.use("/bids", (req, res, next) => {
+    if (!utils.isUserLoggedIn(req)) {
+      return res.redirect(
+        "/login?error=" +
+          encodeURIComponent("You need to be logged in to bid a product!")
       );
     }
     next();
