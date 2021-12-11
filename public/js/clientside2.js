@@ -4,6 +4,7 @@
   $("#emailAlert").hide();
   $("#commentAlert").hide();
   $("#ratingAlert").hide();
+  $("#bidAlert").hide();
   $("#logo").on("click", function (event) {
     $(location).attr("href", "/");
   });
@@ -59,6 +60,81 @@
 
   $("#closeRatingAlert").click(function (event) {
     $("#ratingAlert").hide();
+  });
+
+  $("#closeBidAlert").click(function (event) {
+    $("#bidAlert").hide();
+  });
+
+  $(".bidAcc").click(function (event) {
+    event.preventDefault();
+    $("#viewBidButClose").trigger("click");
+    const url = $(this).attr("href");
+    console.log(url);
+    $.ajax({
+      type: "POST",
+      url: url,
+      success: function (response) {
+        console.log(response);
+        Swal.fire({
+          title: "Success!",
+          text: `Yay! You have accepted ${response.to}'s bid of $${response.amount} for your product: ${response.prodName}. An email has been sent to ${response.to} notifying them of their bid acceptance.`,
+          icon: "success",
+          confirmButtonText: "Got it!",
+        }).then(function () {
+          location.reload(true);
+        });
+      },
+    });
+  });
+
+  $("#bidFormSubmit").click(function (event) {
+    event.preventDefault();
+    const bidForm = $("#bidForm");
+    const bid = $("#bidPrice").val();
+    const bidAlert = $("#bidAlert");
+    const bidAlertMsg = $("#bidMsgAlert");
+    const prodName = $("#prodTitle").text();
+    if (bid.length === 0) {
+      event.preventDefault();
+      bidAlertMsg.html("Your bid cannot be empty!");
+      bidAlert.show();
+    } else if (bid.trim().length === 0) {
+      event.preventDefault();
+      bidAlertMsg.html("Your bid cannot be empty spaces!");
+      bidAlert.show();
+      $("#bidPrice").val("");
+    } else if (isNaN(parseInt(bid)) == true || parseInt(bid) === null) {
+      event.preventDefault();
+      bidAlertMsg.html("Your bid needs to be numeric!");
+      bidAlert.show();
+      $("#bidPrice").val("");
+    } else {
+      $.ajax({
+        type: "POST",
+        url: bidForm.attr("action"),
+        data: bidForm.serialize(),
+        complete: function (response) {
+          $("#bidPrice").val("");
+          $("#bidButClose").trigger("click");
+          if (response.responseJSON == true) {
+            Swal.fire({
+              title: "Success!",
+              text: `Your $${bid} bid on ${prodName} was successfuly recorded!`,
+              icon: "success",
+              confirmButtonText: "Got it!",
+            });
+          } else {
+            Swal.fire({
+              title: "Success!",
+              text: `Your bid has been updated from $${response.responseJSON.oldBid} to $${response.responseJSON.newBid}`,
+              icon: "success",
+              confirmButtonText: "Got it!",
+            });
+          }
+        },
+      });
+    }
   });
 
   $("#emailFormSubmit").click(function (event) {
