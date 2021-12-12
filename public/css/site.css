@@ -47,7 +47,7 @@
 }
 
 h1 {
-  color: #84bae6;
+  color: #4e91c0;
 }
 
 .switch {
@@ -1445,7 +1445,7 @@ div.menu2 > .userCard {
   margin-top: 10px;
 }
 
-#recProdDiv > h3,
+#recProdDiv > h2,
 #recProdDiv > p {
   text-align: center;
 }
