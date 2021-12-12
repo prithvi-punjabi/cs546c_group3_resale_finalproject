@@ -10,21 +10,34 @@ const { ErrorMessage } = require("../helper/message");
 const userData = require("../data/users");
 
 router.get("/", async (req, res) => {
-  const allTestimonials = await testimonialsData.getAll();
-  for (let testimonial in allTestimonials) {
-    const testimonialUser = await userData.get(
-      allTestimonials[testimonial].user_id.toString()
-    );
-    allTestimonials[testimonial].profilePicture =
-      testimonialUser.profilePicture;
-    allTestimonials[testimonial].usersName =
-      testimonialUser.firstName + " " + testimonialUser.lastName;
+  try {
+    const allTestimonials = await testimonialsData.getAll();
+    for (let testimonial in allTestimonials) {
+      const testimonialUser = await userData.get(
+        allTestimonials[testimonial].user_id.toString()
+      );
+      allTestimonials[testimonial].profilePicture =
+        testimonialUser.profilePicture;
+      allTestimonials[testimonial].usersName =
+        testimonialUser.firstName + " " + testimonialUser.lastName;
+    }
+    res.render("about", {
+      test: allTestimonials,
+      user: req.session.user,
+      title: "About re$ale",
+    });
+  } catch (e) {
+    if (typeof e == "string") {
+      e = new Error(e);
+      e.code = errorCode.BAD_REQUEST;
+    }
+    return res
+      .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
+      .render("error", {
+        code: validator.isValidResponseStatusCode(e.code) ? e.code : 500,
+        error: e.message,
+      });
   }
-  res.render("about", {
-    test: allTestimonials,
-    user: req.session.user,
-    title: "About re$ale",
-  });
 });
 
 router.post("/add/:id", async (req, res) => {
