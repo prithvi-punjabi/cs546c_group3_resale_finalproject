@@ -8,7 +8,6 @@ const testimonials = require("../data/testimonials");
 
 async function main() {
   const db = await connection();
-  await db.dropDatabase();
   try {
     const michael = await users.create(
       "Michael",

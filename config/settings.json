@@ -1,6 +1,5 @@
 {
   "mongoConfig": {
-    "serverUrl": "mongodb://localhost:27017/",
-    "database": "resale_db"
+    "serverUrl": "mongodb+srv://admin:admin@resale.ogyjq.mongodb.net/resale?retryWrites=true&w=majority"
   }
 }
