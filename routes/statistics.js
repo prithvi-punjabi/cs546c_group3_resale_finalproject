@@ -59,6 +59,7 @@ router.get("/", async (req, res) => {
       .render("error", {
         code: validator.isValidResponseStatusCode(e.code) ? e.code : 500,
         error: e.message,
+        user: req.session.user,
       });
   }
 });
