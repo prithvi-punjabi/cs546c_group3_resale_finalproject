@@ -1449,3 +1449,9 @@ div.menu2 > .userCard {
 #recProdDiv > p {
   text-align: center;
 }
+
+#signUpMsg {
+  margin-top: 12px;
+  font-size: 14px;
+  font-style: italic;
+}

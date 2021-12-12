@@ -1529,3 +1529,10 @@ div.menu2 > .userCard {
 .col-sm-9 {
   color: #92989e;
 }
+
+#signUpMsg {
+  margin-top: 12px;
+  font-size: 14px;
+  font-style: italic;
+  color: white;
+}
