@@ -7,8 +7,9 @@ const usersData = data.users;
 const productData = data.products;
 const validator = require("../helper/validator");
 const { errorCode } = require("../helper/common");
-const { ErrorMessage } = require("../helper/message");
+const { ErrorMessage, SuccessMessage } = require("../helper/message");
 const { getById } = require("../data/products");
+const { checkNonNull } = require("../helper/validator");
 
 //Important: Do not pass a hashed password to the create function, the password hashing takes place before insertion
 
@@ -129,9 +130,11 @@ router.get("/user/:id", async (req, res) => {
       title: thisuser.firstName + "'s Profile",
     });
   } catch (e) {
-    return res
-      .status(errorCode.NOT_FOUND)
-      .render("error", { code: errorCode.NOT_FOUND, error: e });
+    return res.status(errorCode.NOT_FOUND).render("error", {
+      code: errorCode.NOT_FOUND,
+      error: e,
+      user: req.session.user,
+    });
   }
 });
 
@@ -314,6 +317,7 @@ router.get("/users/update", async (req, res) => {
         .render("error", {
           code: validator.isValidResponseStatusCode(e.code) ? e.code : 500,
           error: e.message,
+          user: req.session.user,
         });
     }
   } else {
@@ -415,6 +419,21 @@ router.post("/users/update/", async (req, res) => {
       error: e,
     });
     //res.status(500).json({ error: e });
+  }
+});
+
+router.post("/users/changeTheme", async (req, res) => {
+  const { darkTheme } = req.body;
+  try {
+    checkNonNull(darkTheme);
+    if (typeof darkTheme != "boolean") {
+      throw "darkTheme must be a boolean";
+    }
+    await usersData.updateTheme(req.session.user._id.toString(), darkTheme);
+    req.session.user.darkTheme = darkTheme;
+    return res.json(SuccessMessage("Theme updated successfully"));
+  } catch (e) {
+    return res.status(400).json(ErrorMessage(e));
   }
 });
 module.exports = router;

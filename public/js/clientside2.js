@@ -124,11 +124,22 @@
               icon: "success",
               confirmButtonText: "Got it!",
             });
-          } else {
+          } else if (
+            response.responseJSON != null &&
+            response.responseJSON.oldBid != null &&
+            response.responseJSON.newBid != null
+          ) {
             Swal.fire({
               title: "Success!",
               text: `Your bid has been updated from $${response.responseJSON.oldBid} to $${response.responseJSON.newBid}`,
               icon: "success",
+              confirmButtonText: "Got it!",
+            });
+          } else {
+            Swal.fire({
+              title: "Uh oh!",
+              text: `Something went wrong`,
+              icon: "error",
               confirmButtonText: "Got it!",
             });
           }

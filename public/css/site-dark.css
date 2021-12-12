@@ -21,6 +21,7 @@
   margin-top: 10px;
   margin-left: 10px;
   text-align: center;
+  background-color: rgb(185, 185, 185) !important;
 }
 .profilePic {
   width: 5rem;
@@ -47,7 +48,7 @@
 }
 
 h1 {
-  color: #4e91c0;
+  color: #83c7ff;
 }
 
 .switch {
@@ -114,6 +115,15 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
+.card-header {
+  background-color: rgb(36 36 36) !important;
+  border-bottom: 1px solid rgb(161, 161, 161) !important;
+}
+
+.card {
+  background-color: rgb(28 28 28) !important;
+}
+
 .card-img-top,
 .logoimg {
   max-height: 80%;
@@ -160,7 +170,7 @@ input:checked + .slider:before {
 }
 .card-title {
   font-size: 19px;
-  color: #0b8a00;
+  color: #3f953d;
 }
 
 .card-text {
@@ -410,28 +420,28 @@ input:checked + .slider:before {
 .product-description h1 {
   font-weight: 300;
   font-size: 52px;
-  color: #43484d;
+  color: #fff;
   letter-spacing: -2px;
   display: inline-block;
 }
 .product-description p {
   font-size: 16px;
   font-weight: 300;
-  color: #677986;
+  color: rgb(170, 170, 170);
   line-height: 24px;
 }
 
 .product-details span {
   font-size: 14px;
   font-weight: 400;
-  color: #677986;
+  color: #f6fbff;
   margin-bottom: 20px;
 }
 
 .product-details p {
   font-size: 14px;
   font-weight: 400;
-  color: black;
+  color: rgb(170, 170, 170);
   margin-bottom: 20px;
   display: inline-block;
 }
@@ -473,7 +483,6 @@ input:checked + .slider:before {
   .left-column img {
     width: 300px;
     right: 0;
-    top: -65px;
     left: initial;
   }
 }
@@ -495,6 +504,11 @@ input:checked + .slider:before {
   cursor: pointer;
 }
 
+.modal-content {
+  background-color: rgb(28, 28, 28) !important;
+  border: 1px solid rgba(255, 255, 255, 0.253) !important;
+}
+
 .custom-checkbox .bi-star-fill,
 .fa-star {
   color: gold;
@@ -502,7 +516,7 @@ input:checked + .slider:before {
 }
 
 .custom-checkbox .bi-star {
-  color: gray;
+  color: rgb(255, 255, 255);
   position: relative;
 }
 
@@ -543,7 +557,7 @@ input:checked + .slider:before {
 }
 
 .dateAdded {
-  color: #86939e;
+  color: rgb(170, 170, 170);
 }
 
 .commentUserName {
@@ -551,18 +565,20 @@ input:checked + .slider:before {
 }
 
 body {
-  font-family: "Lato", sans-serif;
+  font-family: "Lato", sans-serif !important;
+  background-color: #2f3035 !important;
+  color: rgb(224, 224, 224) !important;
 }
 
 .main-head {
   height: 150px;
-  background: #fff;
+  background: #000000;
 }
 
 .sidenav,
 #profileSection {
   height: 100%;
-  background-color: #212529;
+  background-color: #050607;
   overflow-x: hidden;
   padding-top: 20px;
 }
@@ -614,7 +630,19 @@ body {
 .login-main-text {
   margin-top: 20%;
   padding: 60px;
-  color: #fff;
+  color: #ffffff;
+}
+
+.toast {
+  background-color: rgba(53, 53, 53, 0.85) !important;
+  border: 1px solid rgba(170, 170, 170, 0.1) !important;
+  box-shadow: 0 0.5rem 1rem rgba(134, 134, 134, 0.15) !important;
+}
+
+.toast-header {
+  color: #ffffff !important;
+  background-color: rgba(87, 87, 87, 0.85) !important;
+  border-bottom: 1px solid rgba(77, 77, 77, 0.05) !important;
 }
 
 .login-main-text h2 {
@@ -622,8 +650,8 @@ body {
 }
 
 .btn-black {
-  background-color: #000 !important;
-  color: #fff;
+  background-color: #ffffff !important;
+  color: #000000;
 }
 
 .add-product-form {
@@ -709,7 +737,7 @@ body {
 }
 
 #abouthead {
-  color: black;
+  color: #ffffff;
   font-family: "Gagalin";
   font-size: 60px;
 }
@@ -791,7 +819,7 @@ body {
   padding: 16px;
   height: inherit;
   text-align: justify;
-  background-color: white;
+  background-color: black;
 }
 
 .abtcard p {
@@ -865,12 +893,12 @@ body {
   margin: auto 0;
   border-radius: 8px;
   letter-spacing: 0.7px;
-  background-color: #377bb6;
-  color: #fff;
+  background-color: #142e44;
+  color: white;
   font-size: 21px;
   font-family: "Lato", sans-serif;
   cursor: pointer;
-  box-shadow: rgba(0, 9, 61, 0.2) 0px 4px 8px 0px;
+  box-shadow: rgba(62, 85, 216, 0.2) 0px 4px 8px 0px;
 }
 
 #buyresale:active {
@@ -966,9 +994,30 @@ body {
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-  background-color: black;
+  background-color: rgba(75, 75, 75, 0.473);
   padding: 20%;
   border-radius: 8px;
+}
+
+.form-control {
+  color: rgb(223, 223, 223) !important;
+  background-color: rgb(28, 28, 28) !important;
+  border: 1px solid rgb(90, 90, 90) !important;
+}
+
+.offcanvas {
+  background-color: rgb(28, 28, 28) !important;
+}
+
+.list-group-item {
+  color: #e2e2e2 !important;
+  background-color: rgb(28, 28, 28) !important;
+  border: 1px solid rgba(56, 56, 56, 0.125) !important;
+}
+
+.swal2-popup {
+  background: rgb(48, 48, 48) !important;
+  color: #d1d1d1 !important;
 }
 
 #updateBtn {
@@ -977,8 +1026,30 @@ body {
   left: 80%;
 }
 
+::placeholder {
+  color: rgb(223, 223, 223) !important;
+}
+
+.input-group-text {
+  color: #98abbe !important;
+  background-color: #131313 !important;
+  border: 1px solid #444444 !important;
+}
+
+.btn-light {
+  color: #afafaf !important;
+  background-color: #2e2e2e !important;
+  border-color: #707070 !important;
+}
+
+.btn-dark {
+  color: #ffffff !important;
+  background-color: #0e0e0e !important;
+  border-color: #0e0e0e !important;
+}
+
 .card-chat {
-  background: #fff;
+  background: #000;
   transition: 0.5s;
   border: 0;
   margin-bottom: 30px;
@@ -998,7 +1069,7 @@ body {
 
 .chat-app .chat {
   margin-left: 280px;
-  border-left: 1px solid #eaeaea;
+  border-left: 1px solid #222222;
 }
 
 .people-list {
@@ -1015,12 +1086,12 @@ body {
 }
 
 .people-list .chat-list li:hover {
-  background: #efefef;
+  background: #1b1b1b;
   cursor: pointer;
 }
 
 .people-list .chat-list li.active {
-  background: #efefef;
+  background: #0c0c0c;
 }
 
 .people-list .chat-list li .name {
@@ -1055,7 +1126,7 @@ body {
 
 .chat .chat-header {
   padding: 15px 20px;
-  border-bottom: 2px solid #f4f7f6;
+  border-bottom: 2px solid #0f0f0f;
 }
 
 .chat .chat-header img {
@@ -1071,7 +1142,7 @@ body {
 
 .chat .chat-history {
   padding: 20px;
-  border-bottom: 2px solid #fff;
+  border-bottom: 2px solid #000;
 }
 
 .chat .chat-history ul {
@@ -1097,12 +1168,12 @@ body {
 }
 
 .chat .chat-history .message-data-time {
-  color: #434651;
+  color: #a3abc7;
   padding-left: 6px;
 }
 
 .chat .chat-history .message {
-  color: #444;
+  color: rgb(197, 195, 195);
   padding: 18px 20px;
   line-height: 26px;
   font-size: 16px;
@@ -1120,13 +1191,13 @@ body {
   width: 0;
   position: absolute;
   pointer-events: none;
-  border-bottom-color: #fff;
+  border-bottom-color: rgb(0, 0, 0);
   border-width: 10px;
   margin-left: -10px;
 }
 
 .chat .chat-history .my-message {
-  background: #efefef;
+  background: #161616;
 }
 
 .chat .chat-history .my-message:after {
@@ -1138,18 +1209,18 @@ body {
   width: 0;
   position: absolute;
   pointer-events: none;
-  border-bottom-color: #efefef;
+  border-bottom-color: #131313;
   border-width: 10px;
   margin-left: -10px;
 }
 
 .chat .chat-history .other-message {
-  background: #e8f1f3;
+  background: #202222;
   text-align: right;
 }
 
 .chat .chat-history .other-message:after {
-  border-bottom-color: #e8f1f3;
+  border-bottom-color: #0b0c0c;
   left: 70%;
 }
 
@@ -1166,15 +1237,15 @@ body {
 }
 
 .online {
-  color: #86c541;
+  color: #354e1a;
 }
 
 .offline {
-  color: #e47297;
+  color: #42212b;
 }
 
 .me {
-  color: #1d8ecd;
+  color: #0a344b;
 }
 
 .float-right {
@@ -1195,7 +1266,7 @@ body {
     height: 465px;
     width: 100%;
     overflow-x: auto;
-    background: #fff;
+    background: #000;
     left: -400px;
     display: none;
   }
@@ -1245,14 +1316,14 @@ body {
 }
 
 .sold {
-  background-color: red;
-  color: white !important;
+  background-color: rgb(255, 0, 0);
+  color: black !important;
   padding: 5px 15px;
   border-radius: 5px;
 }
 
 .statHead {
-  color: black;
+  color: white;
   font-family: "Gagalin";
   text-align: center;
   margin-top: 10px;
@@ -1269,12 +1340,12 @@ body {
 }
 
 #filterSidebarLabel {
-  color: black;
+  color: white;
   font-size: 22px;
 }
 
 .modal-title {
-  color: black;
+  color: white;
   font-size: 20px;
 }
 
@@ -1287,7 +1358,7 @@ body {
 }
 
 #prodPriceSpan {
-  color: #0b8a00;
+  color: #65a664;
 }
 
 .abtCard > h2 {
@@ -1315,12 +1386,16 @@ body {
   float: right;
 }
 
+.text-secondary {
+  color: #c9c9c9 !important;
+}
+
 .navbar {
   font-size: 18px;
-  background-color: #212529 !important;
+  background-color: #000000 !important;
 }
 .col-md-4 {
-  background-color: black;
+  background-color: white;
   color: white;
 }
 
@@ -1330,7 +1405,8 @@ body {
   height: 100vh;
   text-align: center;
   font-family: "Lato", sans-serif;
-  color: #888;
+  color: rgb(255, 255, 255);
+  background-color: black;
   transition: all 0.6s;
 }
 
@@ -1445,7 +1521,11 @@ div.menu2 > .userCard {
   margin-top: 10px;
 }
 
-#recProdDiv > h2,
+#recProdDiv > h3,
 #recProdDiv > p {
   text-align: center;
+}
+
+.col-sm-9 {
+  color: #92989e;
 }

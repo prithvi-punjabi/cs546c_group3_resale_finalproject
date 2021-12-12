@@ -3,6 +3,7 @@ const users = mongoCollections.users;
 let { ObjectId } = require("mongodb");
 const validate = require("../helper/validator");
 const bcrypt = require("bcryptjs");
+const async = require("hbs/lib/async");
 const saltRounds = 8;
 
 //Important: Do not pass a hashed password to the create function, the password hashing takes place before insertion
@@ -176,6 +177,26 @@ async function update(
   let a = await this.get(id);
   return a;
 }
+
+async function updateTheme(userId, darkTheme) {
+  validate.checkNonNull(userId);
+  validate.checkString(userId);
+  validate.isValidObjectID(userId);
+  validate.checkNonNull(darkTheme);
+  if (typeof darkTheme != "boolean") {
+    throw "Darktheme must be a boolean";
+  }
+  const userCol = await users();
+  const updatedone = await userCol.updateOne(
+    { _id: ObjectId(userId) },
+    { $set: { darkTheme: darkTheme } }
+  );
+  if (updatedone.modifiedCount == 0 && updatedone.matchedCount == 0) {
+    throw "Failed to change theme";
+  }
+  return true;
+}
+
 // delete data
 async function remove(id) {
   validate.checkNonNull(id);
@@ -318,4 +339,5 @@ module.exports = {
   removeFavourite,
   rateUser,
   getRating,
+  updateTheme,
 };
