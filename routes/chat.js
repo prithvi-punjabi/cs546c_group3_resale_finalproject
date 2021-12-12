@@ -5,6 +5,8 @@ const utils = require("../helper/utils");
 const validator = require("../helper/validator");
 const message = require("../helper/message");
 const xss = require("xss");
+const errorCode = require("../helper/common").errorCode;
+const ErrorMessage = require("../helper/message").ErrorMessage;
 
 router.get("/", async (req, res) => {
   if (!utils.isUserLoggedIn(req)) {
