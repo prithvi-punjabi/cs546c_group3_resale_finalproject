@@ -18,23 +18,25 @@
           {{/each}}
         </ul>
       </div>
-      <div class="chat">
-        <div class="chat-header clearfix">
-          <div class="row">
-            <div class="col-lg-6">
-              <a
-                href="javascript:void(0);"
-                data-toggle="modal"
-                data-target="#view_info"
-              >
-                <img src="{{currChat.profilePicture}}" alt="avatar" />
-              </a>
-              <div class="chat-about">
-                <h2 class="m-b-0">{{currChat.userName}}</h2>
+        <div class="chat">
+          <div class="chat-header clearfix">
+            <div class="row">
+              <div class="col-lg-6">
+              {{#if currChat}}
+                <a
+                  href="javascript:void(0);"
+                  data-toggle="modal"
+                  data-target="#view_info"
+                >
+                  <img src="{{currChat.profilePicture}}" alt="avatar" />
+                </a>
+                <div class="chat-about">
+                  <h2 class="m-b-0">{{currChat.userName}}</h2>
+                </div>
+              {{/if}}
               </div>
             </div>
           </div>
-        </div>
         <div class="chat-history">
           <ul id="ul-msg" class="m-b-0">
             {{#each currChat.message}}

@@ -53,6 +53,7 @@ router.get("/:id", async (req, res) => {
       chats: chats,
       currChat: currChat,
       user: req.session.user,
+      title: currChat.userName,
     });
   } catch (e) {
     if (typeof e == "string") {
