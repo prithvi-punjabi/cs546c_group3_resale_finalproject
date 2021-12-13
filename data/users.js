@@ -4,7 +4,7 @@ let { ObjectId } = require("mongodb");
 const validate = require("../helper/validator");
 const bcrypt = require("bcryptjs");
 const async = require("hbs/lib/async");
-const saltRounds = 8;
+const saltRounds = 16;
 
 //Important: Do not pass a hashed password to the create function, the password hashing takes place before insertion
 
