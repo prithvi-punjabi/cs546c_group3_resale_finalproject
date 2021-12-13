@@ -26,7 +26,7 @@
         novalidate
       >
         <div class="input-group mb-3">
-          <span class="input-group-text" id="span-name">First Name</span>
+          <label class="input-group-text" for="firstName">First Name</label>
           <input
             type="text"
             value = "{{user.firstName}}"
@@ -34,8 +34,6 @@
             placeholder="Enter first name"
             id="firstName"
             name="firstName"
-            aria-label="name"
-            aria-describedby="span-name"
             oninput="removeErrorClass(this)"
             required
           />
@@ -44,7 +42,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <span class="input-group-text" id="span-name">Last Name</span>
+          <label class="input-group-text" for="lastName">Last Name</label>
           <input
             type="text"
             value = "{{user.lastName}}"
@@ -52,8 +50,6 @@
             placeholder="Enter last name"
             id="lastName"
             name="lastName"
-            aria-label="name"
-            aria-describedby="span-name"
             oninput="removeErrorClass(this)"
             required
           />
@@ -62,7 +58,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <span class="input-group-text" id="span-image">Profile Image</span>
+          <label class="input-group-text" for="imageUpload">Profile Image</label>
           <input
             id="imageUpload"
             name="imageUpload"
@@ -70,8 +66,6 @@
             class="form-control"
             type="file"
             id="formFileMultiple"
-            aria-label="imageUpload"
-            aria-describedby="span-image"
             oninput="removeErrorClass(this)"
           />
           <div class="invalid-feedback">
@@ -79,16 +73,14 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <span
+          <label
             class="input-group-text"
-            id="span-description"
-          >Biography</span>
+            for="biography"
+          >Biography</label>
           <textarea
             class="form-control"
             id="biography"
             name="biography"
-            aria-label="Description"
-            aria-describedby="span-description"
             placeholder="Describe yourself"
             oninput="removeErrorClass(this)"
             required
@@ -98,7 +90,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <span class="input-group-text" id="span-name">Email Id</span>
+          <label class="input-group-text" for="email">Email Id</label>
           <input
             type="text"
             value = "{{user.email}}"
@@ -106,8 +98,6 @@
             placeholder="Enter email address"
             id="email"
             name="email"
-            aria-label="name"
-            aria-describedby="span-name"
             oninput="removeErrorClass(this)"
             required
           />
@@ -116,7 +106,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <span class="input-group-text" id="span-name">Phone Number</span>
+          <label class="input-group-text" for="phoneNumber">Phone Number</label>
           <input
             type="text"
             value = "{{user.phoneNumber}}"
@@ -124,8 +114,6 @@
             placeholder="Enter phone number (xxx-xxx-xxxx)"
             id="phoneNumber"
             name="phoneNumber"
-            aria-label="name"
-            aria-describedby="span-name"
             oninput="removeErrorClass(this)"
             required
           />
@@ -134,7 +122,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <span class="input-group-text" id="span-street">Address</span>
+          <label class="input-group-text" for="street">Address</label>
           <input
             type="text"
             class="form-control"
@@ -142,8 +130,6 @@
             value = "{{user.address.streetAddress}}"
             id="street"
             name="street"
-            aria-label="street"
-            aria-describedby="span-street"
             oninput="removeErrorClass(this)"
             required
           />
@@ -153,7 +139,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <span class="input-group-text" id="span-city">City</span>
+          <label class="input-group-text" for="city">City</label>
           <input
             type="text"
             class="form-control"
@@ -161,12 +147,10 @@
             value = "{{user.address.city}}"
             id="city"
             name="city"
-            aria-label="city"
-            aria-describedby="span-city"
             oninput="removeErrorClass(this)"
             required
           />
-          <span class="input-group-text" id="span-state">State</span>
+          <label class="input-group-text" id="span-state">State</label>
           <input
             type="text"
             class="form-control"
@@ -174,13 +158,11 @@
             value = "{{user.address.state}}"
             id="state"
             name="state"
-            aria-label="state"
             maxlength="2"
-            aria-describedby="span-state"
             oninput="removeErrorClass(this)"
             required
           />
-          <span class="input-group-text" id="span-zip">Zip</span>
+          <label class="input-group-text" for="zip">Zip</label>
           <input
             type="text"
             class="form-control"
@@ -188,9 +170,7 @@
             value = "{{user.address.zip}}"
             id="zip"
             name="zip"
-            aria-label="zip"
             pattern="[0-9]{5}"
-            aria-describedby="span-zip"
             maxlength="5"
             oninput="removeErrorClass(this)"
             required
@@ -209,10 +189,9 @@
                 name="gender"
                 value="male"
                 id="gender_male"
-                aria-label="male"
                 {{#if user.isMale}}checked{{/if}}
               />
-              <label class="form-check-label" for="status_available">
+              <label class="form-check-label" for="gender_male">
                 Male
               </label>
             </div>
@@ -223,10 +202,9 @@
                 name="gender"
                 value="female"
                 id="gender_female"
-                aria-label="female"
                 {{#if user.isFemale}}checked{{/if}}
               />
-              <label class="form-check-label" for="status_sold">
+              <label class="form-check-label" for="gender_female">
                 Female
               </label>
             </div>
@@ -237,10 +215,9 @@
                 name="gender"
                 value="other"
                 id="gender_other"
-                aria-label="other"
                 {{#if user.isOther}}checked{{/if}}
               />
-              <label class="form-check-label" for="status_sold">
+              <label class="form-check-label" for="gender_other">
                 Other
               </label>
             </div>
@@ -253,9 +230,6 @@
           <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" class="btn btn-primary">Update</button>
             <a class="btn btn-primary" href="/user/{{user._id}}">Back</a>
-            {{!-- <form action="/" id="statBtnForm">
-              <button class="btn btn-primary" id="backBtn" href="/">Back to home</button>
-            </form> --}}
           </div>
         </div>
         <input
@@ -263,7 +237,6 @@
             value = "{{user._id}}"
             id="userID"
             name="userID"
-            aria-label="userID"
           />
       </form>
     </div>

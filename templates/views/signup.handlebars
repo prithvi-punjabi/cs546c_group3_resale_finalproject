@@ -16,15 +16,13 @@
         novalidate
       >
         <div class="input-group mb-3">
-          <span class="input-group-text" id="span-name">First Name</span>
+          <label class="input-group-text" for="firstName">First Name</label>
           <input
             type="text"
             class="form-control"
             placeholder="Enter first name"
             id="firstName"
             name="firstName"
-            aria-label="name"
-            aria-describedby="span-name"
             oninput="removeErrorClass(this)"
             required
           />
@@ -33,15 +31,13 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <span class="input-group-text" id="span-name">Last Name</span>
+          <label class="input-group-text" for="lastName">Last Name</label>
           <input
             type="text"
             class="form-control"
             placeholder="Enter last name"
             id="lastName"
             name="lastName"
-            aria-label="name"
-            aria-describedby="span-name"
             oninput="removeErrorClass(this)"
             required
           />
@@ -50,15 +46,13 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <span class="input-group-text" id="span-name">Username</span>
+          <label class="input-group-text" for="userName">Username</label>
           <input
             type="text"
             class="form-control"
             placeholder="Enter username"
             id="userName"
             name="userName"
-            aria-label="userName"
-            aria-describedby="span-name"
             oninput="removeErrorClass(this)"
             required
           />
@@ -67,15 +61,13 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <span class="input-group-text" id="span-name">Password</span>
+          <label class="input-group-text" for="password">Password</label>
           <input
             type="password"
             class="form-control"
             placeholder="Enter password"
             id="password"
             name="password"
-            aria-label="password"
-            aria-describedby="span-name"
             oninput="removeErrorClass(this)"
             required
           />
@@ -84,7 +76,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <span class="input-group-text" id="span-image">Profile Image</span>
+          <label class="input-group-text" for="imageUpload">Profile Image</label>
           <input
             id="imageUpload"
             name="imageUpload"
@@ -92,21 +84,17 @@
             class="form-control"
             type="file"
             id="formFileMultiple"
-            aria-label="imageUpload"
-            aria-describedby="span-image"
           />
-          <div class="invalid-feedback" id="invalid-firstName-label">
+          <div class="invalid-feedback" id="invalid-imageUpload-label">
             Please select an image
           </div>
         </div>
         <div class="input-group mb-3">
-          <span class="input-group-text" id="span-description">Biography</span>
+          <label class="input-group-text" for="biography">Biography</label>
           <textarea
             class="form-control"
             id="biography"
             name="biography"
-            aria-label="Description"
-            aria-describedby="span-description"
             placeholder="Describe yourself"
             oninput="removeErrorClass(this)"
             required
@@ -116,15 +104,12 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <span class="input-group-text" id="span-name">Date of Birth</span>
+          <label class="input-group-text" for="dob">Date of Birth</label>
           <input
             type="date"
             class="form-control"
-            placeholder="Enter date of birth"
             id="dob"
             name="dob"
-            aria-label="dob"
-            aria-describedby="span-name"
             oninput="removeErrorClass(this)"
             required
           />
@@ -133,15 +118,13 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <span class="input-group-text" id="span-name">Email Id</span>
+          <label class="input-group-text" for="email">Email Id</label>
           <input
             type="email"
             class="form-control"
             placeholder="Enter email address"
             id="email"
             name="email"
-            aria-label="name"
-            aria-describedby="span-name"
             oninput="removeErrorClass(this)"
             required
           />
@@ -150,15 +133,13 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <span class="input-group-text" id="span-name">Phone Number</span>
+          <label class="input-group-text" for="phoneNumber">Phone Number</label>
           <input
             type="text"
             class="form-control"
             placeholder="Enter phone number"
             id="phoneNumber"
             name="phoneNumber"
-            aria-label="name"
-            aria-describedby="span-name"
             oninput="removeErrorClass(this)"
             maxlength="12"
             minlength="12"
@@ -178,9 +159,8 @@
                 name="gender"
                 value="male"
                 id="gender_male"
-                aria-label="male"
               />
-              <label class="form-check-label" for="status_available">
+              <label class="form-check-label" for="gender_male">
                 Male
               </label>
             </div>
@@ -191,9 +171,8 @@
                 name="gender"
                 value="female"
                 id="gender_female"
-                aria-label="female"
               />
-              <label class="form-check-label" for="status_sold">
+              <label class="form-check-label" for="gender_female">
                 Female
               </label>
             </div>
@@ -204,25 +183,22 @@
                 name="gender"
                 value="other"
                 id="gender_other"
-                aria-label="other"
                 checked
               />
-              <label class="form-check-label" for="status_sold">
+              <label class="form-check-label" for="gender_other">
                 Other
               </label>
             </div>
           </div>
         </div>
         <div class="input-group mb-3">
-          <span class="input-group-text" id="span-street">Address</span>
+          <label class="input-group-text" for="street">Address</label>
           <input
             type="text"
             class="form-control"
             placeholder="Enter street address"
             id="street"
             name="street"
-            aria-label="street"
-            aria-describedby="span-street"
             oninput="removeErrorClass(this)"
             required
           />
@@ -232,32 +208,29 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <span class="input-group-text" id="span-city">City</span>
+          <label class="input-group-text" for="city">City</label>
           <input
             type="text"
             class="form-control"
             placeholder="Enter city"
             id="city"
             name="city"
-            aria-label="city"
-            aria-describedby="span-city"
             oninput="removeErrorClass(this)"
             required
           />
-          <span class="input-group-text" id="span-state">State</span>
+          <label class="input-group-text" for="state">State</label>
           <input
             type="text"
             class="form-control"
-            placeholder="Enter state (Eg: NY, nj)"
+            placeholder="Enter state (Eg: NY, NJ)"
             id="state"
             name="state"
             aria-label="state"
             maxlength="2"
-            aria-describedby="span-state"
             oninput="removeErrorClass(this)"
             required
           />
-          <span class="input-group-text" id="span-zip">Zip</span>
+          <label class="input-group-text" for="zip">Zip</label>
           <input
             type="text"
             class="form-control"
@@ -266,7 +239,6 @@
             name="zip"
             aria-label="zip"
             pattern="[0-9]{5}"
-            aria-describedby="span-zip"
             oninput="removeErrorClass(this)"
             maxlength="5"
             required
