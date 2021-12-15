@@ -1,5 +1,5 @@
 {
   "mongoConfig": {
-    "serverUrl": "mongodb+srv://admin:admin@resale.ogyjq.mongodb.net/resale?retryWrites=true&w=majority"
+    "serverUrl": "process.env.MONGODB_URI"
   }
 }
