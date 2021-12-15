@@ -5,6 +5,8 @@ const utils = require("../helper/utils");
 const validator = require("../helper/validator");
 const message = require("../helper/message");
 const xss = require("xss");
+const errorCode = require("../helper/common").errorCode;
+const ErrorMessage = require("../helper/message").ErrorMessage;
 
 router.get("/", async (req, res) => {
   if (!utils.isUserLoggedIn(req)) {
@@ -51,6 +53,7 @@ router.get("/:id", async (req, res) => {
       chats: chats,
       currChat: currChat,
       user: req.session.user,
+      title: currChat.userName,
     });
   } catch (e) {
     if (typeof e == "string") {

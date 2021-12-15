@@ -8,7 +8,7 @@ re$ale is an intermediary between buyers and sellers. Users can either list item
 Our inspiration for this project stems from the pressing need for international students to populate their houses with essential items, all the while ensuring not to go over budget. As a group of international students, we have faced this issue first hand and believe an application like this would greatly benefit not only international students but also people that live on rent or constantly relocate.
 
 <!-- How to run re$ale -->
-## How to run re$ale
+## How to install and run re$ale
 
 Follow the steps to run re$ale.
 
@@ -18,7 +18,22 @@ Follow the steps to run re$ale.
 4. Seed the database (`npm run seed`)
 5. Start the server (`npm start`)
 6. Navigate to `localhost: 3000`
-7. Happy shopping!
+
+<!-- How to use re$ale -->
+## How to use re$ale
+
+Follow these steps to use resale.
+
+1. Access re$ale homepage (`localhost: 3000`)
+2. Sort products and filter them based on your needs
+3. Click sign up, fill up the form to create an account
+4. View products (and recommended products), comment, favourite them, email/chat with, or rate product sellers
+5. Navigate to user profile to view liked products, or update profile
+6. Click on sell products, put in details, upload pictures and click submit
+7. View your product, view product bids, update your product, accept a bid
+8. Read about re$ale on about page, add a testimonial
+9. View re$ale statistics on Statistics Page
+10. Toggle dark mode in User Profile page
 
 <!-- CONTRIBUTING -->
 ## Contributing

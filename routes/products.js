@@ -39,6 +39,7 @@ router.get("/", async (req, res, next) => {
       .render("error", {
         code: validator.isValidResponseStatusCode(e.code) ? e.code : 500,
         error: e.message,
+        user: req.session.user,
       });
   }
 });
@@ -104,6 +105,7 @@ router.get("/get/:id", async (req, res) => {
       .render("error", {
         code: validator.isValidResponseStatusCode(e.code) ? e.code : 500,
         error: e.message,
+        user: req.session.user,
       });
   }
 });
@@ -125,6 +127,7 @@ router.get("/new", async (req, res) => {
       .render("error", {
         code: validator.isValidResponseStatusCode(e.code) ? e.code : 500,
         error: e.message,
+        user: req.session.user,
       });
   }
 });
@@ -140,6 +143,7 @@ router.get("/edit/:id", async (req, res) => {
         return res.status(403).render("error", {
           code: 403,
           error: "You're not authorized to edit others' products",
+          user: req.session.user,
         });
       }
 
@@ -178,7 +182,11 @@ router.get("/edit/:id", async (req, res) => {
       }
       return res
         .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
-        .render("error", { code: e.code, error: e.message });
+        .render("error", {
+          code: e.code,
+          error: e.message,
+          user: req.session.user,
+        });
     }
   } catch (e) {
     console.log(e);
@@ -188,7 +196,11 @@ router.get("/edit/:id", async (req, res) => {
     }
     return res
       .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
-      .render("error", { code: e.code, error: e.message });
+      .render("error", {
+        code: e.code,
+        error: e.message,
+        user: req.session.user,
+      });
   }
 });
 
@@ -202,6 +214,7 @@ router.post("/post/:id", async (req, res) => {
     return res.status(403).render("error", {
       code: 403,
       error: "You cannot email yourself.",
+      user: req.session.user,
     });
   }
   let mailOptions = {

@@ -53,5 +53,5 @@ app.use("/public", express.static(__dirname + "/public"));
 configMiddlewares(app);
 configRoutes(app);
 app.listen(3000, () => {
-  console.log("Server started");
+  console.log("re$ale server started!\nNavigate to localhost:3000 to access re$ale");
 });

@@ -76,7 +76,11 @@ router.post("/delete/:id", async (req, res) => {
     }
     return res
       .status(validator.isValidResponseStatusCode(e.code) ? e.code : 500)
-      .render("error", { code: e.code, error: e.message });
+      .render("error", {
+        code: e.code,
+        error: e.message,
+        user: req.session.user,
+      });
   }
 });
 
