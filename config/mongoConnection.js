@@ -7,7 +7,7 @@ let _db = undefined;
 
 module.exports = async () => {
 	if (!_connection) {
-		_connection = await MongoClient.connect(mongoConfig.serverUrl, {
+		_connection = await MongoClient.connect(process.env.MONGODB_URI, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
 		});
